@@ -1,0 +1,171 @@
+html {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Helvetica Neue", sans-serif;
+  font-weight: 100;
+  font-size: 16px;
+}
+
+div, footer, section, h4 {
+	margin: 0;
+	padding: 0;
+}
+
+h4 {
+	margin: 20px 0;
+	color: #bbb9b9;
+	
+	text-align: center;
+	
+	font-size: 0.9em;
+	font-weight: 100;
+}
+
+a:link {
+	text-decoration: none;
+}
+
+a:hover {
+	border-bottom: 1px dotted;
+}
+
+.text--emphasis, a:link, a:visited {
+	font-weight: 200;
+  color: rgb(62,111,252);
+}
+
+
+
+.clearfix: after {
+	visibility: hidden;
+	display: block;
+	font-size: 0;
+	content: " ";
+	clear: both;
+	height: 0;
+}
+
+.clearfix {
+	display: inline-block;
+}
+
+button {
+  float: left;
+  
+  height: 35px;
+  width: 60px;
+  
+  margin: 1px;
+  
+  background-color: white;
+  border: 1px solid #aeaeae;
+    
+  font-size: 1.1em;
+  text-align: center;
+  font-weight: 100;
+  
+  transition: all 200ms ease-in;
+}
+
+.placeholder {
+	visibility: hidden;
+}
+
+button:focus {
+  outline: 0;
+}
+
+button:active {
+  background-color: black;
+  color:firebrick;
+}
+
+button:hover {
+  cursor: pointer;
+  background-color: lightgrey;
+}
+
+.button--keypad {
+	background-color:#f3f3f3;
+}
+
+.container {
+  max-width: 372px;
+  width: 100%;
+  
+  margin: 0 auto;
+}
+
+.container--col-fluid {
+  width: 100%;
+  margin: 0 auto;
+  font-size: 1em;
+}
+
+.calc--body {
+  /* border: 1px solid red; */
+  border-radius: 5px;
+  width: 372px;
+  
+  margin: 80px 0 50px 0;
+}
+
+.calc--screen {
+  position: relative;
+  display: inline-block;
+  
+  float:left;
+  clear:both;
+    
+  width: 358px;
+  height: 50px;
+  
+  margin: 5px 1px;
+  
+  background-color: white;
+  color: black;
+  
+  border: 1px solid #dfdfdf;
+    
+  font-size: 3em;
+  font-weight: 200;
+  text-align: right;
+  
+  padding: 10px 5px;
+}
+
+.calc--screen:focus {
+  outline:0;
+}
+
+.calc--history {
+	position: relative;
+	
+	width: 358px;
+	height: 10px;
+	
+	margin: 0 auto;
+	padding: 2px 0;
+	
+	text-align: right;
+	
+	font-weight: 200;
+	font-size: 0.8em;
+	color: #6c6c6c;
+}
+
+#button--equals {
+  background-color: rgb(62,111,252);
+  color: white;
+  font-weight: 200;
+  font-size: 1.5em;
+  width: 122px;
+ }
+
+.calc--output {
+  
+}
