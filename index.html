@@ -10,7 +10,8 @@
 	
 	<link rel="stylesheet" href="style.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-	<script src="main.js"></script>
+	<script src="math.js"></script>
+	
 	
 </head>
 
@@ -21,70 +22,73 @@
 
 		<section class="calc--body clearfix">
 			<div class="calc--history"></div>
-			<input class="calc--screen" type="text" readonly>  
+			<input class="calc--screen" type="text" readonly></input>  
 	  
-				  <div id="row1" class="calc--buttons-row">
-				    <button>£</button>
+			<div class="calc--buttons">
+				<div id="row1" class="calc--buttons-row">
+					<button>£</button>
 				    <button class="placeholder"></button>
 				    <button class="placeholder"></button>
 				    <button class="placeholder"></button>
 				    <button value="ac">AC</button>
 				    <button>CE</button>
-				  </div>
+				</div>
 				  				  
-				  <div id="row2" class="calc--buttons-row">
+				<div id="row2" class="calc--buttons-row">
 				    <button value="ans">Ans</button>
-				    <button>root</button>
+				    <button value="&#8730;">&#8730;</button>
 				    <button value="!">n!</button>
 				    <button>n<sup>x</sup></button>
 				    <button>%</button>
-				    <button value="/">÷</button>
-				  </div>
+				    <button value="÷">÷</button>
+				</div>
 				  
-				  <div id="row3" class="calc--buttons-row">
+				<div id="row3" class="calc--buttons-row">
 				    <button value="(">(</button>
 				    <button value=")">)</button>
 				    <button class="button--keypad" value="7">7</button>
 				    <button class="button--keypad" value="8">8</button>
 				    <button class="button--keypad" value="9">9</button>
 				    <button value="&times;">&times;</button>
-				  </div>
+				</div>
 				  
-				  <div id="row4" class="calc--buttons-row">
+				<div id="row4" class="calc--buttons-row">
 					<button>sin</button>
 				    <button>log</button>
 				    <button class="button--keypad" value="4">4</button>
 				    <button class="button--keypad" value="5">5</button>
 				    <button class="button--keypad" value="6">6</button>
 				    <button value="-">-</button>
-				  </div>
+				</div>
 				  
-				  <div id="row5" class="calc--buttons-row">
+				<div id="row5" class="calc--buttons-row">
 					<button>cos</button>
 				    <button>π</button>
 				    <button class="button--keypad" value="1">1</button>
 				    <button class="button--keypad" value="2">2</button>
 				    <button class="button--keypad" value="3">3</button>
 				    <button value="+">+</button>
-				  </div>
+				</div>
 				  
-				  <div id="row6" class="calc--buttons-row">
+				<div id="row6" class="calc--buttons-row">
 					<button>tan</button>
 				    <button>e</button>
-				  
 				    <button class="button--keypad" value=".">.</button>
 				    <button class="button--keypad" value="0">0</button>
 				    <button id="button--equals" value="=">=</button>
-				  </div>
+				</div>
+			</div>
 				  
-  				</section>
-  			</input>
+		</section>
 
-		</div>
+	</div>
+	
 	<footer>
 		<h4>Designed & Coded by <span class="text--emphasis"><a href="http://www.ianmccausland.xyz" target="_blank">Ian McCausland</a></span> in <span class="text--emphasis">Toronto</span></h4>
 	</footer>			
 </div> <!-- /container -->
+
+<script src="main.js"></script>
 </body>
 
 </html>

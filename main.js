@@ -1,83 +1,113 @@
-$( function() {
+( function( $, window ) {
+
+	var utils = {
+		addListeners: function addListeners() {
+			$( ".calc--buttons div" ).on( "click", "button", View.publish );
+			$( window ).on( "keypress", View.publish );	
+		},
+		
+		subscribe: function subscribe( subscription, handler ) {
+			var o = View.screen;
+			
+			o.on( subscription, handler );
+		}	
+	};
 	
-	var calc = {
-		screen: $( ".calc--screen" ),
+	/** Model
+	 ** 
+	 **
+	 **
+	 **
+	 **
+	 *********************************************************************************************/
+	var Model = {
+		screenData: "",
 		
-		history: $( ".calc--history" ),
-		
-		input: [],
-		
-		ans: null,
-		
-		clear: function( save ) {
-			this.screen.val("");
+		getScreenData: function getScreenData() {
+			return this.screenData;
 		},
 		
-		print: function( val ) {
-			if (this.validate( val )) {
-				this.screen.val( this.screen.val() + val );
-			}
-		},
-		
-		validate: function ( val ) {
-			
-			var symbols = /[\+\-÷×\.!]/,
-				numbers = /[0-9]/,
-				content = this.getScreenContents(),
-				search = content.charAt(content.length - 1);
-			
-			console.log((typeof val), search.search(symbols), val.search(numbers));
-				
-			if ( ( search.search(symbols) === -1 ) || (val.search(numbers) !== -1) ) { 
-				// the last symbol entered was not a mathematical operator...
-				if ( (content.length > 0) || (val.search(numbers) !== -1) ) { 
-					// ... so if it isn't the first thing to be entered, then we're good.
-					return true; 
-				}
-			}
-				
-			return false;
-				
-		},
-		
-		evaluateExp: function( val ) {
-			this.input = val;
-			this.history.text( this.input + " =" );
-			console.log("evaluate!");
-			this.print( eval(val).toString() );
-		},
-		
-		parseInput: function( val ) {
-			
-						
-			switch( val ) {
-				
-				case "=":
-					console.log( this.validate(this.getScreenContents()) );
-					if ( this.validate(this.getScreenContents()) ) {
-						this.evaluateExp(this.getScreenContents());
-					}
-					
-					break;
-				case "ce":
-				case "ac":
-				default:
-					this.print( val );
-			} 
-			
-			
-		},
+		setScreenData: function setScreenData( data ) {
+			this.screenData = this.screenData.concat( data );
+		}		
+	};
 	
-		getScreenContents: function() {
+	/** View
+	 ** Most of the view is HTML & CSS -- the .calc--screen and .calc--history CSS class are the two 
+	 ** parts that are necessarily accessible to JavaScript.
+	 **
+	 ** Methods:
+	 ** 	getScreenContents()
+	 **		setScreenContents()
+	 ** 	init() : 	initialize the view by laying down click handlers for buttons and keys?
+	 *********************************************************************************************/
+	var View = {
+		// View interface elements
+		screen: $('.calc--screen'),
+		history: $('.calc--history'),
+		
+		// Methods
+		
+		getScreenContent: function getScreenContent() {
 			return this.screen.val();
-		}
+		},
+		
+		setScreenContent: function setScreenContent( newContent ) {		
+			Model.setScreenData( newContent );	
+		},
+		
+		render: function render() {
+			this.screen.val( Model.getScreenData() );
+		},
+		
+		publish: function publish( event ) {
+			var o = View.screen,
+				EVENT_TYPE = "View:input";
+			
+			o.trigger.call( o, EVENT_TYPE, event );
+				
+		},
+		
+		init: function init() {
+			utils.addListeners();	
+		}	
 		
 	};
+	
+	
+	//controller.
+	var Controller = {
 		
-	$( "button" ).on( "click", function( event ) {
-		var clicked = $(this);
+		calculate: function() {
+			
+		},
 		
-		calc.parseInput( clicked.val() );		
-	});
+		parseInput: function( event, data ) {
+			// IMPORTANT DATA: {keypress: data.which; click: data.target.value}
+			
+			// first step, check if data.type is "keypress" or "click"
+			if (data.type === 'click') {
+				View.setScreenContent( data.target.value );
+			} else if (data.type === 'keypress') {
+				// convert CharCode into ASCII Character
+				// IMPORTANT: Replace * and / with symbols used on the keypad.
+				
+				View.setScreenContent( String.fromCharCode(data.which) );
+			} else {
+				Console.log("Error: invalid data type.");
+			}
+			
+			View.render();
+		},
+		
+		init: function init() {
+			utils.subscribe( "View:input", this.parseInput );
+		}
+	};
+	
+	View.init();
+	Controller.init();
+		
+}(jQuery, window));
 
-});
+
