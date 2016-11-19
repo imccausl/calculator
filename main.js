@@ -22,14 +22,37 @@
 	 *********************************************************************************************/
 	var Model = {
 		screenData: "",
+		lastExpression: "",
+		lastAnswer: "",
+		
+		concatScreenData: function concatScreenData( data ) {
+			this.screenData = this.screenData + data;
+		},
 		
 		getScreenData: function getScreenData() {
 			return this.screenData;
 		},
 		
 		setScreenData: function setScreenData( data ) {
-			this.screenData = this.screenData.concat( data );
-		}		
+			this.screenData = data;
+		},
+		
+		getLastAnswer: function getLastAnswer() {
+			return this.lastAnswer;
+		},
+		
+		setLastAnswer: function setLastAnswer ( data )	{
+			this.lastExpression = this.screenData;
+			this.lastAnswer = data;
+		},
+		
+		setLastExpression: function( data ) {
+			this.lastExpression = data;
+		},
+		
+		getLastExpression: function( data ) {
+			return this.lastExpression;
+		}
 	};
 	
 	/** View
@@ -52,12 +75,13 @@
 			return this.screen.val();
 		},
 		
-		setScreenContent: function setScreenContent( newContent ) {		
-			Model.setScreenData( newContent );	
-		},
-		
 		render: function render() {
 			this.screen.val( Model.getScreenData() );
+			
+			if ( Model.getLastAnswer() ) {
+				console.log( Model.getScreenData() );
+				this.history.text( Model.getLastExpression() + " =" );
+			}
 		},
 		
 		publish: function publish( event ) {
@@ -82,21 +106,51 @@
 			
 		},
 		
+		isFunctionKey: function isFunctionKey( key ) {
+			switch( key ) {
+				case '=':
+				case '%':	
+				case 'ac':
+				case 'ce':
+				
+				case 13:
+					return true;	
+				default:
+					return false;
+			}
+		},
+		
 		parseInput: function( event, data ) {
+			var keyValue = data.target.value || String.fromCharCode( data.which );
+			var keyInput = data.target.value || data.which;
+			
 			// IMPORTANT DATA: {keypress: data.which; click: data.target.value}
 			
-			// first step, check if data.type is "keypress" or "click"
-			if (data.type === 'click') {
-				View.setScreenContent( data.target.value );
-			} else if (data.type === 'keypress') {
-				// convert CharCode into ASCII Character
-				// IMPORTANT: Replace * and / with symbols used on the keypad.
+			// this function routes valid inputs and ignores invalid inputs (such as letters),
+			// but also including two operators (++) in a row, two decimals (..) in a row, etc.
+					
+			if (keyInput) { // if keyInput is not undefined
 				
-				View.setScreenContent( String.fromCharCode(data.which) );
+				if ( !(Controller.isFunctionKey( keyInput )) ) { // check for key/button presses that
+																 // perform calc functions.
+					Model.concatScreenData( keyValue );		
+						 
+				} else {
+					
+					if( (keyValue === '=' ) || (keyInput === 13) ) {
+						//FOR TESTING PURPOSES
+						console.log("evaluate expression");
+						Model.setLastAnswer( math.eval( Model.getScreenData() ) );
+						Model.setScreenData( Model.getLastAnswer() );
+					}
+					
+				}
+				
 			} else {
-				Console.log("Error: invalid data type.");
+				Console.log("Error: invalid data.");
 			}
 			
+			// render the view
 			View.render();
 		},
 		
