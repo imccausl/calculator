@@ -75,8 +75,8 @@
 			return this.screen.val();
 		},
 		
-		render: function render() {
-			this.screen.val( Model.getScreenData() );
+		render: function render( data ) {
+			this.screen.val( data );
 			
 			if ( Model.getLastAnswer() ) {
 				console.log( Model.getScreenData() );
@@ -151,7 +151,18 @@
 			}
 			
 			// render the view
-			View.render();
+			View.render( Controller.renderViewFromModel( Model.getScreenData() ) );
+		},
+		
+		renderViewFromModel: function renderViewFromModel( data ) {
+			var multiplyExp = /[*]/g,
+				divideExp = /[\/]/g;
+			
+			if (typeof data === 'string') {
+				data = data.replace(multiplyExp, " &times; ").replace(divideExp, " ÷ ")
+			}
+			
+			return data;
 		},
 		
 		init: function init() {
