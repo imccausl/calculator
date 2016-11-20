@@ -8,7 +8,7 @@ a powerful library that allows me to play around with adding various functionali
 
 In addition to having a playground in which to practice JavaScript, I am also trying my damndest to utilize design patterns such as
 MVC and (right now) PubSub (although I might refactor that logic a little bit as I continue learning about design patterns) in 
-order to keep the code as clean and maintainable as possible. Feedback is always welcome on how I might attain this ends better
+order to keep the code as clean and maintainable as possible. Feedback is always welcome on how I might attain this end better
 than what my current implementation suggests.
 
 Finally, this project is unfinished as of November 20th, 2016 -- it is a work in progress. So if you DO try to use it,
