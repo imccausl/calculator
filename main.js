@@ -1,3 +1,6 @@
+// things to remember to work on:
+// negative numbers
+// 
 ( function( $, window ) {
 
 	var utils = {
@@ -10,6 +13,42 @@
 			var o = View.screen;
 			
 			o.on( subscription, handler );
+		},
+		
+		validateInput: function validateInput( history, input ) {
+			var operators = ['*','×','/','÷','+','-','%','.'],
+				lastChar = history.charAt(history.length - 1),
+				containsDecimal = /[.]/,
+				decimalExpression = this.splitExpression(history);
+				
+				console.log( "last input:", operators.indexOf(lastChar), "history:", history );
+							
+				
+				if ( ((operators.indexOf(lastChar) > -1) && (operators.indexOf(input) > -1)) ||
+				
+				     ((operators.indexOf(lastChar) > -1) && (input === '='))  ||
+				     
+				     ((operators.indexOf(input) > -1) && (history === "")) ||
+				   
+				     ((decimalExpression.search(containsDecimal) !== -1)) && (input === '.') ) {
+					 	
+					 	return true;
+				}
+			
+			return false;
+			
+		},
+		
+		splitExpression: function splitExpression( input ) {
+			var operators = /[*×\/÷\+-]/g,
+				splitFrom = [],
+				index = 0;
+		
+			while ((splitFrom = operators.exec(input)) !== null ) {
+				index = splitFrom.index;
+			}  
+			
+			return input.substring(index+1);
 		}	
 	};
 	
@@ -75,12 +114,12 @@
 			return this.screen.val();
 		},
 		
-		render: function render( data ) {
-			this.screen.val( data );
+		render: function render( screen, history ) {
+			this.screen.val( screen );
 			
 			if ( Model.getLastAnswer() ) {
 				console.log( Model.getScreenData() );
-				this.history.text( Model.getLastExpression() + " =" );
+				this.history.text( history + " =" );
 			}
 		},
 		
@@ -108,11 +147,10 @@
 		
 		isFunctionKey: function isFunctionKey( key ) {
 			switch( key ) {
-				case '=':
-				case '%':	
+				case '=':	
 				case 'ac':
 				case 'ce':
-				
+				case 'ans':
 				case 13:
 					return true;	
 				default:
@@ -121,29 +159,38 @@
 		},
 		
 		parseInput: function( event, data ) {
-			var keyValue = data.target.value || String.fromCharCode( data.which );
-			var keyInput = data.target.value || data.which;
-			
+			var history = Model.getScreenData(),
+				keyValue = data.target.value || String.fromCharCode( data.which ),
+				keyInput = data.target.value || data.which;
+				
+				
 			// IMPORTANT DATA: {keypress: data.which; click: data.target.value}
 			
 			// this function routes valid inputs and ignores invalid inputs (such as letters),
-			// but also including two operators (++) in a row, two decimals (..) in a row, etc.
+			// but also including two operators (+-) in a row, two decimals (..) in a row, etc.
 					
 			if (keyInput) { // if keyInput is not undefined
 				
 				if ( !(Controller.isFunctionKey( keyInput )) ) { // check for key/button presses that
-																 // perform calc functions.
-					Model.concatScreenData( keyValue );		
+																 // perform calc functions.			
+					
+					if ( !(utils.validateInput( history, keyValue )) ) {
+						Model.concatScreenData( keyValue );	
+					} 
 						 
 				} else {
 					
+					// evaluate expression
 					if( (keyValue === '=' ) || (keyInput === 13) ) {
-						//FOR TESTING PURPOSES
-						console.log("evaluate expression");
-						Model.setLastAnswer( math.eval( Model.getScreenData() ) );
-						Model.setScreenData( Model.getLastAnswer() );
-					}
-					
+						
+						if ( !(utils.validateInput( history.charAt(history.length - 1), '=') ) ) {
+							Model.setLastAnswer( math.eval( Model.getScreenData() ).toString() );
+							Model.setScreenData( Model.getLastAnswer() );
+						}
+					} else if( (keyValue === 'ac') ) {
+						Model.setScreenData("");
+						history = Model.getScreenData();	
+					}					
 				}
 				
 			} else {
@@ -151,15 +198,21 @@
 			}
 			
 			// render the view
-			View.render( Controller.renderViewFromModel( Model.getScreenData() ) );
+			View.render( Controller.renderViewFromModel( Model.getScreenData() ), 
+						 Controller.renderViewFromModel( Model.getLastAnswer() ) );
 		},
 		
 		renderViewFromModel: function renderViewFromModel( data ) {
 			var multiplyExp = /[*]/g,
-				divideExp = /[\/]/g;
+				divideExp = /[\/]/g,
+				subtractExp = /[-]/g,
+				addExp = /[\+]/g;
 			
 			if (typeof data === 'string') {
-				data = data.replace(multiplyExp, " &times; ").replace(divideExp, " ÷ ")
+				data = data.replace(multiplyExp, " × ")
+						   .replace(divideExp, " ÷ ")
+						   .replace(subtractExp, " - ")
+						   .replace(addExp, " + ");
 			}
 			
 			return data;
