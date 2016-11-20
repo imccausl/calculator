@@ -16,26 +16,37 @@
 		},
 		
 		validateInput: function validateInput( history, input ) {
-			var operators = ['*','×','/','÷','+','-','%','.'],
+			var operators = ['*','×','/','÷','+','-','%','.', '!'],
 				lastChar = history.charAt(history.length - 1),
-				containsDecimal = /[.]/,
-				decimalExpression = this.splitExpression(history);
+				containsDecimal = /[\.]/,
+				decimalExpression = this.splitExpression(history),
+				validCharacters = /[0-9\/*-\+×÷=()*%!]/g,
+				validInput = validCharacters.exec(input);
 				
-				console.log( "last input:", operators.indexOf(lastChar), "history:", history );
+				console.log( "last input:", input.search(validCharacters), "history:", input );
 							
 				
-				if ( ((operators.indexOf(lastChar) > -1) && (operators.indexOf(input) > -1)) ||
+				if ( 
 				
-				     ((operators.indexOf(lastChar) > -1) && (input === '='))  ||
-				     
-				     ((operators.indexOf(input) > -1) && (history === "")) ||
-				   
-				     ((decimalExpression.search(containsDecimal) !== -1)) && (input === '.') ) {
-					 	
-					 	return true;
-				}
+	           ((operators.indexOf(lastChar) > -1) && (operators.indexOf(input) > -1)) ||
 			
-			return false;
+	           ((operators.indexOf(lastChar) > -1) && (input === '=')) && (( lastChar !== '!')) ||
+			     
+			   ((operators.indexOf(input) > -1) && (history === "")) ||
+			   
+			   ((decimalExpression.search(containsDecimal) !== -1)) && (input === '.') 
+				   
+				  ) {
+					 	
+					 return true; // invalid order of characters
+				
+				} else if (input.search(validCharacters) !== 0) {
+				
+					return true; // not a valid character
+				
+				}
+							
+			return false; // valid input
 			
 		},
 		
