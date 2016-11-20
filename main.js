@@ -1,6 +1,9 @@
-// things to remember to work on:
+// things to complete:
 // negative numbers
-// 
+// delete key / CE functionality
+// validated input when % or ! is used in expressions
+
+
 ( function( $, window ) {
 
 	var utils = {
@@ -20,13 +23,9 @@
 				lastChar = history.charAt(history.length - 1),
 				containsDecimal = /[\.]/,
 				decimalExpression = this.splitExpression(history),
-				validCharacters = /[0-9\/*-\+×÷=()*%!]/g,
-				validInput = validCharacters.exec(input);
+				validCharacters = /[0-9\/*\-\+×÷=\.()*%!]/;			
 				
-				console.log( "last input:", input.search(validCharacters), "history:", input );
-							
-				
-				if ( 
+		    if ( 
 				
 	           ((operators.indexOf(lastChar) > -1) && (operators.indexOf(input) > -1)) ||
 			
@@ -36,22 +35,22 @@
 			   
 			   ((decimalExpression.search(containsDecimal) !== -1)) && (input === '.') 
 				   
-				  ) {
+			) {
 					 	
-					 return true; // invalid order of characters
+				 return true; // invalid order of characters
 				
-				} else if (input.search(validCharacters) !== 0) {
+			} else if (input.search(validCharacters) !== 0) {
 				
-					return true; // not a valid character
+				return true; // not a valid character
 				
-				}
+			}
 							
 			return false; // valid input
 			
 		},
 		
 		splitExpression: function splitExpression( input ) {
-			var operators = /[*×\/÷\+-]/g,
+			var operators = /[*×\/÷\+\-]/g,
 				splitFrom = [],
 				index = 0;
 		
@@ -71,6 +70,7 @@
 	 **
 	 *********************************************************************************************/
 	var Model = {
+		
 		screenData: "",
 		lastExpression: "",
 		lastAnswer: "",
