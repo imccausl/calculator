@@ -19,28 +19,34 @@
 		},
 		
 		validateInput: function validateInput( history, input ) {
-			var operators = ['*','×','/','÷','+','-','%','.', '!'],
+			var operators = ['*','×','/','÷','+','-','.','%'],
 				lastChar = history.charAt(history.length - 1),
 				containsDecimal = /[\.]/,
 				decimalExpression = this.splitExpression(history),
-				validCharacters = /[0-9\/*\-\+×÷=\.()*%!]/;			
-				
+				validCharacters = /[0-9\/\*\-\+×÷=\.()%!]/,
+				validCharAfterSpecOps = /[0-9\/\*\-\+×÷=]/;
+							
 		    if ( 
+			    
+				//types of invalid input:
 				
-	           ((operators.indexOf(lastChar) > -1) && (operators.indexOf(input) > -1)) ||
+	//case 1: last character on the screen is an operator & current input is an operator
+	((operators.indexOf(lastChar) > -1) && (operators.indexOf(input) > -1)) ||
+	//case 2: last character on the screen is a "!" or "%" and input is not +,-,÷,*, or a number.
+	((( lastChar === '!') || (lastChar === '%')) && (input.search(validCharAfterSpecOps) !== 0)) ||
+    //case 3: input is an operator but there is nothing on the screen 
+    ((operators.indexOf(input) > -1) && (history === "")) ||
+    //case 4: a number with a decimal is on the screen and a decimal is entered again.
+    ((decimalExpression.search(containsDecimal) !== -1) && (input === '.')) ||
+	//case 5: last character on the screen is an operator that isn't "!" and input is '='.
+    ((operators.indexOf(lastChar) > -1) && (input === '=') && ( lastChar !== '!'))   
 			
-	           ((operators.indexOf(lastChar) > -1) && (input === '=')) && (( lastChar !== '!')) ||
-			     
-			   ((operators.indexOf(input) > -1) && (history === "")) ||
-			   
-			   ((decimalExpression.search(containsDecimal) !== -1)) && (input === '.') 
-				   
 			) {
 					 	
 				 return true; // invalid order of characters
 				
 			} else if (input.search(validCharacters) !== 0) {
-				
+			// final case: input is not a valid character (alphabet and non-mathematical characters).
 				return true; // not a valid character
 				
 			}
@@ -50,7 +56,7 @@
 		},
 		
 		splitExpression: function splitExpression( input ) {
-			var operators = /[*×\/÷\+\-]/g,
+			var operators = /[*×\/÷\+-]/g,
 				splitFrom = [],
 				index = 0;
 		
@@ -74,6 +80,7 @@
 		screenData: "",
 		lastExpression: "",
 		lastAnswer: "",
+		savedAnswer: "",
 		
 		concatScreenData: function concatScreenData( data ) {
 			this.screenData = this.screenData + data;
