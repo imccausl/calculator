@@ -18,41 +18,73 @@
 			o.on( subscription, handler );
 		},
 		
+		/* validateInput needs to return an object containing the property "isValid" and 
+		 * if isValid = true, a property with the valid input to send to the Model.
+	     */
+		
 		validateInput: function validateInput( history, input ) {
+			
 			var operators = ['*','×','/','÷','+','-','.','%'],
 				lastChar = history.charAt(history.length - 1),
 				containsDecimal = /[\.]/,
 				decimalExpression = this.splitExpression(history),
 				validCharacters = /[0-9\/\*\-\+×÷=\.()%!]/,
-				validCharAfterSpecOps = /[0-9\/\*\-\+×÷=]/;
+				validCharAfterSpecOps = /[0-9\/\*\-\+×÷=]/,
+				data = {};
 							
-		    if ( 
-			    
-				//types of invalid input:
+			if (input.search(validCharacters) === 0) { // if input is a valid character, first test is passed.
 				
-	//case 1: last character on the screen is an operator & current input is an operator
-	((operators.indexOf(lastChar) > -1) && (operators.indexOf(input) > -1)) ||
-	//case 2: last character on the screen is a "!" or "%" and input is not +,-,÷,*, or a number.
-	((( lastChar === '!') || (lastChar === '%')) && (input.search(validCharAfterSpecOps) !== 0)) ||
-    //case 3: input is an operator but there is nothing on the screen 
-    ((operators.indexOf(input) > -1) && (history === "")) ||
-    //case 4: a number with a decimal is on the screen and a decimal is entered again.
-    ((decimalExpression.search(containsDecimal) !== -1) && (input === '.')) ||
-	//case 5: last character on the screen is an operator that isn't "!" and input is '='.
-    ((operators.indexOf(lastChar) > -1) && (input === '=') && ( lastChar !== '!'))   
+				//check if input is nevertheless invalid based on current state of the data:
+			    if ((operators.indexOf(lastChar) > -1) && (operators.indexOf(input) > -1)) {
+				//case 1: last character on the screen is an operator & current input is an operator 
+				
+					data.isValid = false;
+				   
+				} else if ((( lastChar === '!') || (lastChar === '%')) && (input.search(validCharAfterSpecOps) === 0)) {
+				//case 2: last character on the screen is a "!" or "%" and input is +,-,÷,*, or a number.
+				
+					//output is valid with conditions
+					data.isValid = true;
+					
+					// if input is a number then we need to make some changes to the data; if it's an operator then it doesn't matter.
+					if (input.search(/[0-9]/) === 0) {
+						// use a different default operator for factorial or percent.
+						if (lastChar === '!') {
+							data.write = '*' + input;
+						} else if (lastChar === '%') {
+							data.write = "+" + input;
+						}
+					} else {
+						data.write = input;
+					}
+					
+				} else if ((operators.indexOf(input) > -1) && (history === "")) {
+				//case 3: input is an operator but there is nothing on the screen	
+				
+					data.isValid = false;
+				
+				} else if ((decimalExpression.search(containsDecimal) !== -1) && (input === '.')) {
+				//case 4: a number with a decimal is on the screen and a decimal is entered again.
+				
+					data.isValid = false;
+					
+				} else if ((operators.indexOf(lastChar) > -1) && (input === '=')) {
+				//case 5: last character on the screen is an operator that isn't "!" and input is '='.	
+				
+					data.isValid = false;
+				
+				} else {
+					
+					data.isValid = true;
+				    data.write = input; // return valid output
+				
+				} // end data-state validation check
 			
-			) {
-					 	
-				 return true; // invalid order of characters
-				
-			} else if (input.search(validCharacters) !== 0) {
-			// final case: input is not a valid character (alphabet and non-mathematical characters).
-				return true; // not a valid character
-				
-			}
-							
-			return false; // valid input
+			} else {
+				data.isValid = false; 
+			} // end generalized input validation check
 			
+			return data;
 		},
 		
 		splitExpression: function splitExpression( input ) {
@@ -179,7 +211,8 @@
 		parseInput: function( event, data ) {
 			var history = Model.getScreenData(),
 				keyValue = data.target.value || String.fromCharCode( data.which ),
-				keyInput = data.target.value || data.which;
+				keyInput = data.target.value || data.which,
+				view = utils.validateInput( history, keyValue );
 				
 				
 			// IMPORTANT DATA: {keypress: data.which; click: data.target.value}
@@ -191,9 +224,11 @@
 				
 				if ( !(Controller.isFunctionKey( keyInput )) ) { // check for key/button presses that
 																 // perform calc functions.			
+									
+					if ( view.isValid ) { // if input is NOT invalid
+						
+						Model.concatScreenData( view.write );	
 					
-					if ( !(utils.validateInput( history, keyValue )) ) {
-						Model.concatScreenData( keyValue );	
 					} 
 						 
 				} else {
@@ -201,7 +236,9 @@
 					// evaluate expression
 					if( (keyValue === '=' ) || (keyInput === 13) ) {
 						
-						if ( !(utils.validateInput( history.charAt(history.length - 1), '=') ) ) {
+						console.log( view.isValid );
+						
+						if ( view.isValid ) {
 							Model.setLastAnswer( math.eval( Model.getScreenData() ).toString() );
 							Model.setScreenData( Model.getLastAnswer() );
 						}
