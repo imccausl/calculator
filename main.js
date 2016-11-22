@@ -24,7 +24,7 @@
 		
 		validateInput: function validateInput( history, input ) {
 			
-			var operators = ['*','×','/','÷','+','-','.','%'],
+			var operators = ['*','×','/','÷','+','-','.','%','!'],
 				lastChar = history.charAt(history.length - 1),
 				containsDecimal = /[\.]/,
 				decimalExpression = this.splitExpression(history),
@@ -37,25 +37,33 @@
 				//check if input is nevertheless invalid based on current state of the data:
 			    if ((operators.indexOf(lastChar) > -1) && (operators.indexOf(input) > -1)) {
 				//case 1: last character on the screen is an operator & current input is an operator 
-				
-					data.isValid = false;
-				   
-				} else if ((( lastChar === '!') || (lastChar === '%')) && (input.search(validCharAfterSpecOps) === 0)) {
-				//case 2: last character on the screen is a "!" or "%" and input is +,-,÷,*, or a number.
-				
-					//output is valid with conditions
-					data.isValid = true;
 					
-					// if input is a number then we need to make some changes to the data; if it's an operator then it doesn't matter.
-					if (input.search(/[0-9]/) === 0) {
-						// use a different default operator for factorial or percent.
-						if (lastChar === '!') {
-							data.write = '*' + input;
-						} else if (lastChar === '%') {
-							data.write = "+" + input;
+					console.log(lastChar.search(/[!%=]/));
+					if (( lastChar === '!') && (input.search(validCharAfterSpecOps) === 0)) {
+						//case 1b: last character on the screen is a "!" or "%" and input is +,-,÷,*, or a number.
+						
+						//bug: prints multiple exclaimation points (factorials) because not enough conditions of lastChar are checked.
+						
+						//output is valid with conditions
+						data.isValid = true;
+						
+						// if input is a number then we need to make some changes to the data;
+						// if it's an operator then it doesn't matter.
+						if (input.search(/[0-9]/) === 0) {
+							// use a different default operator for factorial or percent.
+							if (lastChar === '!') {
+								data.write = '*' + input;
+							} else if (lastChar === '%') {
+								data.write = '+' + input;
+							}
+						} else if (input.search(/[\/\-\+×÷!=]/) === 0) {
+							data.write = input;
+						} else {
+							data.isValid = false;
+							data.write = "";
 						}
 					} else {
-						data.write = input;
+						data.isValid = false;
 					}
 					
 				} else if ((operators.indexOf(input) > -1) && (history === "")) {
@@ -68,8 +76,8 @@
 				
 					data.isValid = false;
 					
-				} else if ((operators.indexOf(lastChar) > -1) && (input === '=')) {
-				//case 5: last character on the screen is an operator that isn't "!" and input is '='.	
+				} else if ((operators.indexOf(lastChar) > -1 >= 8) && (input === '=')) {
+				//case 5: last character on the screen is an operator that isn't "!" (operators[8]) and input is '='.	
 				
 					data.isValid = false;
 				
