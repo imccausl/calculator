@@ -1,0 +1,227 @@
+@font-face {
+	font-family: MathJax;
+	src: url("./fonts/CommonHTML/TeX/otf/MathJax_Main-Regular.otf");
+}
+
+@font-face {
+	font-family: MathJaxBold;
+	src: url("./fonts/CommonHTML/TeX/otf/MathJax_Main-Bold.otf");
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "MathJax", sans-serif;
+  font-weight: 100;
+  font-size: 16px;
+}
+
+div, footer, section, h4 {
+	position: relative;
+	margin: 0;
+	padding: 0;
+}
+
+footer {
+	padding: 10px;
+	clear: both;
+}
+
+h4 {
+	margin: 5px 0;
+	color: #bbb9b9;
+	
+	text-align: center;
+	
+	font-size: 0.8em;
+	font-weight: 100;
+}
+
+a:link {
+	text-decoration: none;
+}
+
+a:hover {
+	border-bottom: 1px dotted;
+}
+
+.text--emphasis, a:link, a:visited {
+	font-weight: 200;
+	color: rgb(62,111,252);
+}
+
+
+
+.clearfix: after {
+	visibility: hidden;
+	display: block;
+	font-size: 0;
+	content: " ";
+	clear: both;
+	height: 0;
+}
+
+.clearfix {
+	display: inline-block;
+}
+
+button {
+  float: left;
+  
+  height: 50px;
+  width: 60px;
+  
+  margin: 1px;
+  
+  background-color: white;
+  border: 1px solid #aeaeae;
+  
+  font-family: MathJax;
+  font-size: 1.3em;
+  text-align: center;
+  font-weight: 100;
+  
+  transition: all 200ms ease-in;
+}
+
+.placeholder {
+	visibility: hidden;
+}
+
+button:focus {
+  outline: 0;
+}
+
+button:active {
+  background-color: black;
+  color:firebrick;
+}
+
+button:hover {
+  cursor: pointer;
+  background-color: lightgrey;
+}
+
+.button--keypad, #button--ce, #button--ac {
+	background-color:#e6e6e6;
+	
+}
+
+.container {
+  top: 2vh;
+  
+  max-width: 310px;
+  width: 100%;
+  
+  margin: 0 auto;
+}
+
+.container--col-fluid {
+  width: 100%;
+  font-size: 1em;
+  
+}
+
+.calc--body {
+  /* border: 1px solid red; */
+  border-radius: 5px;
+ 
+  
+  margin: 10px 0 5px 0;
+}
+
+.calc--screen {
+  position: relative;
+  display: inline-block;
+  word-wrap: break-word;
+  
+  clear:both;
+    
+  width: 310px;
+  height: 140px;
+  
+  margin: 5px 0;
+  
+  background-color: white;
+  color: black;
+  
+  border: 1px solid #dfdfdf;
+  
+  font-family: MathJax; 
+  font-size: 1.2em;
+  font-weight: 100;
+  text-align: right;
+  line-height: 1;
+  
+  padding: 5px 5px;
+}
+
+.calc--screen:focus {
+  outline:0;
+}
+
+#calc--history {
+	position: relative;
+	overflow-y: scroll;
+	
+	width: 298px;
+	height: 50px;
+	
+	margin: 0;
+	padding: 0;
+	
+	text-align: right;
+	
+	font-family: MathJax, serif; 
+	font-size: 1em;
+	font-weight: 100;
+	text-align: right;
+	line-height: 1;	
+	
+	border: 1px solid #aeaeae;
+	color: #6c6c6c;
+	background-color:#bbb9b9;
+}
+
+#calc--total-output {
+	overflow-y: scroll;
+	position: relative;
+	margin-top: 10px;
+}
+
+#calc--output {
+	display: inline-block;
+	overflow: visible;
+	margin: 5px;
+	height: 70px;
+}
+
+#button--equals {
+  background-color: rgb(62,111,252);
+  color: white;
+  font-weight: 200;
+  font-size: 1.5em;
+  width: 122px;
+ }
+
+#calc--parens {
+	color: #bbb9b9;
+}
+
+#calc--exp {
+	
+}
+
+#button--ce:hover, #button--ac:hover {
+	background-color: rgba(255, 0, 0, 0.7);
+	transition: background-color 500ms ease-in;
+}
+
+#calc--prerender {
+	position: absolute;
+	visibility: hidden;
+}
