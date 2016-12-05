@@ -1,0 +1,32 @@
+{
+  "name": "calculator",
+  "version": "1.0.0",
+  "description": "A calculator app",
+  "main": "main.js",
+  "dependencies": {
+    "eslint": "^3.10.2",
+    "jasmine": "^2.5.2"
+  },
+  "devDependencies": {
+    "jasmine": "^2.5.2",
+    "mathjax": "^2.7.0",
+    "requirejs": "^2.3.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/imccausl/calculator.git"
+  },
+  "keywords": [
+    "calculator",
+    "MVC"
+  ],
+  "author": "Ian McCausland",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/imccausl/calculator/issues"
+  },
+  "homepage": "https://github.com/imccausl/calculator#readme"
+}
