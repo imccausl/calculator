@@ -1,11 +1,11 @@
 @font-face {
 	font-family: MathJax;
-	src: url("./fonts/CommonHTML/TeX/otf/MathJax_Main-Regular.otf");
+	src: url("../fonts/CommonHTML/TeX/otf/MathJax_Main-Regular.otf");
 }
 
 @font-face {
 	font-family: MathJaxBold;
-	src: url("./fonts/CommonHTML/TeX/otf/MathJax_Main-Bold.otf");
+	src: url("../fonts/CommonHTML/TeX/otf/MathJax_Main-Bold.otf");
 }
 
 * {
