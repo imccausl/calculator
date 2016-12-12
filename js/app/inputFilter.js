@@ -13,9 +13,9 @@
  * splitExpression(), evaluatePercent(), lots of adhoc model modification that should be the controller's responsibility
  **************************************************/
 
-define( [], function () {
+define( [], function() {
 	
-	var inputFilter =  function () {
+	var inputFilter =  ( function () {
 	
 		var _allowedInput = [],
 		
@@ -32,7 +32,8 @@ define( [], function () {
 				decimal: ".",
 				leftParen: "(",
 				rightParen: ")",
-				evaluate: "="
+				evaluate: "=",
+				pi: "π"
 			},
 		
 			_lexer = {
@@ -76,10 +77,7 @@ define( [], function () {
 				isDecimal: function isDecimal(ch, lastCh) {			
 					if (ch === ".") {
 						console.log("isDecimal():", "["+lastCh+"]");
-						if ((lastCh === "") || (lastCh.search(/[\+\*\/-]/) > -1) || lastCh === ",") {
-							expression.model = expression.model.replace(lastCh+".", lastCh+"0."); // model modification
-						}
-						
+												
 						return ["numbers"];
 						
 					} else {
@@ -94,10 +92,6 @@ define( [], function () {
 					
 					if (operators.indexOf(ch) > -1) {
 						
-						if ( (operators.indexOf(lastCh) > -1) ) {
-							expression.model = expression.model.replace(lastCh, ""); // model modification
-						}
-						
 						console.log("model", expression.model);
 						
 						return ["numbers", "pow", "leftParen", "rightParen", "minus", "plus", "multiDiv"];
@@ -107,23 +101,16 @@ define( [], function () {
 				},
 				
 				isParen: function isParen(ch, lastCh) {
-					var parenClosed = closedParens.text(), // view call
-						inputRules = ["numbers", "root", "minus", "plus", "log", "evaluate", "leftParen"],
+					var inputRules = ["numbers", "root", "minus", "plus", "log", "evaluate", "leftParen"],
 						chFound = false;
 					
-					if (ch==='(') {
-						parenClosed += ")";
-						closedParens.text(parenClosed); //view modification
+					if ( (ch==='(') || (ch===')') ) {
 						chFound = true;
-					} else if (ch===')') {
-						parenClosed = parenClosed.replace(")", "");
-						closedParens.text(parenClosed); // view modification
-						chFound = true;
-					}
+					} 
 					
-					console.log("parenClosed.length:", parenClosed.length, lastCh, expression.splitExpression("\[\(+\\d+]"));
-							
-					if ((chFound) && ((expression.splitExpression("\[\(+\\d+]").search(/\d+/) > -1) && (parenClosed.length > 0))) {
+					//console.log("parenClosed.length:", parenClosed.length, lastCh, expression.splitExpression("\[\(+\\d+]"));
+					// contains a model query in order to determine when a rightParen is an acceptable input		
+					if ((chFound) && ((expression.splitExpression("\[\(+\\d+]").search(/\d+/) > -1) && (parenClosed.length > 0))) { // view call
 						inputRules.push("rightParen");
 					} 
 					
@@ -141,15 +128,6 @@ define( [], function () {
 						percentVal = "";
 					
 					if (specOps.indexOf(ch) > -1) {
-						switch (specOps.indexOf(ch)) {
-							case 0:
-								percentVal = expression.splitExpression("([\\d\+\*\\-]\d+)%");
-								expression.model = expression.model.replace(percentVal, expression.evaluatePercent(percentVal));
-								// should i tokenize percent expressions by saving the percent expression and its mathematical equiv
-								// so I can do a find and replace at the time of expression evaluation?
-								console.log("change made by % key:", expression.model);					
-						}
-						
 						return inputRules;
 					} else {
 						return false;
@@ -158,31 +136,12 @@ define( [], function () {
 				
 				isSqOrLog: function isSqOrLog(ch, lastCh) {
 					var operation = ["pow", "log"],
-						inputRules = ["numbers", "plus", "minus"],
-						output = "",
-						replString = "";
+						inputRules = ["numbers", "plus", "minus"];
 						
-						console.log("POW last ch:", lastCh);
+					console.log("POW last ch:", lastCh);
 						
 					if (operation.indexOf(ch) > -1) {
-						
-						replString = expression.splitExpression("(\\d+"+operation[operation.indexOf(ch)]+")");
-						output = replString.replace(/(\D+)/, "");
-						
-						switch(operation.indexOf(ch)) {
-							case 0:
-								output = "pow("+output+",";
-								expression.model = expression.model.replace(/(\d+pow)/, output);						
-								console.log("POW:", output);	
-								break;
-							case 1:
-								output = "log(";
-								expression.model = expression.model.replace(/log(\(\d+\))^/, output);
-						}
-						
-						closedParens.text(closedParens.text()+")"); // view modification (for testing purposes)
 						return inputRules;	
-						
 					} else {
 						return false;
 					}
@@ -190,8 +149,13 @@ define( [], function () {
 			},
 			
 			_makeFilter = function _makeFilter(rules) {
-				var	decimalExpression = expression.splitExpression("[\\*\\+\\/-]"),
-					rulesStr = "",
+				// contains a model call for adding a decimal point as an accepted input. This should be a separate thing?
+				// it crosses a boundary between model and inputFilter, since this one piece of input is dependent on the current
+				// state of the view/model.
+				
+				//var	decimalExpression = expression.splitExpression("[\\*\\+\\/-]"),
+				
+				var	rulesStr = "",
 					filterArray = [];
 										
 				rules.forEach(function (element) {
@@ -202,9 +166,9 @@ define( [], function () {
 				filterArray.pop(filterArray.length-1);
 						
 				
-				if ( (decimalExpression.search(/[\.]/) === -1) ) {
-					filterArray.push(".");
-				}
+				// if ( (viewState.search(/[\.]/) === -1) ) {
+				//	filterArray.push(".");
+				// }
 	
 				return filterArray;		
 	 	},
@@ -217,16 +181,28 @@ define( [], function () {
 				// CONFLICT: the operator replacement functionality to work properly, 
 				// lastCh has to have the previous state of the model.
 						
-				for( var func in _lexer ) {
-					
-					console.log("??", _lexer[func]);
-					
-					inputRules = _lexer[func](ch, lastCh);
-					if (inputRules) {
-						return _makeFilter(inputRules);
-					}	
-				}	
+				if ( ( ch && lastCh ) !== undefined ) {					
+					for( var func in _lexer ) {
+						
+						console.log("??", _lexer[func]);
+						
+						inputRules = _lexer[func](ch, lastCh);
+						if (inputRules) {
+							return _makeFilter(inputRules);
+						}	
+					}
+				} else {
+					// no input rules found, so initialize the input filter:
+					console.log("No rules found. Initializing the filter!");
+				
+					return _makeFilter(['numbers', 'plus', 'minus', 'pi', 'log', 'root', 'pow', 'decimal', 'leftParen']);
+				}
+			},
+				
+			_addToFilter = function _addToFilter(item) {
+				_allowedInput.push(item);
 			}
+				
 	
 		// public methods
 		return {
@@ -237,10 +213,12 @@ define( [], function () {
 			
 			setFilter: function setFilter(ch, lastCh) {
 				_allowedInput = _getNextFilter(ch, lastCh);
-			}
+			},
+			
+			addToFilter: _addToFilter
 			
 		}
-	};
+	})();
 	
 	return inputFilter;
 });

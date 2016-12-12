@@ -8,18 +8,21 @@
  
 define( [], function (expression) {
 	
-	var expression = function () {
+	var expression = ( function() {
 		
-		var _model = "",
-			_view = "",
-		
-			_modifyView = function _modifyView(str, replacement) {
-				_view = _model.replace(str, replacement);
+		var _model = {
+				content: {
+					data: "",
+					isValid: false
+				},
+				
+				lastExpression: "",
+				lastAns: ""
 			},
-			
+					
 			splitExpression = function splitExpression(expr, str) {
 				var splitFrom = new RegExp(expr, "g"),
-					input = str || _model;
+					input = str || _model.content.data;
 					lastInstance = [],
 					index = 0;
 							
@@ -54,13 +57,14 @@ define( [], function (expression) {
 			 	return _model;
 		 	},
 		 	
-		 	getView = function getView () {
-			 	return _view;	
-		 	},
 		 	
 		 	pushToModel = function pushToModel(ch) {		
-				_model += ch;
-				console.log(_model);
+				_model.content.data += ch;
+				console.log(_model.content.data);
+			},
+			
+			init = function init() {
+				_model.content.data = "";	
 			}
 		
 		// Interface
@@ -69,12 +73,11 @@ define( [], function (expression) {
 		 	splitExpression: splitExpression,
 		 	pushToModel: pushToModel,
 		 	getModel: getModel,
-		 	getView: getView,
-		 	modifyView: _modifyView
+		 	init: init
 				
 		}
 	
-	};
+	})();
 	
 	
 	
@@ -102,15 +105,8 @@ define( [], function (expression) {
 		
 		
 		
-		init: function init() {
-			var initialInput = "0 1 2 3 4 5 6 7 8 9 . ( - + π log pow sqrt";
-			expression.model = "";
-			
-			inputFilter.allowedInput = initialInput.split(" ");
-			
-			$( ".calc--buttons div" ).on( "click", "button", expression.getInput );
-			$( window ).on( "keypress", expression.getInput );
-			
+		
+		
 		}
 	};
 	
@@ -125,3 +121,40 @@ define( [], function (expression) {
 });
 
 //module.exports = expression;
+
+
+
+
+/* expression calls from inputFilter:
+
+// converts strings such as x% or 10+x% into an evaluatable value:
+
+switch (specOps.indexOf(ch)) {
+	case 0:
+		percentVal = expression.splitExpression("([\\d\+\*\\-]\d+)%");
+		expression.model = expression.model.replace(percentVal, expression.evaluatePercent(percentVal));
+		// should i tokenize percent expressions by saving the percent expression and its mathematical equiv
+		// so I can do a find and replace at the time of expression evaluation?
+		console.log("change made by % key:", expression.model);					
+	}
+	
+// contains both expression and view calls: 
+// converts logs and powers into a syntactically correct expression
+
+	var replString = expression.splitExpression("(\\d+"+operation[operation.indexOf(ch)]+")"),
+		output = replString.replace(/(\D+)/, "")
+						
+	switch(operation.indexOf(ch)) {
+		case 0:
+			output = "pow("+output+",";
+			expression.model = expression.model.replace(/(\d+pow)/, output);						
+			console.log("POW:", output);	
+			break;
+		case 1:
+			output = "log(";
+			expression.model = expression.model.replace(/log(\(\d+\))^/, output);
+		}
+	
+	closedParens.text(closedParens.text()+")"); // view modification (for testing purposes)
+	
+*/

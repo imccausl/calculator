@@ -1,17 +1,33 @@
 // config
-require.config({
+requirejs.config({
 	baseUrl: 'js/app',
+	
 	paths: {
 		'MathJax':'https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=AM_CHTML.js',
-		'math': 'js/lib/math.js',
-		app: 'js/app'
+		math: '../lib/math',
+		domReady:'../lib/domReady'
+	},
+	
+	shim: {
+		'MathJax': {
+			exports: 'MathJax'
+		}
 	}
 });
 
 //app
 
-require(['expression', 'inputFilter'], function(expression, inputFilter) {
-	console.log(inputFilter);
+require(['domReady'], function(domReady) {
+	
+	domReady(function() {
+		
+		require(['expression', 'viewModel'], function(expression, viewModel) {
+		
+			viewModel.init();
+		
+		});
+	});
+	
 });
 
 
