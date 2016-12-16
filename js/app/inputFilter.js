@@ -9,8 +9,6 @@
  * setFilter(ch, lastCh) : sets the next input filter based on current input and the last character pushed to the model
  * getFilter() : retrieves the current input filter
  *
- * DEPENDENCIES THAT I'D LIKE TO FIX
- * splitExpression(), evaluatePercent(), lots of adhoc model modification that should be the controller's responsibility
  **************************************************/
 
 define( [], function() {
@@ -28,7 +26,7 @@ define( [], function() {
 				percent: "%",
 				root: "sqrt",
 				log: "log",
-				pow: "pow",
+				pow: "^",
 				decimal: ".",
 				leftParen: "(",
 				rightParen: ")",
@@ -54,18 +52,7 @@ define( [], function() {
 		
 					
 					if ( ((ch >= '0') && (ch <= '9')) ) {
-						
-						if (lastCh === "(") {
-							inputRule.push("rightParen");
-						} else if (lastCh === ")") {
-							expression.model = expression.model.replace(/\)\d+/, ")*"+ch);
-							inputRule.push("rightParen");
-						} else if (lastCh==="!") {
-							expression.model = expression.model.replace(/!\d+/, "!*"+ch);
-						} else if (expression.splitExpression("pow").search(/(pow\(\d+\,\d+)/) > -1)  {
-							inputRule.push("rightParen");
-						}
-						
+												
 						return inputRule;
 						
 					} else {
@@ -91,10 +78,7 @@ define( [], function() {
 					console.log("isOperator():", lastCh, ch, operators.indexOf(ch));
 					
 					if (operators.indexOf(ch) > -1) {
-						
-						console.log("model", expression.model);
-						
-						return ["numbers", "pow", "leftParen", "rightParen", "minus", "plus", "multiDiv"];
+						return ["numbers", "leftParen", "rightParen", "minus", "plus"];
 					} else {
 						return false;
 					}
@@ -110,9 +94,9 @@ define( [], function() {
 					
 					//console.log("parenClosed.length:", parenClosed.length, lastCh, expression.splitExpression("\[\(+\\d+]"));
 					// contains a model query in order to determine when a rightParen is an acceptable input		
-					if ((chFound) && ((expression.splitExpression("\[\(+\\d+]").search(/\d+/) > -1) && (parenClosed.length > 0))) { // view call
-						inputRules.push("rightParen");
-					} 
+					//if ((chFound) && ((expression.splitExpression("\[\(+\\d+]").search(/\d+/) > -1) && (parenClosed.length > 0))) { // view call
+					//	inputRules.push("rightParen");
+					//} 
 					
 					if (chFound) {
 						return inputRules;
@@ -122,6 +106,7 @@ define( [], function() {
 					
 				},
 				
+				// my so-called "Special Operators" are percent and factorial, that require different input filters than the regular operators.
 				isSpecOp: function isSpecOp(ch, lastCh) {
 					var specOps = ['%', '!' ],
 						inputRules = ["numbers","evaluate"],
@@ -134,8 +119,9 @@ define( [], function() {
 					}
 				},
 				
+				// Don't really know what to call this function: it sets the input filter for Exponents, Logs, and Square Roots
 				isSqOrLog: function isSqOrLog(ch, lastCh) {
-					var operation = ["pow", "log"],
+					var operation = ["^", "log", "sqrt"],
 						inputRules = ["numbers", "plus", "minus"];
 						
 					console.log("POW last ch:", lastCh);
@@ -180,8 +166,9 @@ define( [], function() {
 				
 				// CONFLICT: the operator replacement functionality to work properly, 
 				// lastCh has to have the previous state of the model.
-						
-				if ( ( ch && lastCh ) !== undefined ) {					
+				console.log("getnextFilter", ch);
+					
+				if ( ( ch  ) !== undefined ) {					
 					for( var func in _lexer ) {
 						
 						console.log("??", _lexer[func]);

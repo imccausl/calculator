@@ -1,23 +1,42 @@
-define(['view', 'expression', 'inputFilter'], function(view, expression, inputFilter) {
+define(['view', 'expression', 'inputFilter', 'math'], function(view, expression, inputFilter, math) {
 		
 	//controller.
 	var ViewModel = ( function() {
 		
 		var calculate = function() {
+
+				var model = "",
+					expr = "",
+					preSyntaxModel = expression.getModel();
+				
+				expression.checkSyntax();
+				
+				model = expression.getModel();
+				model.content.data = model.content.data + view.elements.closedParens.innerHTML;
+				view.elements.closedParens.innerHTML = "";
+				
 			
+				
+				expr = model.content.data;
+				model.lastExpression = preSyntaxModel.content.data + "=";
+				
+				model.content.data = math.eval(expr).toString();
+				
+				expression.setModel(model);
+
 			},
 			
-			renderViewFromModel = function renderViewFromModel() {
-			
+			checkExpression = function checkExpression() {
+				
 			},
 		
 			isFunctionKey = function isFunctionKey( key ) {
 				switch( key ) {
-					case '=':	
+					
 					case 'ac':
 					case 'ce':
 					case 'ans':
-					case 13:
+					
 						return true;	
 					default:
 						return false;
@@ -27,7 +46,8 @@ define(['view', 'expression', 'inputFilter'], function(view, expression, inputFi
 			parseInput = function( event ) {
 				var history = null,
 					keyInput = event.srcElement.value || event.key,
-					keyValue = event.charCode || keyInput;
+					keyValue = event.charCode || keyInput,
+					lastCh = expression.getLastCh();
 										
 				view.startRender();
 				// IMPORTANT DATA: {keypress: data.which; click: data.target.value}
@@ -38,40 +58,37 @@ define(['view', 'expression', 'inputFilter'], function(view, expression, inputFi
 				if (keyInput) { // if keyInput is not undefined
 					
 					if ( !(isFunctionKey( keyValue )) ) { // check for key/button presses that
+						let dataFilter = inputFilter.getFilter();
 																	 // perform calc functions.			
 						console.log("Applying rule:", inputFilter.getFilter(), keyInput);
 				
-						if (inputFilter.getFilter().indexOf(keyInput) > -1) {
-							 expression.pushToModel(keyInput);
-						}
-/*
-							if (ch==="=") {
-								expression.model = expression.model + closedParens.text() 
-								// concatenation of model and view (closedParens data)
-								closedParens.text(""); // view modification 
-								expression.model = math.eval(expression.model).toString();
-								render();
-								expression.init();
+						if (dataFilter.indexOf(keyInput) > -1) {
+							
+							// evaluate expression: evaluation is beholden to the input filter unlike some of the other functions, 
+							// below the isFunctionKey() else statement.
+							
+							if( (keyInput === '=' ) || (keyValue === 13) ) {
+							
+							//if ( view.isValid ) {
+								calculate();
+							//}
+						
 							} else {
-*/													 
+							 	expression.pushToModel(keyInput);
+							 	inputFilter.setFilter(keyInput, lastCh);
+							}
+						}
+									 
 					} else {
 						
-						// evaluate expression
-						if( (keyInput === '=' ) || (keyValue === 13) ) {
-							
-							if ( view.isValid ) {
-								//Model.setLastAnswer( math.eval( Model.getScreenData() ).toString() );
-								//Model.setScreenData( Model.getLastAnswer() );
-							}
-						
-						} else if( (keyInput === 'ac') ) {
+						if ( (keyInput === 'ac') ) {
 							//Model.setScreenData("");
 							//history = Model.getScreenData();	
 						}					
 					}
 					
 				} else {
-					//throw Error("Something totally unexpected happened: Invalid data received!");
+					throw Error("Something totally unexpected happened: Invalid data received!");
 				}
 			},
 			
@@ -85,7 +102,7 @@ define(['view', 'expression', 'inputFilter'], function(view, expression, inputFi
 					
 				addListeners();
 				console.log(document);
-				inputFilter.setFilter();
+				inputFilter.setFilter(); // Passing no arguments into the setFilter() method initializes the filter.
 			}
 		
 		return {
@@ -129,5 +146,19 @@ define(['view', 'expression', 'inputFilter'], function(view, expression, inputFi
 		closedParens.text(parenClosed); // view modification
 		chFound = true;
 	}
+	
+	
+	// makes some small changes to the model that help the readability of the view
+	if (lastCh === "(") {
+							inputRule.push("rightParen");
+						} else if (lastCh === ")") {
+							expression.model = expression.model.replace(/\)\d+/, ")*"+ch);
+							inputRule.push("rightParen");
+						} else if (lastCh==="!") {
+							expression.model = expression.model.replace(/!\d+/, "!*"+ch);
+						} else if (expression.splitExpression("pow").search(/(pow\(\d+\,\d+)/) > -1)  {
+							inputRule.push("rightParen");
+						}
+
 	
 */

@@ -19,10 +19,53 @@ define( [], function (expression) {
 				lastExpression: "",
 				lastAns: ""
 			},
+			
+			_syntax = {
+				parenify: function parenify() {
+					var addParensTo = [/sqrt(\d+)/g, /log(\d+)/g],
+						parensNeededOn = ["sqrt", "log"];
+					
+					parensNeededOn.forEach(function (element, index) {
+						_modifyModel(addParensTo[index], parensNeededOn[index]+'($1)');
+						console.log("Inside parenify():", index);
+					});
+					
+				},
+				
+				changePi: function changePi() {
+					_modifyModel(/π/g, "pi");
+				},
+				
+				changePercent: function changePercent() {
+					var percentExpression = /(\d*)([\+\*\/-])*(\d+)%/g,
+						operator = [],
+						changeString = "";
+						
+					operator = percentExpression.exec(_model.content.data);
+					
+					if (operator !== null) {
+						if (operator[2] !== undefined) {	
+							if (operator[2] === "*" || operator[2] === "/") {
+								changeString = "($1$2($3/100))"
+							} else {
+								changeString = "($1$2$1($3/100))"
+							}
+						} else {
+							changeString = "($3/100)";
+						}
+					
+						_modifyModel(percentExpression, changeString);
+					}
+				}
+			},
+			
+			_modifyModel = function _modifyModel(regex, newString) {
+				_model.content.data = _model.content.data.replace(regex, newString);	
+			},
 					
 			splitExpression = function splitExpression(expr, str) {
 				var splitFrom = new RegExp(expr, "g"),
-					input = str || _model.content.data;
+					input = str || _model.content.data,
 					lastInstance = [],
 					index = 0;
 							
@@ -35,7 +78,7 @@ define( [], function (expression) {
 			
 			
 			evaluatePercent = function evaluatePercent(str) {
-			 	var operators = new RegExp("[\+\*\\-]", "g"),
+			 	var operators = new RegExp("[\+\*\/-]", "g"),
 			 		percentVal = str.substring(str.search(operators)+1),
 			 		opr = str.substring(str.search(operators), str.search(operators)+1),
 			 		num = str.substring(0, str.search(operators));
@@ -57,6 +100,22 @@ define( [], function (expression) {
 			 	return _model;
 		 	},
 		 	
+		 	getLastCh = function getLastCh() {
+				return _model.content.data.charAt(_model.length-1);	
+		 	},
+		 	
+		 	setModel = function setModel(newModel) {
+		 		_model = newModel;
+		 	},
+		 	
+		 	checkSyntax = function checkSyntax() {
+			 	for (var func in _syntax) {
+				 	console.log("Running:", func, "in _syntax");
+				 	_syntax[func]();
+			 	}
+			 	
+			 	console.log("completed checkSyntax(). Model updated:", _model.content.data);
+		 	},
 		 	
 		 	pushToModel = function pushToModel(ch) {		
 				_model.content.data += ch;
@@ -73,6 +132,9 @@ define( [], function (expression) {
 		 	splitExpression: splitExpression,
 		 	pushToModel: pushToModel,
 		 	getModel: getModel,
+		 	setModel: setModel,
+		 	getLastCh: getLastCh,
+		 	checkSyntax: checkSyntax,
 		 	init: init
 				
 		}

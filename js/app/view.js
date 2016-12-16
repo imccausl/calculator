@@ -18,17 +18,18 @@ define(['expression', 'MathJax'], function(expression) {
 				screen: document.getElementById("calc--output"),
 				closedParens: document.getElementById("calc--parens"),
 				history: document.getElementById("calc--history"),
+				historyBuffer: document.getElementById("calc--history-prerender")
 			},
 		
 			timeout = null,
 			mjRunning = false,
 			mjPending = false,
-			delay = 150,
+			delay = 0,
 					
 			// Methods: All begin as private. Are made public in the return statement below their definitions.
 			
 			getScreenContent = function getScreenContent() {
-				// this returns the markup that MathJax creates to render the view
+				// returns the markup that MathJax creates to render the view
 				
 				return elements.buffer.innerHTML;
 			},
@@ -52,6 +53,7 @@ define(['expression', 'MathJax'], function(expression) {
 				mjRunning = mjPending = false;
 				
 				elements.screen.innerHTML = elements.buffer.innerHTML;
+				elements.history.innerHTML = elements.historyBuffer.innerHTML;
 				//View.elements.screen = screen;
 			},
 			
@@ -59,10 +61,12 @@ define(['expression', 'MathJax'], function(expression) {
 				var model = expression.getModel();
 				
 				setScreenContent( "`"+model.content.data+"`" );
+				elements.historyBuffer.innerHTML = "`"+model.lastExpression+"`";
 				
 				console.log( "Render() contents of View.model:", model.content.data );
 				console.log( "Render() View.elements.buffer: ", elements.buffer );
 				console.log( "Render() View.elements.screen: ", elements.screen );
+				console.log( "Render() View.elements.history: ", elements.history )
 				
 				// render View.model into the buffer, then swap the buffer for the screen
 				// when the buffer is finished rendering.
@@ -78,6 +82,7 @@ define(['expression', 'MathJax'], function(expression) {
 					
 					MathJax.Hub.Queue(
 						["Typeset", MathJax.Hub, elements.buffer],
+						["Typeset", MathJax.Hub, elements.historyBuffer],
 						swapBufferForScreen
 					);
 				}
