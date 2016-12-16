@@ -172,7 +172,7 @@ button:hover {
 	height: 50px;
 	
 	margin: 0;
-	padding: 0;
+	padding: 4px 0;
 	
 	text-align: right;
 	
@@ -183,8 +183,8 @@ button:hover {
 	line-height: 1;	
 	
 	border: 1px solid #aeaeae;
-	color: #6c6c6c;
-	background-color:#bbb9b9;
+	color: black;
+	background-color:#e6e6e6;
 }
 
 #calc--total-output {
@@ -221,7 +221,7 @@ button:hover {
 	transition: background-color 500ms ease-in;
 }
 
-#calc--prerender {
+#calc--prerender, #calc--history-prerender {
 	position: absolute;
 	visibility: hidden;
 }
