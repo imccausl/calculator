@@ -9,7 +9,7 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 					expr = "",
 					preSyntaxModel = expression.getModel();
 				
-				expression.checkSyntax();
+				expression.checkSyntax("syntax");
 				
 				model = expression.getModel();
 				model.content.data = model.content.data + view.elements.closedParens.innerHTML;
@@ -101,7 +101,6 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 				}
 					
 				addListeners();
-				console.log(document);
 				inputFilter.setFilter(); // Passing no arguments into the setFilter() method initializes the filter.
 			}
 		
@@ -115,22 +114,6 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 });
 
 /*
-	
-	// if a decimal is entered on a blank screen, after an operator, or any situation such as this,
-	// a zero is inserted before the decimal.
-	
-	if ((lastCh === "") || (lastCh.search(/[\+\*\/-]/) > -1) || lastCh === ",") {
-		expression.model = expression.model.replace(lastCh+".", lastCh+"0."); // model modification
-	}
-
-
-	// if an operator is entered, but the last character entered was an operator,
-	// print nothing to the screen
-	
-	if ( (operators.indexOf(lastCh) > -1) ) {
-		expression.model = expression.model.replace(lastCh, ""); // model modification
-	}
-	
 	
 	// adding closed parens to the view when an open paren is entered and 
 	// moving the closed parens to the regular view when closed parens are entered.

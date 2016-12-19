@@ -63,11 +63,6 @@ define(['expression', 'MathJax'], function(expression) {
 				setScreenContent( "`"+model.content.data+"`" );
 				elements.historyBuffer.innerHTML = "`"+model.lastExpression+"`";
 				
-				console.log( "Render() contents of View.model:", model.content.data );
-				console.log( "Render() View.elements.buffer: ", elements.buffer );
-				console.log( "Render() View.elements.screen: ", elements.screen );
-				console.log( "Render() View.elements.history: ", elements.history )
-				
 				// render View.model into the buffer, then swap the buffer for the screen
 				// when the buffer is finished rendering.
 				

@@ -63,8 +63,6 @@ define( [], function() {
 				
 				isDecimal: function isDecimal(ch, lastCh) {			
 					if (ch === ".") {
-						console.log("isDecimal():", "["+lastCh+"]");
-												
 						return ["numbers"];
 						
 					} else {
@@ -74,8 +72,6 @@ define( [], function() {
 			
 				isOperator: function isOperator(ch, lastCh) {
 					var operators = ['*','/', '+', '-'];
-					
-					console.log("isOperator():", lastCh, ch, operators.indexOf(ch));
 					
 					if (operators.indexOf(ch) > -1) {
 						return ["numbers", "leftParen", "rightParen", "minus", "plus"];
@@ -123,9 +119,7 @@ define( [], function() {
 				isSqOrLog: function isSqOrLog(ch, lastCh) {
 					var operation = ["^", "log", "sqrt"],
 						inputRules = ["numbers", "plus", "minus"];
-						
-					console.log("POW last ch:", lastCh);
-						
+												
 					if (operation.indexOf(ch) > -1) {
 						return inputRules;	
 					} else {
@@ -166,13 +160,9 @@ define( [], function() {
 				
 				// CONFLICT: the operator replacement functionality to work properly, 
 				// lastCh has to have the previous state of the model.
-				console.log("getnextFilter", ch);
-					
 				if ( ( ch  ) !== undefined ) {					
 					for( var func in _lexer ) {
-						
-						console.log("??", _lexer[func]);
-						
+												
 						inputRules = _lexer[func](ch, lastCh);
 						if (inputRules) {
 							return _makeFilter(inputRules);
@@ -209,5 +199,3 @@ define( [], function() {
 	
 	return inputFilter;
 });
-
-//module.exports = inputFilter;

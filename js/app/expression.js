@@ -59,8 +59,33 @@ define( [], function (expression) {
 				}
 			},
 			
-			_modifyModel = function _modifyModel(regex, newString) {
-				_model.content.data = _model.content.data.replace(regex, newString);	
+			_presentationSyntax = {
+				
+				insertZero: function insertZero() {
+					var lastCh = getLastCh();
+					
+					console.log("insertZero:", lastCh, (lastCh===""));
+					
+					if ( (lastCh === "") || (lastCh.search(/[\+\*\/-]/) > -1) || (lastCh === ",") ) {
+						_modifyModel(lastCh+".", lastCh+"0.");
+						console.log("Does this exist in insertZero?", _model.content.data.indexOf("."));
+					}
+				},
+				
+				checkForExcessOperators: function checkForExcessOperators(ch) {
+					var lastCh = getLastCh(),
+						operators = ["+", "-", "/", "*"];					
+					
+					console.log("checkforExcessOperators:", lastCh, (operators.indexOf(lastCh)));
+					
+					if ( (operators.indexOf(lastCh) > -1) && (operators.indexOf(ch) > -1)) {
+						_modifyModel(lastCh, "");
+					}
+				}
+			},
+			
+			_modifyModel = function _modifyModel(replacer, newString) {
+				_model.content.data = _model.content.data.replace(replacer, newString);	
 			},
 					
 			splitExpression = function splitExpression(expr, str) {
@@ -101,25 +126,35 @@ define( [], function (expression) {
 		 	},
 		 	
 		 	getLastCh = function getLastCh() {
-				return _model.content.data.charAt(_model.length-1);	
+				return _model.content.data.charAt(_model.content.data.length-2);	
 		 	},
 		 	
 		 	setModel = function setModel(newModel) {
 		 		_model = newModel;
 		 	},
 		 	
-		 	checkSyntax = function checkSyntax() {
-			 	for (var func in _syntax) {
-				 	console.log("Running:", func, "in _syntax");
-				 	_syntax[func]();
+		 	checkSyntax = function checkSyntax(type) {
+			 	var runType = null,
+			 		args = arguments[1]; // presentation syntax methods take the current character as an argument in some situations
+			 	
+			 	if (type.toLowerCase() === "syntax") {
+				 	runType = _syntax;
+			 	} else {
+				 	runType = _presentationSyntax;
+			 	}
+			 	
+			 	for (var func in runType) {
+				 	console.log("Running:", func, "in", runType, "with args:", args);
+				 	runType[func](args);
 			 	}
 			 	
 			 	console.log("completed checkSyntax(). Model updated:", _model.content.data);
 		 	},
 		 	
 		 	pushToModel = function pushToModel(ch) {		
+				
 				_model.content.data += ch;
-				console.log(_model.content.data);
+				checkSyntax("presentation", ch);
 			},
 			
 			init = function init() {
@@ -140,83 +175,6 @@ define( [], function (expression) {
 		}
 	
 	})();
-	
-	
-	
-	
-	 	// *** end lexer ** generic model functions for getting input from the view and initializing the model follow //
-	/*
 		
-		getInput: function getInput(event) {
-			var ch = event.target.value || String.fromCharCode( event.which );
-			
-			console.log("Applying rule:", inputFilter.allowedInput, ch);
-	
-			 if (inputFilter.allowedInput.indexOf(ch) > -1) {	
-				if (ch==="=") {
-					expression.model = expression.model + closedParens.text() // concatenation of model and view (closedParens data)
-					closedParens.text(""); // view modification 
-					expression.model = math.eval(expression.model).toString();
-					render();
-					expression.init();
-				} else {
-					expression.pushToModel(ch);
-				}
-			} 
-		},
-		
-		
-		
-		
-		
-		}
-	};
-	
-	function render() {
-		output.text( expression.model ); // view modification (for testing purposes)
-	}
-	
-	expression.init();
-	*/
-	
 	return expression;
 });
-
-//module.exports = expression;
-
-
-
-
-/* expression calls from inputFilter:
-
-// converts strings such as x% or 10+x% into an evaluatable value:
-
-switch (specOps.indexOf(ch)) {
-	case 0:
-		percentVal = expression.splitExpression("([\\d\+\*\\-]\d+)%");
-		expression.model = expression.model.replace(percentVal, expression.evaluatePercent(percentVal));
-		// should i tokenize percent expressions by saving the percent expression and its mathematical equiv
-		// so I can do a find and replace at the time of expression evaluation?
-		console.log("change made by % key:", expression.model);					
-	}
-	
-// contains both expression and view calls: 
-// converts logs and powers into a syntactically correct expression
-
-	var replString = expression.splitExpression("(\\d+"+operation[operation.indexOf(ch)]+")"),
-		output = replString.replace(/(\D+)/, "")
-						
-	switch(operation.indexOf(ch)) {
-		case 0:
-			output = "pow("+output+",";
-			expression.model = expression.model.replace(/(\d+pow)/, output);						
-			console.log("POW:", output);	
-			break;
-		case 1:
-			output = "log(";
-			expression.model = expression.model.replace(/log(\(\d+\))^/, output);
-		}
-	
-	closedParens.text(closedParens.text()+")"); // view modification (for testing purposes)
-	
-*/
