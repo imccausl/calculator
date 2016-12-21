@@ -197,6 +197,8 @@ button:hover {
 	display: inline-block;
 	overflow: visible;
 	margin: 5px;
+	margin-right: 0;
+	padding-right: 0;
 	height: 70px;
 }
 
@@ -209,6 +211,9 @@ button:hover {
  }
 
 #calc--parens {
+	margin: 0;
+	padding: 0;
+	
 	color: #bbb9b9;
 }
 
