@@ -20,6 +20,30 @@ define(['expression', 'MathJax'], function(expression) {
 				history: document.getElementById("calc--history"),
 				historyBuffer: document.getElementById("calc--history-prerender")
 			},
+			
+			parens = {
+				addPlaceholder: function addPlaceholder() {
+					var parenClosed = elements.closedParens.innerHTML;
+	
+					parenClosed += ")";
+					elements.closedParens.innerHTML = parenClosed;
+				},
+				
+				shiftToView: function shiftToView() {
+					var parenClosed = elements.closedParens.innerHTML;
+					
+					parenClosed = parenClosed.replace(")", "");
+					elements.closedParens.innerHTML = parenClosed;
+					
+				},
+				
+				checkForParens: function checkForParens() {
+					var parenClosed = elements.closedParens.innerHTML;
+					
+					return (parenClosed.search(/[)]/g) > -1);
+				}
+				
+			},
 		
 			timeout = null,
 			mjRunning = false,
@@ -92,6 +116,7 @@ define(['expression', 'MathJax'], function(expression) {
 			elements: elements,
 			startRender: startRender,
 			render: render,
+			parens: parens,
 			getScreenContent: getScreenContent,
 			setScreenContent: setScreenContent
 		}

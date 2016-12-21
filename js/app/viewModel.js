@@ -26,8 +26,17 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 
 			},
 			
-			checkExpression = function checkExpression() {
-				
+			checkInput = function checkInput(input) {
+				if (input === '(') {
+					view.parens.addPlaceholder();	
+				} else if ( ( (input >= '0') && (input <= '9') ) ) {
+					if (view.parens.checkForParens()) {
+						inputFilter.addToFilter(')');
+					}
+					
+				} else if (input === ')') {
+					view.parens.shiftToView();
+				}
 			},
 		
 			isFunctionKey = function isFunctionKey( key ) {
@@ -74,8 +83,9 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 							//}
 						
 							} else {
-							 	expression.pushToModel(keyInput);
 							 	inputFilter.setFilter(keyInput, lastCh);
+							 	checkInput(keyInput);
+							 	expression.pushToModel(keyInput);
 							}
 						}
 									 
@@ -88,7 +98,7 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 					}
 					
 				} else {
-					throw Error("Something totally unexpected happened: Invalid data received!");
+					throw new Error("Something totally unexpected happened: Invalid data received!");
 				}
 			},
 			
@@ -112,36 +122,3 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 	
 	return ViewModel;
 });
-
-/*
-	
-	// adding closed parens to the view when an open paren is entered and 
-	// moving the closed parens to the regular view when closed parens are entered.
-	
-	var parenClosed = closedParens.text();
-	
-	if (ch==='(') {
-		parenClosed += ")";
-		closedParens.text(parenClosed); //view modification
-		chFound = true;
-	} else if (ch===')') {
-		parenClosed = parenClosed.replace(")", "");
-		closedParens.text(parenClosed); // view modification
-		chFound = true;
-	}
-	
-	
-	// makes some small changes to the model that help the readability of the view
-	if (lastCh === "(") {
-							inputRule.push("rightParen");
-						} else if (lastCh === ")") {
-							expression.model = expression.model.replace(/\)\d+/, ")*"+ch);
-							inputRule.push("rightParen");
-						} else if (lastCh==="!") {
-							expression.model = expression.model.replace(/!\d+/, "!*"+ch);
-						} else if (expression.splitExpression("pow").search(/(pow\(\d+\,\d+)/) > -1)  {
-							inputRule.push("rightParen");
-						}
-
-	
-*/

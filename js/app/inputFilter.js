@@ -81,19 +81,16 @@ define( [], function() {
 				},
 				
 				isParen: function isParen(ch, lastCh) {
-					var inputRules = ["numbers", "root", "minus", "plus", "log", "evaluate", "leftParen"],
+					var inputRules = ["numbers", "root", "minus", "plus", "pi", "log", "leftParen"],
 						chFound = false;
 					
-					if ( (ch==='(') || (ch===')') ) {
+					if (ch==='(') {
 						chFound = true;
+					} else if (ch===')') {
+						chFound = true;
+						inputRules.push("multiDiv", "factorial", "pow", "evaluate");
 					} 
-					
-					//console.log("parenClosed.length:", parenClosed.length, lastCh, expression.splitExpression("\[\(+\\d+]"));
-					// contains a model query in order to determine when a rightParen is an acceptable input		
-					//if ((chFound) && ((expression.splitExpression("\[\(+\\d+]").search(/\d+/) > -1) && (parenClosed.length > 0))) { // view call
-					//	inputRules.push("rightParen");
-					//} 
-					
+										
 					if (chFound) {
 						return inputRules;
 					} else {

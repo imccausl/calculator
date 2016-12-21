@@ -63,12 +63,9 @@ define( [], function (expression) {
 				
 				insertZero: function insertZero() {
 					var lastCh = getLastCh();
-					
-					console.log("insertZero:", lastCh, (lastCh===""));
-					
+										
 					if ( (lastCh === "") || (lastCh.search(/[\+\*\/-]/) > -1) || (lastCh === ",") ) {
 						_modifyModel(lastCh+".", lastCh+"0.");
-						console.log("Does this exist in insertZero?", _model.content.data.indexOf("."));
 					}
 				},
 				
@@ -76,11 +73,19 @@ define( [], function (expression) {
 					var lastCh = getLastCh(),
 						operators = ["+", "-", "/", "*"];					
 					
-					console.log("checkforExcessOperators:", lastCh, (operators.indexOf(lastCh)));
-					
 					if ( (operators.indexOf(lastCh) > -1) && (operators.indexOf(ch) > -1)) {
 						_modifyModel(lastCh, "");
 					}
+				},
+				
+				prettifyParenExpressions: function prettifyParenExpressions(input) {
+					var lastCh = getLastCh();
+					
+					if (lastCh === ")") {
+						_modifyModel(/\)\d+/, ")*"+input);
+					} else if (lastCh==="!") {
+						_modifyModel(/!\d+/, "!*"+input);
+					} 
 				}
 			},
 			
