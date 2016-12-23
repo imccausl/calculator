@@ -18,7 +18,8 @@ define(['expression', 'MathJax'], function(expression) {
 				screen: document.getElementById("calc--output"),
 				closedParens: document.getElementById("calc--parens"),
 				history: document.getElementById("calc--history"),
-				historyBuffer: document.getElementById("calc--history-prerender")
+				historyBuffer: document.getElementById("calc--history-prerender"),
+				lastAnsButton: document.getElementById("button--ans")
 			},
 			
 			parens = {
@@ -72,12 +73,15 @@ define(['expression', 'MathJax'], function(expression) {
 			},
 			
 			swapBufferForScreen = function swapBufferForScreen() {
-				//var buffer = View.elements.screen.innerHTML, screen = View.elements.buffer;
-				
+				// i want to only swap the buffer if it contains rendered data...
+								
 				mjRunning = mjPending = false;
 				
-				elements.screen.innerHTML = elements.buffer.innerHTML;
-				elements.history.innerHTML = elements.historyBuffer.innerHTML;
+				if (!(/(`\w*)/.test(elements.buffer.textContent) )) {
+					elements.screen.innerHTML = elements.buffer.innerHTML;
+					elements.history.innerHTML = elements.historyBuffer.innerHTML;
+				}
+		
 				//View.elements.screen = screen;
 			},
 			
@@ -108,6 +112,10 @@ define(['expression', 'MathJax'], function(expression) {
 								
 			},
 			
+			init = function init() {
+				elements.lastAnsButton.disabled = true;
+			}
+			
 			callback = MathJax.Callback(render);
 			
 		callback.autoReset = true;
@@ -116,6 +124,7 @@ define(['expression', 'MathJax'], function(expression) {
 			elements: elements,
 			startRender: startRender,
 			render: render,
+			init: init,
 			parens: parens,
 			getScreenContent: getScreenContent,
 			setScreenContent: setScreenContent

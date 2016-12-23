@@ -105,7 +105,11 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 						if ( (keyInput === 'ac') ) {
 							//Model.setScreenData("");
 							//history = Model.getScreenData();	
-						}					
+						} else if ( (keyInput === 'ans' ) ) {
+							
+						} else if ( (keyInput === 'ce' ) ) {
+							
+						}			
 					}
 					
 				} else {
@@ -128,6 +132,7 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 				}
 					
 				addListeners();
+				view.init();
 				inputFilter.setFilter(); // Passing no arguments into the setFilter() method initializes the filter.
 			}
 		
