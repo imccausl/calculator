@@ -15,16 +15,22 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 				model.content.data = model.content.data + view.elements.closedParens.innerHTML;
 				view.elements.closedParens.innerHTML = "";
 				
-			
+				// make any show-stopping errors simply display "ERROR" on the screen... just like a real calculator... kinda?
+				try {
+					expr = model.content.data;
+					model.lastExpression = preSyntaxModel.content.data + "=";
+					
+					model.content.data = math.eval(expr).toString();
+					model.lastAns = model.content.data;
+				} 
 				
-				expr = model.content.data;
-				model.lastExpression = preSyntaxModel.content.data + "=";
+				catch(err) {
+					model.content.data = "ERROR";
+				}
 				
-				model.content.data = math.eval(expr).toString();
-				model.lastAns = model.content.data;
-				
-				expression.setModel(model);
-
+				finally {
+					expression.setModel(model);
+				}
 			},
 			
 			checkInput = function checkInput(input) {
@@ -69,13 +75,10 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 				if (keyInput) { // if keyInput is not undefined
 					
 					if ( !(isFunctionKey( keyValue )) ) { // check for key/button presses that
-						let dataFilter = inputFilter.getFilter();
+						let dataFilter = inputFilter.getFilter(); //used let because I only need block scope here.
 						
 						if (keyInput === 'Enter') keyInput = '=';
-						
-						 // perform calc functions.			
-						console.log("Applying rule:", inputFilter.getFilter(), keyInput);
-				
+										
 						if (dataFilter.indexOf(keyInput) > -1) {
 							
 							// evaluate expression: evaluation is beholden to the input filter unlike some of the other functions, 

@@ -141,12 +141,9 @@ define( [], function() {
 	 	},
 	 	
 		 	_getNextFilter = function _getNextFilter(ch, lastCh) {
-				// var lastCh = expression.model.charAt(expression.model.length-2),
 				var inputRules = [];
 				
 				
-				// CONFLICT: the operator replacement functionality to work properly, 
-				// lastCh has to have the previous state of the model.
 				if ( ( ch  ) !== undefined ) {					
 					for( var func in _lexer ) {
 												
@@ -157,8 +154,6 @@ define( [], function() {
 					}
 				} else {
 					// no input rules found, so initialize the input filter:
-					console.log("No rules found. Initializing the filter!");
-				
 					return _makeFilter(['numbers', 'plus', 'minus', 'pi', 'log', 'root', 'pow', 'decimal', 'leftParen']);
 				}
 			},
