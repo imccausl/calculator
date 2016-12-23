@@ -21,7 +21,7 @@ require(['domReady'], function(domReady) {
 	
 	domReady(function() {
 		
-		require(['expression', 'viewModel'], function(expression, viewModel) {
+		require(['viewModel'], function(viewModel) {
 		
 			viewModel.init();
 		

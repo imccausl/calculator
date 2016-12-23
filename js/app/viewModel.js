@@ -21,6 +21,7 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 				model.lastExpression = preSyntaxModel.content.data + "=";
 				
 				model.content.data = math.eval(expr).toString();
+				model.lastAns = model.content.data;
 				
 				expression.setModel(model);
 
@@ -37,6 +38,7 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 				} else if (input === ')') {
 					view.parens.shiftToView();
 				}
+				
 			},
 		
 			isFunctionKey = function isFunctionKey( key ) {
@@ -68,7 +70,10 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 					
 					if ( !(isFunctionKey( keyValue )) ) { // check for key/button presses that
 						let dataFilter = inputFilter.getFilter();
-																	 // perform calc functions.			
+						
+						if (keyInput === 'Enter') keyInput = '=';
+						
+						 // perform calc functions.			
 						console.log("Applying rule:", inputFilter.getFilter(), keyInput);
 				
 						if (dataFilter.indexOf(keyInput) > -1) {
@@ -76,16 +81,22 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 							// evaluate expression: evaluation is beholden to the input filter unlike some of the other functions, 
 							// below the isFunctionKey() else statement.
 							
-							if( (keyInput === '=' ) || (keyValue === 13) ) {
+							if( (keyInput === '=' ) || (keyInput === 'Enter') ) {
 							
 							//if ( view.isValid ) {
 								calculate();
 							//}
 						
 							} else {
+							 	
 							 	inputFilter.setFilter(keyInput, lastCh);
 							 	checkInput(keyInput);
 							 	expression.pushToModel(keyInput);
+							 	
+							 	if (!(expression.hasDecimal())) {
+							 		inputFilter.addToFilter('.');
+								}
+								
 							}
 						}
 									 
@@ -103,6 +114,12 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 			},
 			
 			init = function init() {
+				
+				//configure math.js lib for 64 bit numbers to prevent round-off errors.
+				math.config({
+					number: 'BigNumber',
+					precision: 64
+				});	
 				
 				function addListeners() {
 					document.addEventListener("keypress", parseInput, false);

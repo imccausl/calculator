@@ -27,7 +27,6 @@ define( [], function (expression) {
 					
 					parensNeededOn.forEach(function (element, index) {
 						_modifyModel(addParensTo[index], parensNeededOn[index]+'($1)');
-						console.log("Inside parenify():", index);
 					});
 					
 				},
@@ -73,7 +72,7 @@ define( [], function (expression) {
 					var lastCh = getLastCh(),
 						operators = ["+", "-", "/", "*"];					
 					
-					if ( (operators.indexOf(lastCh) > -1) && (operators.indexOf(ch) > -1)) {
+					if ( (operators.indexOf(lastCh) > -1) && (operators.indexOf(ch) > -1) ) {
 						_modifyModel(lastCh, "");
 					}
 				},
@@ -89,6 +88,13 @@ define( [], function (expression) {
 				}
 			},
 			
+			_hasDecimal = function _hasDecimal() {
+				expr = splitExpression("[\+\*\/-]");
+				
+				return /[.]/.test(expr);
+				
+			},
+			
 			_modifyModel = function _modifyModel(replacer, newString) {
 				_model.content.data = _model.content.data.replace(replacer, newString);	
 			},
@@ -98,12 +104,13 @@ define( [], function (expression) {
 					input = str || _model.content.data,
 					lastInstance = [],
 					index = 0;
-							
-				while ((lastInstance = splitFrom.exec(input))) {
+												
+				while (lastInstance = splitFrom.exec(input)) {
+					
 					index = lastInstance.index;
 				}  
 				
-				return input.substring(index); 
+				return input.substring(index+1); 
 			},
 			
 			
@@ -149,11 +156,9 @@ define( [], function (expression) {
 			 	}
 			 	
 			 	for (var func in runType) {
-				 	console.log("Running:", func, "in", runType, "with args:", args);
 				 	runType[func](args);
 			 	}
 			 	
-			 	console.log("completed checkSyntax(). Model updated:", _model.content.data);
 		 	},
 		 	
 		 	pushToModel = function pushToModel(ch) {		
@@ -170,6 +175,7 @@ define( [], function (expression) {
 		return {
 			
 		 	splitExpression: splitExpression,
+		 	hasDecimal: _hasDecimal,
 		 	pushToModel: pushToModel,
 		 	getModel: getModel,
 		 	setModel: setModel,
