@@ -2,7 +2,7 @@
 
 /* the expression module
  * ---------------------
- * this is the home of the model, where the calculator's data lives in -- ideally -- its raw, unprocessed form.
+ * this is the home of the model, where the calculator's data lives.
  *
  */
  

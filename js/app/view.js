@@ -5,7 +5,7 @@
  ** Methods:
  ** 	getScreenContents()
  **		setScreenContents()
- ** 	init() : 	initialize the view by laying down click handlers for buttons and keys?
+ ** 	init() : set the initial state of the view.
  *********************************************************************************************/
  
 define(['expression', 'MathJax'], function(expression) {
@@ -72,17 +72,15 @@ define(['expression', 'MathJax'], function(expression) {
 				timeout = setTimeout(callback, delay);
 			},
 			
-			swapBufferForScreen = function swapBufferForScreen() {
-				// i want to only swap the buffer if it contains rendered data...
-								
+			swapBufferForScreen = function swapBufferForScreen() {	
 				mjRunning = mjPending = false;
 				
-				if (!(/(`\w*)/.test(elements.buffer.textContent) )) {
+				// Only swap the buffer if it contains rendered data
+				if (!(/(`\w*)/.test(elements.buffer.textContent) )) {	
 					elements.screen.innerHTML = elements.buffer.innerHTML;
 					elements.history.innerHTML = elements.historyBuffer.innerHTML;
 				}
 		
-				//View.elements.screen = screen;
 			},
 			
 			render = function render() {

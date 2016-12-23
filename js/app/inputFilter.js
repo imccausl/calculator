@@ -6,10 +6,11 @@
  * mathematical operator, a decimal, a paren, etc). 
  *
  * PUBLC METHODS:
- * setFilter(ch, lastCh) : sets the next input filter based on current input and the last character pushed to the model
- * getFilter() : retrieves the current input filter
- *
- **************************************************/
+ * setFilter(ch, lastCh) : sets the next input filter based on current input and the last character pushed to the model.
+ *						 : if no arguments are passed, then the filter is initialized for first-time/blank-slate inputs.
+ * getFilter()			 : retrieves the current input filter
+ * addToFilter()		 : allows for on-the-fly amendments to the inputFilter for things like decimals and parentheses.
+ *******************************************************************************************************************************/
 
 define( [], function() {
 	
@@ -126,12 +127,6 @@ define( [], function() {
 			},
 			
 			_makeFilter = function _makeFilter(rules) {
-				// contains a model call for adding a decimal point as an accepted input. This should be a separate thing?
-				// it crosses a boundary between model and inputFilter, since this one piece of input is dependent on the current
-				// state of the view/model.
-				
-				//var	decimalExpression = expression.splitExpression("[\\*\\+\\/-]"),
-				
 				var	rulesStr = "",
 					filterArray = [];
 										
@@ -141,12 +136,7 @@ define( [], function() {
 				
 				filterArray = rulesStr.split(" ");
 				filterArray.pop(filterArray.length-1);
-						
-				
-				// if ( (viewState.search(/[\.]/) === -1) ) {
-				//	filterArray.push(".");
-				// }
-	
+					
 				return filterArray;		
 	 	},
 	 	
