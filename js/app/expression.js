@@ -13,7 +13,7 @@ define( [], function (expression) {
 		var _model = {
 				content: {
 					data: "",
-					isValid: false
+					firstInput: true
 				},
 				
 				lastExpression: "",
@@ -89,7 +89,7 @@ define( [], function (expression) {
 			},
 			
 			_hasDecimal = function _hasDecimal() {
-				expr = splitExpression("[\+\*\/-]");
+				expr = _splitExpression("[\+\*\/-]");
 				
 				return /[.]/.test(expr);
 				
@@ -99,7 +99,7 @@ define( [], function (expression) {
 				_model.content.data = _model.content.data.replace(replacer, newString);	
 			},
 					
-			splitExpression = function splitExpression(expr, str) {
+			_splitExpression = function splitExpression(expr, str) {
 				var splitFrom = new RegExp(expr, "g"),
 					input = str || _model.content.data,
 					lastInstance = [],
@@ -145,6 +145,10 @@ define( [], function (expression) {
 		 		_model = newModel;
 		 	},
 		 	
+		 	getLastAns = function getLastAns() {
+			 	return _model.lastAns;
+		 	},
+		 	
 		 	checkSyntax = function checkSyntax(type) {
 			 	var runType = null,
 			 		args = arguments[1]; // presentation syntax methods take the current character as an argument in some situations
@@ -161,10 +165,22 @@ define( [], function (expression) {
 			 	
 		 	},
 		 	
-		 	pushToModel = function pushToModel(ch) {		
+		 	backspace = function backspace() {
+				_model.content.data = _model.content.data.substr(0, _model.content.data.length-1);	
+		 	},
+		 	
+		 	pushToModel = function pushToModel(ch) {	 		
+				if (_model.content.firstInput === true) {
+					toggleFirstInput();
+					_model.content.data = "";
+				}
 				
 				_model.content.data += ch;
 				checkSyntax("presentation", ch);
+			},
+			
+			toggleFirstInput = function toggleFirstInput() {
+				_model.content.firstInput = !(_model.content.firstInput);	
 			},
 			
 			init = function init() {
@@ -174,13 +190,16 @@ define( [], function (expression) {
 		// Interface
 		return {
 			
-		 	splitExpression: splitExpression,
 		 	hasDecimal: _hasDecimal,
+		 	splitExpression: _splitExpression,
+		 	toggleFirstInput: toggleFirstInput,
 		 	pushToModel: pushToModel,
 		 	getModel: getModel,
 		 	setModel: setModel,
 		 	getLastCh: getLastCh,
 		 	checkSyntax: checkSyntax,
+		 	getLastAns: getLastAns,
+		 	backspace: backspace,
 		 	init: init
 				
 		}
