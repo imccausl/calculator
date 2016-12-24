@@ -12,8 +12,9 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 				expression.checkSyntax("syntax");
 				
 				model = expression.getModel();
-				model.content.data = model.content.data + view.elements.closedParens.innerHTML;
-				view.elements.closedParens.innerHTML = "";
+				model.content.data = model.content.data + view.elements.closedParens.textContent;
+				expression.toggleFirstInput();
+				view.elements.closedParens.textContent = "";
 				
 				// make any show-stopping errors simply display "ERROR" on the screen... just like a real calculator... kinda?
 				try {
@@ -22,6 +23,7 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 					
 					model.content.data = math.eval(expr).toString();
 					model.lastAns = model.content.data;
+					view.toggleLastAns(true);
 				} 
 				
 				catch(err) {
@@ -29,6 +31,7 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 				}
 				
 				finally {
+					inputFilter.setFilter();
 					expression.setModel(model);
 				}
 			},
@@ -43,7 +46,7 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 					
 				} else if (input === ')') {
 					view.parens.shiftToView();
-				}
+				} 
 				
 			},
 		
@@ -52,8 +55,9 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 					
 					case 'ac':
 					case 'ce':
-					case 'ans':
-					
+					case 'Backspace':
+					case 'Delete':
+					case 'Clear':
 						return true;	
 					default:
 						return false;
@@ -66,14 +70,15 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 					keyValue = event.charCode || keyInput,
 					lastCh = expression.getLastCh();
 										
-				view.startRender();
+				
 				// IMPORTANT DATA: {keypress: data.which; click: data.target.value}
 				
 				// this function routes valid inputs and ignores invalid inputs (such as letters),
 				// but also including two operators (+-) in a row, two decimals (..) in a row, etc.
 						
 				if (keyInput) { // if keyInput is not undefined
-					
+					view.startRender();
+										
 					if ( !(isFunctionKey( keyValue )) ) { // check for key/button presses that
 						let dataFilter = inputFilter.getFilter(); //used let because I only need block scope here.
 						
@@ -84,20 +89,23 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 							// evaluate expression: evaluation is beholden to the input filter unlike some of the other functions, 
 							// below the isFunctionKey() else statement.
 							
-							if( (keyInput === '=' ) || (keyInput === 'Enter') ) {
-							
-							//if ( view.isValid ) {
-								calculate();
-							//}
-						
+							if( keyInput === '=' ) {
+								calculate();		
 							} else {
 							 	
 							 	inputFilter.setFilter(keyInput, lastCh);
 							 	checkInput(keyInput);
+							 	
+							 	if (keyInput === 'ans') keyInput = "(" + expression.getLastAns() + ")";
+							 								 	
 							 	expression.pushToModel(keyInput);
 							 	
 							 	if (!(expression.hasDecimal())) {
 							 		inputFilter.addToFilter('.');
+								}
+								
+								if ( (view.parens.numInside()) && (view.parens.checkForParens()) ) {
+									inputFilter.addToFilter(')');
 								}
 								
 							}
@@ -105,19 +113,30 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 									 
 					} else {
 						
-						if ( (keyInput === 'ac') ) {
-							//Model.setScreenData("");
-							//history = Model.getScreenData();	
-						} else if ( (keyInput === 'ans' ) ) {
+						if ( (keyInput === 'ac') || (keyInput === 'Clear') ) {
 							
-						} else if ( (keyInput === 'ce' ) ) {
+							expression.setModel({
+								content: {
+									data: "",
+									firstInput: true
+								},
+								lastAns: "",
+								lastExpression: ""
+							});	
 							
+							view.toggleLastAns(false);
+							inputFilter.setFilter();
+							
+						} else if ( (keyInput === 'ce' ) || (keyInput === 'Backspace') || (keyInput === 'Delete') ) {
+							expression.backspace();
 						}			
 					}
 					
 				} else {
 					throw new Error("Something totally unexpected happened: Invalid data received!");
 				}
+				
+				
 			},
 			
 			init = function init() {
@@ -129,7 +148,7 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 				});	
 				
 				function addListeners() {
-					document.addEventListener("keypress", parseInput, false);
+					document.addEventListener("keydown", parseInput, false);
 					view.elements.buttons.addEventListener("click", parseInput, false);
 					view.elements.screen.addEventListener("broadcast", parseInput, false);
 				}
