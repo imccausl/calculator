@@ -24,14 +24,14 @@ define(['expression', 'MathJax'], function(expression) {
 			
 			parens = {
 				addPlaceholder: function addPlaceholder() {
-					var parenClosed = elements.closedParens.innerHTML;
+					var parenClosed = elements.closedParens.textContent;
 	
 					parenClosed += ")";
 					elements.closedParens.innerHTML = parenClosed;
 				},
 				
 				shiftToView: function shiftToView() {
-					var parenClosed = elements.closedParens.innerHTML;
+					var parenClosed = elements.closedParens.textContent;
 					
 					parenClosed = parenClosed.replace(")", "");
 					elements.closedParens.innerHTML = parenClosed;
@@ -39,9 +39,15 @@ define(['expression', 'MathJax'], function(expression) {
 				},
 				
 				checkForParens: function checkForParens() {
-					var parenClosed = elements.closedParens.innerHTML;
+					var parenClosed = elements.closedParens.textContent;
 					
 					return (parenClosed.search(/[)]/g) > -1);
+				},
+				
+				numInside: function numInside() {
+					expr = expression.splitExpression("\\(+");
+					
+					return /\d+/.test(expr);
 				}
 				
 			},
@@ -87,7 +93,12 @@ define(['expression', 'MathJax'], function(expression) {
 				var model = expression.getModel();
 				
 				setScreenContent( "`"+model.content.data+"`" );
-				elements.historyBuffer.innerHTML = "`"+model.lastExpression+"`";
+				
+				if ( (model.content.firstInput === false) && (model.lastAns !== "") ) {
+					model.lastExpression = "ans = " + model.lastAns;	
+				}
+				
+				elements.historyBuffer.textContent = "`"+model.lastExpression+"`";
 				
 				// render View.model into the buffer, then swap the buffer for the screen
 				// when the buffer is finished rendering.
@@ -110,8 +121,12 @@ define(['expression', 'MathJax'], function(expression) {
 								
 			},
 			
+			toggleLastAns = function (bool) {
+				elements.lastAnsButton.disabled = bool || !elements.lastAnsButton.disabled;	
+			},
+			
 			init = function init() {
-				elements.lastAnsButton.disabled = true;
+				toggleLastAns();
 			}
 			
 			callback = MathJax.Callback(render);
@@ -123,6 +138,7 @@ define(['expression', 'MathJax'], function(expression) {
 			startRender: startRender,
 			render: render,
 			init: init,
+			toggleLastAns: toggleLastAns,
 			parens: parens,
 			getScreenContent: getScreenContent,
 			setScreenContent: setScreenContent
