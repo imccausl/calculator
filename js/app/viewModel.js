@@ -23,7 +23,7 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 					
 					model.content.data = math.eval(expr).toString();
 					model.lastAns = model.content.data;
-					view.toggleLastAns(true);
+					view.disableLastAns(false);
 				} 
 				
 				catch(err) {
@@ -124,7 +124,7 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 								lastExpression: ""
 							});	
 							
-							view.toggleLastAns(false);
+							view.disableLastAns(true);
 							inputFilter.setFilter();
 							
 						} else if ( (keyInput === 'ce' ) || (keyInput === 'Backspace') || (keyInput === 'Delete') ) {

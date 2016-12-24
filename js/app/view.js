@@ -121,12 +121,12 @@ define(['expression', 'MathJax'], function(expression) {
 								
 			},
 			
-			toggleLastAns = function (bool) {
-				elements.lastAnsButton.disabled = bool || !elements.lastAnsButton.disabled;	
+			disableLastAns = function disableLastAns(setting) {
+				elements.lastAnsButton.disabled = setting;
 			},
 			
 			init = function init() {
-				toggleLastAns();
+				disableLastAns(true);
 			}
 			
 			callback = MathJax.Callback(render);
@@ -138,7 +138,7 @@ define(['expression', 'MathJax'], function(expression) {
 			startRender: startRender,
 			render: render,
 			init: init,
-			toggleLastAns: toggleLastAns,
+			disableLastAns: disableLastAns,
 			parens: parens,
 			getScreenContent: getScreenContent,
 			setScreenContent: setScreenContent
