@@ -19,7 +19,7 @@ define( [], function() {
 		var _allowedInput = [],
 		
 			_inputType = {
-				numbers: "0 1 2 3 4 5 6 7 8 9",
+				numbers: "0 1 2 3 4 5 6 7 8 9 ans",
 				multiDiv: "* /",
 				plus: "+",
 				minus: "-",
@@ -52,7 +52,7 @@ define( [], function() {
 							"multiDiv"		];
 		
 					
-					if ( ((ch >= '0') && (ch <= '9')) ) {
+					if ( ( (ch >= '0') && (ch <= '9') ) || (ch === 'ans') ) {
 												
 						return inputRule;
 						
@@ -153,7 +153,7 @@ define( [], function() {
 						}	
 					}
 				} else {
-					// no input rules found, so initialize the input filter:
+					// no input rules found, so initialize the input filter with the following allowed inputs:
 					return _makeFilter(['numbers', 'plus', 'minus', 'pi', 'log', 'root', 'pow', 'decimal', 'leftParen']);
 				}
 			},
