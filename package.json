@@ -25,7 +25,6 @@
   },
   "homepage": "https://github.com/imccausl/calculator#readme",
   "devDependencies": {
-    "requirejs": "^2.3.2",
-    "webpack": "^1.13.3"
+    "requirejs": "^2.3.2"
   }
 }
