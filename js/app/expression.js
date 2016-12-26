@@ -41,8 +41,7 @@ define( [], function (expression) {
 						changeString = "";
 						
 					operator = percentExpression.exec(_model.content.data);
-					console.log("Change Percent:", operator);
-					
+										
 					if (operator !== null) {
 						if (operator[2] !== undefined) {	
 							if (operator[2] === "*" || operator[2] === "/") {
