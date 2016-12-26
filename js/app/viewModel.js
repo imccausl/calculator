@@ -12,6 +12,7 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 				expression.checkSyntax("syntax");
 				
 				model = expression.getModel();
+				
 				model.content.data = model.content.data + view.elements.closedParens.textContent;
 				expression.toggleFirstInput();
 				view.elements.closedParens.textContent = "";
@@ -32,6 +33,7 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 				
 				finally {
 					inputFilter.setFilter();
+					console.log("Model state at calculate", model);
 					expression.setModel(model);
 				}
 			},
@@ -70,7 +72,6 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 					keyValue = event.charCode || keyInput,
 					lastCh = expression.getLastCh();
 										
-				
 				// IMPORTANT DATA: {keypress: data.which; click: data.target.value}
 				
 				// this function routes valid inputs and ignores invalid inputs (such as letters),
@@ -96,7 +97,7 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 							 	inputFilter.setFilter(keyInput, lastCh);
 							 	checkInput(keyInput);
 							 	
-							 	if (keyInput === 'ans') keyInput = "(" + expression.getLastAns() + ")";
+							 	if (keyInput === 'ans') keyInput = expression.getLastAns();
 							 								 	
 							 	expression.pushToModel(keyInput);
 							 	

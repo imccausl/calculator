@@ -36,11 +36,12 @@ define( [], function (expression) {
 				},
 				
 				changePercent: function changePercent() {
-					var percentExpression = /(\d*)([\+\*\/-])*(\d+)%/g,
+					var percentExpression = /(\d*\.?\d*?)?([\+\*\/\-])*(\d+\.?\d*?)%/g,
 						operator = [],
 						changeString = "";
 						
 					operator = percentExpression.exec(_model.content.data);
+					console.log("Change Percent:", operator);
 					
 					if (operator !== null) {
 						if (operator[2] !== undefined) {	
@@ -169,7 +170,9 @@ define( [], function (expression) {
 				_model.content.data = _model.content.data.substr(0, _model.content.data.length-1);	
 		 	},
 		 	
-		 	pushToModel = function pushToModel(ch) {	 		
+		 	pushToModel = function pushToModel(ch) {
+			 	console.log("Current model state:", _model.content.data);
+			 		 		
 				if (_model.content.firstInput === true) {
 					toggleFirstInput();
 					_model.content.data = "";
