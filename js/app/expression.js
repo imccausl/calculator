@@ -113,27 +113,7 @@ define( [], function (expression) {
 				
 				return input.substring(index+1); 
 			},
-			
-			
-			evaluatePercent = function evaluatePercent(str) {
-			 	var operators = new RegExp("[\+\*\/-]", "g"),
-			 		percentVal = str.substring(str.search(operators)+1),
-			 		opr = str.substring(str.search(operators), str.search(operators)+1),
-			 		num = str.substring(0, str.search(operators));
-			 	
-			 	percentVal = math.eval(percentVal.replace(/%/g, "")+"/100").toString();
-			 	
-			 	if ((opr === "+") || (opr === "-")) {
-				 	num = "(" + num + opr + num + "*" + percentVal + ")";
-			 	} else if ((opr === "*") || (opr === "/")) {
-				 	num = num + opr + percentVal;
-			 	} else {
-				 	num = percentVal;
-			 	}
-			 	
-			 	return num;	
-		 	}, 
-		 	
+					 	
 		 	getModel = function getModel() {
 			 	return _model;
 		 	},
