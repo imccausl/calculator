@@ -13,6 +13,7 @@
 }
 
 body {
+	overflow: hidden;
   margin: 0;
   padding: 0;
   font-family: "MathJax", sans-serif;
@@ -21,21 +22,25 @@ body {
 }
 
 div, footer, section, h4 {
-	position: relative;
+	
 	margin: 0;
 	padding: 0;
 }
 
 footer {
-	padding: 10px;
+	position: absolute;
+	
+	bottom: 0;
+	padding: 0 12px;
+	min-width: 320px;
+	 
 	clear: both;
 }
-
 h4 {
 	margin: 5px 0;
-	color: #bbb9b9;
+	color: #a8a6a6;
 	
-	text-align: center;
+	text-align: left;
 	
 	font-size: 0.8em;
 	font-weight: 100;
@@ -72,18 +77,18 @@ a:hover {
 button {
   float: left;
   
-  height: 50px;
-  width: 60px;
+  height: 48px;
+  width: 58px;
   
   margin: 1px;
   
   background-color: white;
   border: 1px solid #aeaeae;
   
-  font-family: MathJax;
-  font-size: 1.3em;
+  
+  font-size: 1.7em;
   text-align: center;
-  font-weight: 100;
+  font-weight: 200;
   
   transition: all 200ms ease-in;
 }
@@ -112,26 +117,30 @@ button:hover {
 }
 
 .container {
-  top: 2vh;
-  
-  max-width: 310px;
+  position:relative;
+ 
+  overflow: hidden;
+  max-width: 320px;
   width: 100%;
-  
-  margin: 0 auto;
-}
+  height: 548px;
+ }
 
 .container--col-fluid {
-  width: 100%;
+  display:block;
+  position: fixed;
   font-size: 1em;
   
 }
 
 .calc--body {
-  /* border: 1px solid red; */
-  border-radius: 5px;
- 
+  border: 1px solid #dfdfdf;
+  border-radius: 0 0 10px 0;
   
-  margin: 10px 0 5px 0;
+  background-color: #fcfcfc;
+  
+  
+  padding: 10px;
+  margin: 0;
 }
 
 .calc--screen {
@@ -141,7 +150,7 @@ button:hover {
   
   clear:both;
     
-  width: 310px;
+  width: 300px;
   height: 140px;
   
   margin: 5px 0;
@@ -168,7 +177,7 @@ button:hover {
 	position: relative;
 	overflow-y: scroll;
 	
-	width: 298px;
+	width: 288px;
 	height: 50px;
 	
 	margin: 0;
@@ -207,7 +216,7 @@ button:hover {
   color: white;
   font-weight: 200;
   font-size: 1.5em;
-  width: 122px;
+  width: 118px;
  }
 
 #calc--parens {
@@ -217,8 +226,9 @@ button:hover {
 	color: #bbb9b9;
 }
 
-#calc--exp {
-	
+.container .container--col-fluid .calc--body #calc--buttons, footer {
+	font-weight: 200;
+	font-family: "Helvetica Neue", "Helvetica", sans-serif;
 }
 
 #button--ce:hover, #button--ac:hover {
@@ -230,3 +240,82 @@ button:hover {
 	position: absolute;
 	visibility: hidden;
 }
+
+/* breakpoints */
+	
+@media (max-device-width: 370px) {
+	body {
+		zoom: 99.7%;
+	}
+	
+	.container {
+		margin: 0 auto;
+	}
+}
+
+@media (min-device-width: 370px) and (max-device-width: 414px) and (orientation: portrait) and (max-width: 414px) and (min-width: 370px) {
+	body {
+		zoom: 117%;
+	}
+	
+	.container {
+		margin: 0 auto;
+	}
+}
+
+@media (min-device-width: 370px) and (max-device-width: 639px) and (orientation: portrait) and (max-width: 639px) and (min-width: 414px) {
+	body {
+		zoom: 115%;
+	}
+	
+	.container {
+		margin: 40px auto;
+	}
+}
+
+@media (min-device-width: 370px) and (max-device-width: 768px) and (orientation: portrait) and (max-width: 768px) and (min-width: 639px) {
+	body {
+		zoom: 130%;
+	}
+	
+	.container {
+		margin: 0 auto;
+	}
+}
+
+@media (min-device-width: 370px) and (max-device-width: 1024px) and (orientation: portrait) and (min-width: 768px) and (max-width: 1024px) {
+	body {
+		zoom: 175%;
+	}
+	
+	.container {
+		margin: 15px auto;
+	}
+}
+
+
+@media (orientation: portrait) and (max-device-width: 1024px) {
+	body {
+		zoom: 175%;
+	}
+	
+	.container {
+		margin: 300px auto;
+	}
+}
+
+@media (min-device-width: 1200px) and (min-width: 370px) {
+	body {
+		zoom: 115%;
+	}
+	
+	.container {
+		margin: 10px auto;
+	}
+}
+
+
+
+
+
+

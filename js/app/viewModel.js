@@ -28,7 +28,7 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 				} 
 				
 				catch(err) {
-					model.content.data = "ERROR";
+					model.content.data = "ERROR !";
 				}
 				
 				finally {

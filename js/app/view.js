@@ -82,7 +82,9 @@ define(['expression', 'MathJax'], function(expression) {
 				mjRunning = mjPending = false;
 				
 				// Only swap the buffer if it contains rendered data
-				if (!(/(`\w*)/.test(elements.buffer.textContent) )) {	
+				if (!(/(`\w*)/.test(elements.buffer.textContent) )) {
+					
+					
 					elements.screen.innerHTML = elements.buffer.innerHTML;
 					elements.history.innerHTML = elements.historyBuffer.innerHTML;
 				}
@@ -92,31 +94,37 @@ define(['expression', 'MathJax'], function(expression) {
 			render = function render() {
 				var model = expression.getModel();
 				
-				setScreenContent( "`"+model.content.data+"`" );
-				
-				if ( (model.content.firstInput === false) && (model.lastAns !== "") ) {
-					model.lastExpression = "ans = " + model.lastAns;	
-				}
-				
-				elements.historyBuffer.textContent = "`"+model.lastExpression+"`";
-				
-				// render View.model into the buffer, then swap the buffer for the screen
-				// when the buffer is finished rendering.
-				
-				if (mjPending) return;
-				
-				if (mjRunning) {
-					mjPending = true;
-					
-					MathJax.Hub.Queue(render);
+				if (model.content.data === "ERROR !") {
+					View.elements.screen = model.content.data;
+					model.content.data = "";
 				} else {
-					mjRunning = true;
+				
+					setScreenContent( "`"+model.content.data+"`" );
 					
-					MathJax.Hub.Queue(
-						["Typeset", MathJax.Hub, elements.buffer],
-						["Typeset", MathJax.Hub, elements.historyBuffer],
-						swapBufferForScreen
-					);
+					if ( (model.content.firstInput === false) && (model.lastAns !== "") ) {
+						model.lastExpression = "ans = " + model.lastAns;	
+					}
+					
+					elements.historyBuffer.textContent = "`"+model.lastExpression+"`";
+					
+					// render View.model into the buffer, then swap the buffer for the screen
+					// when the buffer is finished rendering.
+					
+					if (mjPending) return;
+					
+					if (mjRunning) {
+						mjPending = true;
+						
+						MathJax.Hub.Queue(render);
+					} else {
+						mjRunning = true;
+						
+						MathJax.Hub.Queue(
+							["Typeset", MathJax.Hub, elements.buffer],
+							["Typeset", MathJax.Hub, elements.historyBuffer],
+							swapBufferForScreen
+						);
+					}
 				}
 								
 			},

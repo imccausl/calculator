@@ -146,7 +146,12 @@ define( [], function (expression) {
 		 	},
 		 	
 		 	backspace = function backspace() {
-				_model.content.data = _model.content.data.substr(0, _model.content.data.length-1);	
+			 	
+			 	if (_splitExpression(/\blog\b/, _model.content.data)) {
+				 	_model.content.data = _model.content.data.replace("log", "");
+			 	} else {
+			 		_model.content.data = _model.content.data.substr(0, _model.content.data.length-1);	
+			 	}
 		 	},
 		 	
 		 	pushToModel = function pushToModel(ch) {
