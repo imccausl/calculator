@@ -70,21 +70,26 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 				
 			 	var model = expression.getModel(),
 			 		lastCh = "",
-			 		ch = "";
+			 		filtCh = "";
 			 	
-			 	model.content.data = model.content.data.substr(0, model.content.data.length-1);	
+			 	
 			 	
 			 	
 			 	if (model.content.firstInput) {
 				 	allClear();
 				 } else {
+					model.content.data = model.content.data.substr(0, model.content.data.length-1);	
+					 
 				 	lastCh = model.content.data.charAt(model.content.data.length-2);
-				 	ch = model.content.data.charAt(model.content.data.length-1);
+				 	filtCh = model.content.data.charAt(model.content.data.length-1);
 				 	
+				 	console.log("backspace:", "ch", filtCh, "lastch", lastCh);
 				 	// known issue: removing "log" instead of backspacing 1 ch at a time.
 				 	
 				 	expression.setModel(model);
-				 	inputFilter.setFilter(ch, lastCh); // if the model changes, the input filter has to follow suit.
+				 	inputFilter.setFilter(filtCh, lastCh); // if the model changes, the input filter has to follow suit.
+				 	
+				 	console.log("inputfilter:", inputFilter.getFilter());
 				}
 			 	
 		 	},

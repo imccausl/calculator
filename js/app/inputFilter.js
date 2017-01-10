@@ -171,6 +171,8 @@ define( [], function() {
 			},
 			
 			setFilter: function setFilter(ch, lastCh) {
+				console.log("Set filter with:", arguments);
+				
 				_allowedInput = _getNextFilter(ch, lastCh);
 			},
 			
