@@ -145,14 +145,7 @@ define( [], function (expression) {
 			 	
 		 	},
 		 	
-		 	backspace = function backspace() {
-			 	
-			 	if (_splitExpression(/\blog\b/, _model.content.data)) {
-				 	_model.content.data = _model.content.data.replace("log", "");
-			 	} else {
-			 		_model.content.data = _model.content.data.substr(0, _model.content.data.length-1);	
-			 	}
-		 	},
+		 	
 		 	
 		 	pushToModel = function pushToModel(ch) {
 			 	console.log("Current model state:", _model.content.data);
@@ -186,7 +179,6 @@ define( [], function (expression) {
 		 	getLastCh: getLastCh,
 		 	checkSyntax: checkSyntax,
 		 	getLastAns: getLastAns,
-		 	backspace: backspace,
 		 	init: init
 				
 		}

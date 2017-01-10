@@ -66,6 +66,43 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 				}
 			},
 			
+			backspace = function backspace() {
+				
+			 	var model = expression.getModel(),
+			 		lastCh = "",
+			 		ch = "";
+			 	
+			 	model.content.data = model.content.data.substr(0, model.content.data.length-1);	
+			 	
+			 	
+			 	if (model.content.firstInput) {
+				 	allClear();
+				 } else {
+				 	lastCh = model.content.data.charAt(model.content.data.length-2);
+				 	ch = model.content.data.charAt(model.content.data.length-1);
+				 	
+				 	// known issue: removing "log" instead of backspacing 1 ch at a time.
+				 	
+				 	expression.setModel(model);
+				 	inputFilter.setFilter(ch, lastCh); // if the model changes, the input filter has to follow suit.
+				}
+			 	
+		 	},
+		 	
+		 	allClear = function allClear() {
+			 	expression.setModel({
+								content: {
+									data: "",
+									firstInput: true
+								},
+								lastAns: "",
+								lastExpression: ""
+							});	
+							
+							view.disableLastAns(true);
+							inputFilter.setFilter();	
+		 	},
+			
 			parseInput = function( event ) {
 				var history = null,
 					keyInput = event.srcElement.value || event.key,
@@ -116,20 +153,10 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 						
 						if ( (keyInput === 'ac') || (keyInput === 'Clear') ) {
 							
-							expression.setModel({
-								content: {
-									data: "",
-									firstInput: true
-								},
-								lastAns: "",
-								lastExpression: ""
-							});	
-							
-							view.disableLastAns(true);
-							inputFilter.setFilter();
+							allClear();
 							
 						} else if ( (keyInput === 'ce' ) || (keyInput === 'Backspace') || (keyInput === 'Delete') ) {
-							expression.backspace();
+							backspace();
 						}			
 					}
 					
@@ -142,10 +169,10 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 			
 			init = function init() {
 				
-				//configure math.js lib for 64 bit numbers to prevent round-off errors.
+				//configure math.js lib to prevent round-off errors.
 				math.config({
 					number: 'BigNumber',
-					precision: 64
+					precision: 15 // display up to 15 numbers
 				});	
 				
 				function addListeners() {
