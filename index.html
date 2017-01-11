@@ -19,9 +19,8 @@
 		MathJax.Hub.Config(
 		
 		{
-			extensions: ['fast-preview.js'],
-			/* showProcessingMessages: false, */
-			messageStyle: 'simple',
+			showProcessingMessages: false,
+			messageStyle: 'none',
 			skipStartupTypeset: true,
 			elements: ['.calc--screen'],
 			showMathMenu: false,
@@ -32,15 +31,9 @@
 			
 			"HTML-CSS": {
 				noReflows: true
-			},
-			
-			"fast-preview": {
-			    Chunks: {EqnChunk: 10000, EqnChunkFactor: 1, EqnChunkDelay: 0},
-			    color: "inherit !important",
-			    updateTime: 30, updateDelay: 6,
-			    messageStyle: "none",
-			    disabled: false
 			}
+			
+			
 		});
 	</script>
 	
