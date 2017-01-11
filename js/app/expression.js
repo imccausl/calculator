@@ -169,8 +169,7 @@ define( [], function (expression) {
 		 	
 		 	
 		 	pushToModel = function pushToModel(ch) {
-			 	console.log("Current model state:", _model.content.data);
-			 		 		
+			 	 		
 				if (_model.content.firstInput === true) {
 					toggleFirstInput();
 					_model.content.data = "";
