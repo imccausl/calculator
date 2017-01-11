@@ -8,6 +8,7 @@
 	<!-- NB: yes, I know that 'user-scalable=no' is ordinarily very, very bad accessibility-wise, but the whole point of
 		setting it on this app is that the css takes care of the zooming to fill the space of the view-port, so on an ipad you get a GIANT 
 		calculator (http://tinyurl.com/h7xzrnb). Plus, its super annoying on mobile if you hit a button twice and then your device registers 		it as an attempt to zoom in -->
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	
 	<title>Calculator</title>
 	
@@ -18,7 +19,11 @@
 		MathJax.Hub.Config(
 		
 		{
+			extensions: ['fast-preview.js'],
 			/* showProcessingMessages: false, */
+			messageStyle: 'simple',
+			skipStartupTypeset: true,
+			elements: ['.calc--screen'],
 			showMathMenu: false,
 			
 			CommonHTML: {
@@ -27,6 +32,14 @@
 			
 			"HTML-CSS": {
 				noReflows: true
+			},
+			
+			"fast-preview": {
+			    Chunks: {EqnChunk: 10000, EqnChunkFactor: 1, EqnChunkDelay: 0},
+			    color: "inherit !important",
+			    updateTime: 30, updateDelay: 6,
+			    messageStyle: "none",
+			    disabled: false
 			}
 		});
 	</script>
