@@ -90,9 +90,9 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 				 		
 				 		filtCh = 'log';
 					} else if (filtCh === 'o') {
-						filtCh = 'log';
 						
 						model.content.data = model.content.data.replace("lo", "");
+						filtCh = model.content.data.charAt(model.content.data.length-1);
 					}
 				 	
 				 	// known issue: removing "log" instead of backspacing 1 ch at a time.
