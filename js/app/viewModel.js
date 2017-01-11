@@ -57,6 +57,7 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 					
 					case 'ac':
 					case 'ce':
+					case 'info':
 					case 'Backspace':
 					case 'Delete':
 					case 'Clear':
@@ -132,7 +133,27 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 						
 				try {
 					if (keyInput) { // if keyInput is not undefined
-						view.startRender();
+												
+						if (keyInput !== 'info') {
+							let aboutHeader = document.querySelector('.calc-about--header');
+							let aboutBody = document.querySelector('.calc-about--body');
+							let screenOutput = document.querySelector('#calc--total-output');
+							
+							// perform this check so that any key input will resume the app from its present state.
+							if (aboutHeader.classList.contains('visible')) {
+								// put the calc-history--data and calc--total-output classes back in.
+								// (I hide them in order to preserve the data, so clicking "info" doesn't delete everything.
+								
+								view.elements.history.classList.remove('hidden');
+								screenOutput.classList.remove('hidden');
+								
+								// hide the app info divs.
+								aboutHeader.classList.remove('visible');
+								aboutBody.classList.remove('visible');
+							}
+
+							view.startRender();
+						}
 											
 						if ( !(isFunctionKey( keyValue )) ) { // check for key/button presses that
 							let dataFilter = inputFilter.getFilter(); //used let because I only need block scope here.
@@ -174,7 +195,19 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 								
 							} else if ( (keyInput === 'ce' ) || (keyInput === 'Backspace') || (keyInput === 'Delete') ) {
 								backspace();
-							}			
+							} else if ( keyInput === 'info' ) {
+								let aboutHeader = document.querySelector('.calc-about--header');
+								let aboutBody = document.querySelector('.calc-about--body');
+								let screenOutput = document.querySelector('#calc--total-output');
+								
+								console.log("header:", aboutHeader, "body:", aboutBody);
+								
+								screenOutput.classList.toggle('hidden');
+								view.elements.history.classList.toggle('hidden');
+								
+								aboutHeader.classList.toggle('visible');
+								aboutBody.classList.toggle('visible');
+							}		
 						}
 						
 					} else {
@@ -184,7 +217,8 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 				}
 				
 				catch(err) {
-					allClear();
+					console.log(err);
+					allClear(); // if something totally unexpected happens with input, just reset the calculator.
 				}
 				
 				

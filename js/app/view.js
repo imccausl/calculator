@@ -17,7 +17,7 @@ define(['expression', 'MathJax'], function(expression) {
 				buffer: document.getElementById("calc--prerender"),
 				screen: document.getElementById("calc--output"),
 				closedParens: document.getElementById("calc--parens"),
-				history: document.getElementById("calc--history"),
+				history: document.getElementById("calc-history--data"),
 				historyBuffer: document.getElementById("calc--history-prerender"),
 				lastAnsButton: document.getElementById("button--ans")
 			},
@@ -94,7 +94,7 @@ define(['expression', 'MathJax'], function(expression) {
 			render = function render() {
 				var model = expression.getModel();
 				
-				if (model.content.data === "ERROR !") {
+				if (model.content.data === "E R R  !") {
 					View.elements.screen = model.content.data;
 					model.content.data = "";
 				} else {

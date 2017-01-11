@@ -172,10 +172,6 @@ button:hover {
   padding: 5px 5px;
 }
 
-.calc--screen:focus {
-  outline:0;
-}
-
 #calc--history {
 	position: relative;
 	overflow-y: scroll;
@@ -208,7 +204,7 @@ button:hover {
 #calc--output {
 	display: inline-block;
 	overflow: visible;
-	margin: 5px;
+	
 	margin-right: 0;
 	padding-right: 0;
 	height: 70px;
@@ -221,15 +217,44 @@ button:hover {
   font-size: 1.5em;
   width: 118px;
  }
+ 
+ .button--about {
+	 width: 118px;
+		 
+ }
 
 #calc--parens {
 	margin: 0;
 	padding: 0;
-	
+	overflow-y: scroll;
 	color: #bbb9b9;
 }
 
-.container .container--col-fluid .calc--body #calc--buttons, footer {
+.calc-about--body, .calc-about--header {
+	position: absolute;
+	display: none;
+	
+	font-family: "Rubik", sans-serif;
+	font-size: 0.78em;
+	padding: 0 5px 5px 5px;
+	
+	width: 288px;
+	text-align: center;
+}
+
+.calc-about--header {
+	height: 45px;
+}
+
+.calc-about--body {
+	height: 90px;
+}
+
+.calc--screen, .calc--history {
+	position: relative;
+}
+
+.container .container--col-fluid .calc--body #calc--buttons {
 	
 	font-family: "Rubik", sans-serif;
 }
@@ -242,6 +267,14 @@ button:hover {
 #calc--prerender, #calc--history-prerender {
 	position: absolute;
 	visibility: hidden;
+}
+
+.visible {
+	display: block;
+}
+
+.hidden {
+	display: none;
 }
 
 /* breakpoints */

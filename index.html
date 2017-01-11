@@ -4,7 +4,10 @@
 <head>
 	
 	<meta charset="UTF-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<!-- NB: yes, I know that 'user-scalable=no' is ordinarily very, very bad accessibility-wise, but the whole point of
+		setting it on this app is that the css takes care of the zooming to fill the space of the view-port, so on an ipad you get a GIANT 
+		calculator (http://tinyurl.com/h7xzrnb). Plus, its super annoying on mobile if you hit a button twice and then your device registers 		it as an attempt to zoom in -->
 	
 	<title>Calculator</title>
 	
@@ -29,7 +32,7 @@
 	</script>
 	
 	<script data-main="js/app" src="js/lib/require.js"></script>
-	
+	<script src="https://use.fontawesome.com/79b193d53b.js"></script>
 	
 </head>
 
@@ -42,7 +45,37 @@
 		<section class="calc--body clearfix">
 			
 			<div class="calc--screen">
-				<div id="calc--history"></div>
+				
+				<div id="calc--history">
+					
+					<div id="calc-history--data"></div>
+					
+					<div class="calc-about--header">
+						<h4>Designed & Coded by 
+						<span class="text--emphasis">
+						<a href="http://www.ianmccausland.xyz" target="_blank">Ian McCausland</a>
+					    </span> in <span class="text--emphasis">Toronto</span></h4>
+					    <h4>View the source code on 
+						<a href="https://github.com/imccausl/calculator" target="_blank">Github</a>.</h4>
+					</div>
+					
+				</div>
+				
+					<div class="calc-about--body">
+					
+						<h4>Powered by:</h4><h4> 
+						<a href="http://www.mathjax.org" target="_blank">
+						<img title="Powered by MathJax" 
+							 src="https://cdn.mathjax.org/mathjax/badge/mj_logo.png"
+							 width="45%" alt="Powered by MathJax"></a> 
+							 
+							 <a href="http://mathjs.org/" target="_blank">
+						    <img src="http://mathjs.org/css/img/mathjs_330x100.png" 
+						    	 width="50%" 
+						    	 alt="Uses mathJS extensive math library for JavaScript and Node.js"></a>
+					
+					</div>	
+				
 				<div id="calc--total-output">
 					<span id ="calc--output"></span>
 					<span id="calc--parens"></span>
@@ -51,9 +84,10 @@
 	  
 			<div id="calc--buttons">
 				<div id="row1" class="calc--buttons-row">
-					<button id="button--ans" value="ans">ans</button>
-				    <button class="placeholder"></button>
-				    <button class="placeholder"></button>
+					
+				    <button class="button--about" value="info"><i class="fa fa-info-circle" aria-hidden="true"></i> about</button>
+				    
+				    <button id="button--ans" value="ans">ans</button>
 				    <button id="button--ce" value="ce">ce</button>
 				    <button id="button--ac" value="ac">ac</button>
 				</div>
@@ -101,17 +135,6 @@
 		</section>
 
 	</div>
-	
-			
-<footer>
-		<div class="footer-bottom">
-		<h4>Designed & Coded by <span class="text--emphasis"><a href="http://www.ianmccausland.xyz" target="_blank">Ian McCausland</a></span> in <span class="text--emphasis">Toronto</span></h4>
-		<h4>Submit bugs via <a href="https://github.com/imccausl/calculator" target="_blank">Github</a></h4>
-		<a href="http://www.mathjax.org">
-		<img title="Powered by MathJax" src="http://cdn.mathjax.org/mathjax/badge/mj_logo_60x20.png" border="0" alt="Powered by MathJax" />
-		</a>
-		</div>
-	</footer>	
 	</div> <!-- /container -->
 
 </body>

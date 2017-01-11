@@ -1,10 +1,34 @@
-/** MODEL **/
-
 /* the expression module
- * ---------------------
- * this is the home of the model, where the calculator's data lives.
- *
- */
+ * ----------------
+ * Each function returns an array with the names of the attributes of the inputType object that correspond to the
+ * input that is allowable after the functions' corresponding input type. (e.g., isDecimalDigit checks whether a
+ * digit was just inputted from the user and if so, returns an array with the kinds of input allowed following a digit such as a
+ * mathematical operator, a decimal, a paren, etc). 
+ * ************************************************
+ 
+   PUBLIC METHODS:
+   
+   hasDecimal(): 
+   
+   splitExpression(regex, input):
+    
+   toggleFirstInput(boolean):
+    
+   pushToModel(input): 
+   
+   getModel():
+    
+   setModel({model obj}):
+    
+   getLastCh():
+    
+   checkSyntax():
+    
+   getLastAns():
+   
+   init():
+
+ *******************************************************************************************************************************/
  
 define( [], function (expression) {
 	
