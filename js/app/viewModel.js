@@ -205,7 +205,7 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 								 	
 								 	if (keyInput === 'ans') keyInput = expression.getLastAns();
 								 	
-								 	calcOutput.scrollIntoView({behavior: "instant", block: "end"});									 					 						calcOutput.scrollLeft = calcOutput.scrollWidth;
+								 	calcOutput.scrollLeft = calcOutput.scrollWidth;
 								 	
 								 	expression.pushToModel(keyInput);
 								 	view.elements.screen.textContent = expression.getModel().content.data
