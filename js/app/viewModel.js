@@ -122,10 +122,11 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 			
 			parseInput = function( event ) {
 				var history = null,
-					keyInput = event.srcElement.value || event.key,
+					keyInput = event.target.value || event.key,
 					keyValue = event.charCode || keyInput,
 					lastCh = expression.getLastCh();
-										
+					
+					console.log(event);					
 				// IMPORTANT DATA: {keypress: data.which; click: data.target.value}
 				
 				// this function routes valid inputs and ignores invalid inputs (such as letters),
@@ -173,8 +174,13 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 								 	checkInput(keyInput);
 								 	
 								 	if (keyInput === 'ans') keyInput = expression.getLastAns();
-								 								 	
+								 										 					 	
 								 	expression.pushToModel(keyInput);
+								 	view.elements.screen.textContent = expression.getModel().content.data
+								 		.replace(/\*/g, " ⋅ ")
+								 		.replace(/\+/g, " + ")
+								 		.replace(/\-/g, " - ")
+								 		.replace(/\//g, " ÷ ");
 								 	
 								 	if (!(expression.hasDecimal())) {
 								 		inputFilter.addToFilter('.');
@@ -219,6 +225,7 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 				catch(err) {
 					console.log(err);
 					allClear(); // if something totally unexpected happens with input, just reset the calculator.
+					init();
 				}
 				
 				

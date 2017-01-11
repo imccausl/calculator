@@ -77,6 +77,7 @@ define(['expression', 'MathJax'], function(expression) {
 			},
 			
 			setScreenContent = function setScreenContent( content ) {
+				
 				elements.buffer.innerHTML = content;	
 			},
 			
@@ -135,6 +136,7 @@ define(['expression', 'MathJax'], function(expression) {
 					} else {
 						mjRunning = true;
 						
+							
 						MathJax.Hub.Queue(
 							["Typeset", MathJax.Hub, elements.buffer],
 							["Typeset", MathJax.Hub, elements.historyBuffer],

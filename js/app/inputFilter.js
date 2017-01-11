@@ -75,7 +75,7 @@ define( [], function() {
 					var operators = ['*','/', '+', '-'];
 					
 					if (operators.indexOf(ch) > -1) {
-						return ["numbers", "pi", "leftParen", "rightParen", "minus", "plus"];
+						return ["numbers", "pi", "leftParen", "rightParen"];
 					} else {
 						return false;
 					}
