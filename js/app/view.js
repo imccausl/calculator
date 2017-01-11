@@ -71,11 +71,16 @@ define(['expression', 'MathJax'], function(expression) {
 			
 			startRender = function startRender() {
 				// render the view
+/*
 				if (timeout) {
 					clearTimeout(timeout);
 				}
 				
 				timeout = setTimeout(callback, delay);
+				
+*/
+				// use requestAnimationFrame to render the view for better performance.
+				requestAnimationFrame(callback);
 			},
 			
 			swapBufferForScreen = function swapBufferForScreen() {	
