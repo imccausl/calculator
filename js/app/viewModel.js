@@ -131,13 +131,21 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 					keyValue = event.charCode || keyInput,
 					lastCh = expression.getLastCh();
 					
-					console.log(event);					
+											
+									
 				// IMPORTANT DATA: {keypress: data.which; click: data.target.value}
 				
 				// this function routes valid inputs and ignores invalid inputs (such as letters),
 				// but also including two operators (+-) in a row, two decimals (..) in a row, etc.
 						
 				try {
+					
+					if (document.activeElement) {
+						document.activeElement.blur();
+					}
+						
+					window.focus();
+
 					if (keyInput) { // if keyInput is not undefined
 												
 						if (keyInput !== 'info') {
