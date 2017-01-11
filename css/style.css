@@ -37,6 +37,7 @@ footer {
 	 
 	clear: both;
 }
+
 h4 {
 	margin: 5px 0;
 	color: #a8a6a6;
@@ -200,7 +201,9 @@ button:hover {
 #calc--total-output {
 	overflow-y: scroll;
 	position: relative;
-	margin-top: 10px;
+	
+	font-size: 1.8em;
+	margin-top: 5px;
 }
 
 #calc--output {
