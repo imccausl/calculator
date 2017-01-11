@@ -141,10 +141,11 @@ define( [], function() {
 	 	},
 	 	
 		 	_getNextFilter = function _getNextFilter(ch, lastCh) {
-				var inputRules = [];
+				var inputRules = [],
+					ch = ch || "";
 				
 				
-				if ( ( ch  ) !== undefined ) {					
+				if ( ( ch  ) !== "" ) {					
 					for( var func in _lexer ) {
 												
 						inputRules = _lexer[func](ch, lastCh);

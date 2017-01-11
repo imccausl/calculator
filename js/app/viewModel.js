@@ -71,7 +71,9 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 				
 			 	var model = expression.getModel(),
 			 		lastCh = "",
-			 		filtCh = "";
+			 		filtCh = "",
+			 		delCh = "",
+			 		closedParens = view.elements.closedParens;
 			 	
 			 	
 			 	
@@ -80,6 +82,10 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 				 	allClear();
 				 } else {
 					
+					delCh = model.content.data.charAt(model.content.data.length-1);
+					if (delCh === '(') {
+						closedParens.textContent = closedParens.textContent.substr(0, closedParens.textContent.length-1)
+					}
 					
 					model.content.data = model.content.data.substr(0, model.content.data.length-1);	
 					
