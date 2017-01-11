@@ -229,7 +229,7 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 				//configure math.js lib to prevent round-off errors.
 				math.config({
 					number: 'BigNumber',
-					precision: 15 // display up to 15 numbers
+					precision: 16 // display up to 15 numbers
 				});	
 				
 				function addListeners() {
