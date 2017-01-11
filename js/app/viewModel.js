@@ -20,9 +20,9 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 				// make any show-stopping errors simply display "ERROR" on the screen... just like a real calculator... kinda?
 				try {
 					expr = model.content.data;
-					model.lastExpression = preSyntaxModel.content.data + "=";
+					model.lastExpression = preSyntaxModel.content.data + " =";
 					
-					model.content.data = math.eval(expr).toString();
+					model.content.data = math.eval(expr).toString(); // this is a mathJS function for evaluating math, not JS EVAL
 					model.lastAns = model.content.data;
 					view.disableLastAns(false);
 				} 
@@ -180,7 +180,8 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 								 		.replace(/\*/g, " ⋅ ")
 								 		.replace(/\+/g, " + ")
 								 		.replace(/\-/g, " - ")
-								 		.replace(/\//g, " ÷ ");
+								 		.replace(/\//g, " ÷ ")
+								 		.replace(/sqrt/g, " √");
 								 	
 								 	if (!(expression.hasDecimal())) {
 								 		inputFilter.addToFilter('.');
