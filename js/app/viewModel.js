@@ -33,7 +33,7 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 				
 				finally {
 					inputFilter.setFilter();
-					console.log("Model state at calculate", model);
+					
 					expression.setModel(model);
 				}
 			},
@@ -82,7 +82,7 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 					
 					
 					model.content.data = model.content.data.substr(0, model.content.data.length-1);	
-					console.log("backspace", expression.splitExpression(/log\b/, model.content.data));
+					
 					 
 				 	lastCh = model.content.data.charAt(model.content.data.length-2);
 				 	filtCh = model.content.data.charAt(model.content.data.length-1);
@@ -101,7 +101,7 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 				 	expression.setModel(model);
 				 	inputFilter.setFilter(filtCh, lastCh); // if the model changes, the input filter has to follow suit.
 				 	
-				 	console.log("inputfilter:", inputFilter.getFilter());
+				 	
 				}
 			 	
 		 	},
@@ -200,7 +200,7 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 								let aboutBody = document.querySelector('.calc-about--body');
 								let screenOutput = document.querySelector('#calc--total-output');
 								
-								console.log("header:", aboutHeader, "body:", aboutBody);
+								
 								
 								screenOutput.classList.toggle('hidden');
 								view.elements.history.classList.toggle('hidden');
