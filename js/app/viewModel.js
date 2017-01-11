@@ -135,6 +135,9 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 								lastExpression: ""
 							});	
 							
+							view.elements.closedParens.textContent = "";
+							view.elements.screen.textContent = "";
+							
 							view.disableLastAns(true);
 							inputFilter.setFilter();	
 		 	},
