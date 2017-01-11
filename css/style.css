@@ -123,7 +123,7 @@ button:hover {
 .container {
   position:relative;
  
-  overflow: hidden;
+  overflow:hidden;
   max-width: 320px;
   width: 100%;
   height: 542px;
@@ -178,6 +178,7 @@ button:hover {
 #calc--history {
 	position: relative;
 	overflow-y: scroll;
+	overflow-x: visible;
 	
 	width: 288px;
 	height: 50px;
@@ -200,6 +201,7 @@ button:hover {
 
 #calc--total-output {
 	overflow-y: scroll;
+	overflow-x: hidden;
 	position: relative;
 	
 	font-size: 1.8em;
@@ -208,13 +210,20 @@ button:hover {
 
 #calc--output {
 	display: inline-block;
-	overflow: visible;
+	overflow-x: visible;
 	
-	margin-right: 0;
-	padding-right: 0;
+	margin: 0;
+	padding: 0;
 	height: 70px;
 }
 
+#calc-history--data {
+	overflow: visible;
+}
+
+#calc--output span:focus, #calc-history--data span:focus {
+	outline:0; /* for mathjax display */
+}
 #button--equals {
   background-color: rgb(62,111,252);
   color: white;
