@@ -177,7 +177,7 @@ button:hover {
 
 #calc--history {
 	position: relative;
-	overflow-y: scroll;
+	overflow-y: auto;
 	overflow-x: visible;
 	
 	width: 288px;
@@ -200,9 +200,11 @@ button:hover {
 }
 
 #calc--total-output {
-	overflow-y: scroll;
+	overflow-y: auto;
+	
 	overflow-x: hidden;
 	position: relative;
+	white-space: nowrap;
 	
 	font-size: 1.8em;
 	margin-top: 5px;
@@ -239,10 +241,13 @@ button:hover {
  }
 
 #calc--parens {
+	
 	margin: 0;
 	padding: 0;
-	overflow-y: scroll;
+	
+	overflow-y: auto;
 	color: #bbb9b9;
+	
 }
 
 .calc-about--body, .calc-about--header {
