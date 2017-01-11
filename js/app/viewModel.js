@@ -94,6 +94,11 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 						
 						model.content.data = model.content.data.replace("lo", "");
 						filtCh = model.content.data.charAt(model.content.data.length-1);
+					} else if (filtCh === 't') {
+						filtCh = 'sqrt';
+					} else if (filtCh === 'r') {
+						model.content.data = model.content.data.replace("sqr", "");
+						filtCh = model.content.data.charAt(model.content.data.length-1);
 					}
 				 	
 				 	// known issue: removing "log" instead of backspacing 1 ch at a time.
