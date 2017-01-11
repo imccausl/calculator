@@ -1,11 +1,22 @@
 /** View
  ** Most of the view is HTML & CSS -- the .calc--screen and .calc--history CSS class are the two 
  ** parts that are necessarily accessible to JavaScript.
- **
- ** Methods:
- ** 	getScreenContents()
- **		setScreenContents()
- ** 	init() : set the initial state of the view.
+ ************************************************************************************************
+ 
+	 Public Properties: 
+ 		 elements
+ 	Public Methods:
+ 	 	getScreenContent()
+ 		setScreenContent()
+		
+		startRender: startRender,
+		render: render,
+		init: init,
+		disableLastAns: disableLastAns,
+		parens: parens,
+		
+		init() : set the initial state of the view.
+		
  *********************************************************************************************/
  
 define(['expression', 'MathJax'], function(expression) {

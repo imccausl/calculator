@@ -1,9 +1,6 @@
 /* the expression module
  * ----------------
- * Each function returns an array with the names of the attributes of the inputType object that correspond to the
- * input that is allowable after the functions' corresponding input type. (e.g., isDecimalDigit checks whether a
- * digit was just inputted from the user and if so, returns an array with the kinds of input allowed following a digit such as a
- * mathematical operator, a decimal, a paren, etc). 
+ * This is where the model lives, including methods to work with model data when necessary.
  * ************************************************
  
    PUBLIC METHODS:
