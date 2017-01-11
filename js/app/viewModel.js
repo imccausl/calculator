@@ -33,7 +33,7 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 				
 				finally {
 					inputFilter.setFilter();
-					
+					view.elements.screen.textContent = model.content.data;
 					expression.setModel(model);
 				}
 			},
