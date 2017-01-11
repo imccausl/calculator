@@ -52,7 +52,7 @@ define( [], function() {
 							"multiDiv"		];
 		
 					
-					if ( ( (ch >= '0') && (ch <= '9') ) || (ch === 'ans') ) {
+					if ( ( (ch >= '0') && (ch <= '9') ) || (ch === 'ans') || (ch ==='π' )) {
 												
 						return inputRule;
 						
@@ -75,14 +75,14 @@ define( [], function() {
 					var operators = ['*','/', '+', '-'];
 					
 					if (operators.indexOf(ch) > -1) {
-						return ["numbers", "leftParen", "rightParen", "minus", "plus"];
+						return ["numbers", "pi", "leftParen", "rightParen", "minus", "plus"];
 					} else {
 						return false;
 					}
 				},
 				
 				isParen: function isParen(ch, lastCh) {
-					var inputRules = ["numbers", "root", "minus", "plus", "pi", "log", "leftParen"],
+					var inputRules = ["numbers", "pi", "root", "minus", "plus", "pi", "log", "leftParen"],
 						chFound = false;
 					
 					if (ch==='(') {

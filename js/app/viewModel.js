@@ -28,7 +28,7 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 				} 
 				
 				catch(err) {
-					model.content.data = "ERROR !";
+					model.content.data = "E R R  !";
 				}
 				
 				finally {
@@ -78,12 +78,23 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 			 	if (model.content.firstInput) {
 				 	allClear();
 				 } else {
+					
+					
 					model.content.data = model.content.data.substr(0, model.content.data.length-1);	
+					console.log("backspace", expression.splitExpression(/log\b/, model.content.data));
 					 
 				 	lastCh = model.content.data.charAt(model.content.data.length-2);
 				 	filtCh = model.content.data.charAt(model.content.data.length-1);
 				 	
-				 	console.log("backspace:", "ch", filtCh, "lastch", lastCh);
+				 	if (filtCh === 'g') {
+				 		
+				 		filtCh = 'log';
+					} else if (filtCh === 'o') {
+						filtCh = 'log';
+						
+						model.content.data = model.content.data.replace("lo", "");
+					}
+				 	
 				 	// known issue: removing "log" instead of backspacing 1 ch at a time.
 				 	
 				 	expression.setModel(model);
@@ -119,54 +130,61 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 				// this function routes valid inputs and ignores invalid inputs (such as letters),
 				// but also including two operators (+-) in a row, two decimals (..) in a row, etc.
 						
-				if (keyInput) { // if keyInput is not undefined
-					view.startRender();
-										
-					if ( !(isFunctionKey( keyValue )) ) { // check for key/button presses that
-						let dataFilter = inputFilter.getFilter(); //used let because I only need block scope here.
-						
-						if (keyInput === 'Enter') keyInput = '=';
-										
-						if (dataFilter.indexOf(keyInput) > -1) {
+				try {
+					if (keyInput) { // if keyInput is not undefined
+						view.startRender();
+											
+						if ( !(isFunctionKey( keyValue )) ) { // check for key/button presses that
+							let dataFilter = inputFilter.getFilter(); //used let because I only need block scope here.
 							
-							// evaluate expression: evaluation is beholden to the input filter unlike some of the other functions, 
-							// below the isFunctionKey() else statement.
-							
-							if( keyInput === '=' ) {
-								calculate();		
-							} else {
-							 	
-							 	inputFilter.setFilter(keyInput, lastCh);
-							 	checkInput(keyInput);
-							 	
-							 	if (keyInput === 'ans') keyInput = expression.getLastAns();
-							 								 	
-							 	expression.pushToModel(keyInput);
-							 	
-							 	if (!(expression.hasDecimal())) {
-							 		inputFilter.addToFilter('.');
-								}
+							if (keyInput === 'Enter') keyInput = '=';
+											
+							if (dataFilter.indexOf(keyInput) > -1) {
 								
-								if ( (view.parens.numInside()) && (view.parens.checkForParens()) ) {
-									inputFilter.addToFilter(')');
-								}
+								// evaluate expression: evaluation is beholden to the input filter unlike some of the other functions, 
+								// below the isFunctionKey() else statement.
 								
+								if( keyInput === '=' ) {
+									calculate();		
+								} else {
+								 	
+								 	inputFilter.setFilter(keyInput, lastCh);
+								 	checkInput(keyInput);
+								 	
+								 	if (keyInput === 'ans') keyInput = expression.getLastAns();
+								 								 	
+								 	expression.pushToModel(keyInput);
+								 	
+								 	if (!(expression.hasDecimal())) {
+								 		inputFilter.addToFilter('.');
+									}
+									
+									if ( (view.parens.numInside()) && (view.parens.checkForParens()) ) {
+										inputFilter.addToFilter(')');
+									}
+									
+								}
 							}
+										 
+						} else {
+							
+							if ( (keyInput === 'ac') || (keyInput === 'Clear') ) {
+								
+								allClear();
+								
+							} else if ( (keyInput === 'ce' ) || (keyInput === 'Backspace') || (keyInput === 'Delete') ) {
+								backspace();
+							}			
 						}
-									 
-					} else {
 						
-						if ( (keyInput === 'ac') || (keyInput === 'Clear') ) {
-							
-							allClear();
-							
-						} else if ( (keyInput === 'ce' ) || (keyInput === 'Backspace') || (keyInput === 'Delete') ) {
-							backspace();
-						}			
+					} else {
+						throw new Error("Something totally unexpected happened: Invalid data received!");
+						
 					}
-					
-				} else {
-					throw new Error("Something totally unexpected happened: Invalid data received!");
+				}
+				
+				catch(err) {
+					allClear();
 				}
 				
 				
