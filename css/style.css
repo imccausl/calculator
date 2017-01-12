@@ -28,6 +28,10 @@ div, footer, section, h4 {
 	padding: 0;
 }
 
+sup, i {
+	pointer-events: none;
+}
+
 footer {
 	position: absolute;
 	

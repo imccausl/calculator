@@ -285,7 +285,6 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 				function addListeners() {
 					document.addEventListener("keydown", parseInput, false);
 					view.elements.buttons.addEventListener("click", parseInput, false);
-					view.elements.screen.addEventListener("broadcast", parseInput, false);
 				}
 					
 				addListeners();
