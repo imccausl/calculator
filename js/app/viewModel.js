@@ -283,8 +283,22 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 				});	
 				
 				function addListeners() {
+					var hasTouch = ("ontouchstart" in window),
+						preventTouchEvent = function preventTouchEvent(evt) {
+							evt.preventDefault();
+						};
+					
+					
+					if (hasTouch) {
+						view.elements.buttons.addEventListener("touchstart", parseInput, false);
+						view.elements.buttons.addEventListener("touchmove", preventTouchEvent(event), false);
+						view.elements.buttons.addEventListener("touchend", preventTouchEvent(event), false);
+					} else {
+						view.elements.buttons.addEventListener("mousedown", parseInput, false);
+					}
+					
 					document.addEventListener("keydown", parseInput, false);
-					view.elements.buttons.addEventListener("click", parseInput, false);
+					
 				}
 					
 				addListeners();
