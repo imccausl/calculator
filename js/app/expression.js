@@ -57,7 +57,7 @@ define( [], function (expression) {
 				},
 				
 				changePercent: function changePercent() {
-					var percentExpression = /(\d*\.?\d*?)?([\+\*\/\-])*(\d+\.?\d*?)%/g,
+					var percentExpression = /(\d*\.?\d*)*([\+\*\/\-])*(\d*\.?\d+)%/g,
 						operator = [],
 						changeString = "";
 						
@@ -71,8 +71,9 @@ define( [], function (expression) {
 								changeString = "($1$2$1($3/100))"
 							}
 						} else {
-							changeString = "($3/100)";
+							changeString = "($1$3/100)";
 						}
+						
 					
 						_modifyModel(percentExpression, changeString);
 					}
@@ -117,6 +118,7 @@ define( [], function (expression) {
 			},
 			
 			_modifyModel = function _modifyModel(replacer, newString) {
+				
 				_model.content.data = _model.content.data.replace(replacer, newString);	
 			},
 					

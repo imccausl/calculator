@@ -162,6 +162,9 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 				
 				// this function routes valid inputs and ignores invalid inputs (such as letters),
 				// but also including two operators (+-) in a row, two decimals (..) in a row, etc.
+				
+				console.log("parseInput():", event);
+				console.log("KeyInput:", keyInput, "KeyValue:", keyValue);
 						
 				try {
 					
