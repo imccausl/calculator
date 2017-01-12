@@ -29,6 +29,7 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 				
 				catch(err) {
 					model.content.data = "E R R  !";
+					
 				}
 				
 				finally {
@@ -258,7 +259,7 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 						}
 						
 					} else {
-						throw new Error("Something totally unexpected happened: Invalid data received!");
+						throw new Error("Something totally unexpected happened: Invalid data received? How?!!");
 						
 					}
 				}

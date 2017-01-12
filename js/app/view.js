@@ -110,10 +110,12 @@ define(['expression', 'MathJax'], function(expression) {
 			
 			render = function render() {
 				var model = expression.getModel();
+			
 				
 				if (model.content.data === "E R R  !") {
-					View.elements.screen = model.content.data;
-					model.content.data = "";
+					
+					View.elements.screen.textContent = model.content.data;
+					
 				} else {
 				
 					setScreenContent( "`"+model.content.data+"`" );
@@ -126,7 +128,8 @@ define(['expression', 'MathJax'], function(expression) {
 					
 					// render View.model into the buffer, then swap the buffer for the screen
 					// when the buffer is finished rendering.
-					
+				
+				
 					if (mjPending) return;
 					
 					if (mjRunning) {

@@ -178,6 +178,7 @@ define( [], function (expression) {
 				}
 				
 				_model.content.data += ch;
+				console.log("State of the model:", _model.content);
 				checkSyntax("presentation", ch);
 			},
 			
