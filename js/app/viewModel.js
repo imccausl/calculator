@@ -291,8 +291,8 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 					
 					if (hasTouch) {
 						view.elements.buttons.addEventListener("touchstart", parseInput, false);
-						view.elements.buttons.addEventListener("touchmove", preventTouchEvent(event), false);
-						view.elements.buttons.addEventListener("touchend", preventTouchEvent(event), false);
+						view.elements.buttons.addEventListener("touchmove", preventTouchEvent, false);
+						view.elements.buttons.addEventListener("touchend", preventTouchEvent, false);
 					} else {
 						view.elements.buttons.addEventListener("mousedown", parseInput, false);
 					}
