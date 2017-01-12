@@ -279,7 +279,7 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 				//configure math.js lib to prevent round-off errors.
 				math.config({
 					number: 'BigNumber',
-					precision: 15 // number of digits to display
+					precision: 14 // number of digits to display
 				});	
 				
 				function addListeners() {
