@@ -199,6 +199,7 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 											
 						if ( !(isFunctionKey( keyValue )) ) { // check for key/button presses that
 							let dataFilter = inputFilter.getFilter(); //used let because I only need block scope here.
+							console.log("Current filter:", dataFilter);
 							
 							if (keyInput === 'Enter') keyInput = '=';
 											
