@@ -95,8 +95,12 @@ define( [], function (expression) {
 						operators = ["+", "-", "/", "*"];					
 					
 					if ( (operators.indexOf(lastCh) > -1) && (operators.indexOf(ch) > -1) ) {
-						_modifyModel(lastCh + ch, ch);
+						
+							_modifyModel(lastCh + ch, ch);
+					
 					}
+					
+					
 				},
 				
 				prettifyParenExpressions: function prettifyParenExpressions(input) {

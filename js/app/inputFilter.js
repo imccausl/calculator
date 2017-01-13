@@ -70,15 +70,27 @@ define( [], function() {
 						return false;
 					}
 				},
-			
+
+				
 				isOperator: function isOperator(ch, lastCh) {
-					var operators = ['*','/', '+', '-'];
+					var plusMinus = ['+', '-'],
+						operators = ['+', '-', '*', '/'],
+						inputRules = ["numbers", "pi", "leftParen", "rightParen", "plus", "minus"];
 					
-					if (operators.indexOf(ch) > -1) {
-						return ["numbers", "pi", "leftParen", "rightParen", "multiDiv", "plus", "minus"];
-					} else {
-						return false;
+					console.log("isOperator() ch", ch, "lastCh", lastCh);
+					
+					if ( (operators.indexOf(ch) > -1) ) {
+						
+						if ( ( (lastCh >= '0') && (lastCh <= '9') ) ) {
+							
+							inputRules.push("multiDiv");
+							
+						} 
+						
+						return inputRules;
 					}
+					
+					return false;
 				},
 								
 				isParen: function isParen(ch, lastCh) {
@@ -100,7 +112,8 @@ define( [], function() {
 					
 				},
 				
-				// my so-called "Special Operators" are percent and factorial, that require different input filters than the regular operators.
+				// my so-called "Special Operators" are percent and factorial, 
+				// that require different input filters than the regular operators.
 				isSpecOp: function isSpecOp(ch, lastCh) {
 					var specOps = ['%', '!' ],
 						inputRules = ["multiDiv","plus", "minus", "leftParen", "evaluate"],
@@ -113,7 +126,8 @@ define( [], function() {
 					}
 				},
 				
-				// Don't really know what to call this function: it sets the input filter for Exponents, Logs, and Square Roots
+				// sets the input filter for Exponents, Logs, and Square Roots. Exponents not 
+				// implied by the name of the function because isSqExOrLog seemed cumbersome.
 				isSqOrLog: function isSqOrLog(ch, lastCh) {
 					var operation = ["^", "log", "sqrt"],
 						inputRules = ["numbers", "plus", "minus"];

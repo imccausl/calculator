@@ -154,7 +154,6 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 				var history = null,
 					keyInput = event.target.value || event.key,
 					keyValue = event.charCode || keyInput,
-					lastCh = expression.getLastCh(),
 					calcOutput = document.getElementById('calc--total-output');
 					
 											
@@ -201,7 +200,7 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 							let dataFilter = inputFilter.getFilter(); //used let because I only need block scope here.
 							console.log("Current filter:", dataFilter);
 							
-							if (keyInput === 'Enter') keyInput = '=';
+							if (keyInput.toLowerCase() === 'Enter') keyInput = '=';
 											
 							if (dataFilter.indexOf(keyInput) > -1) {
 								
@@ -212,7 +211,7 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 									calculate();		
 								} else {
 								 	
-								 	inputFilter.setFilter(keyInput, lastCh);
+								 	// where getFilter used to be
 								 	checkInput(keyInput);
 								 	
 								 	if (keyInput === 'ans') keyInput = expression.getLastAns();
@@ -220,6 +219,8 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 								 	calcOutput.scrollLeft = calcOutput.scrollWidth;
 								 	
 								 	expression.pushToModel(keyInput);
+								 	inputFilter.setFilter(keyInput, expression.getLastCh());
+								 	
 								 	view.elements.screen.textContent = expression.getModel().content.data
 								 		.replace(/\*/g, " ⋅ ")
 								 		.replace(/\+/g, " + ")
