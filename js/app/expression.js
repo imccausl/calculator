@@ -95,7 +95,7 @@ define( [], function (expression) {
 						operators = ["+", "-", "/", "*"];					
 					
 					if ( (operators.indexOf(lastCh) > -1) && (operators.indexOf(ch) > -1) ) {
-						_modifyModel(lastCh, "");
+						_modifyModel(lastCh + ch, ch);
 					}
 				},
 				
@@ -111,7 +111,7 @@ define( [], function (expression) {
 			},
 			
 			_hasDecimal = function _hasDecimal() {
-				expr = _splitExpression("[\+\*\/-]");
+				expr = _splitExpression("[\+\*\/\\-!%]");
 				
 				return /[.]/.test(expr);
 				
@@ -187,7 +187,15 @@ define( [], function (expression) {
 			},
 			
 			init = function init() {
-				_model.content.data = "";	
+				_model = {
+					content: {
+						data: "",
+						firstInput: true
+					},
+				
+					lastExpression: "",
+					lastAns: ""
+				};	
 			}
 		
 		// Interface
