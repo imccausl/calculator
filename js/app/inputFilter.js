@@ -75,12 +75,12 @@ define( [], function() {
 					var operators = ['*','/', '+', '-'];
 					
 					if (operators.indexOf(ch) > -1) {
-						return ["numbers", "pi", "leftParen", "rightParen"];
+						return ["numbers", "pi", "leftParen", "rightParen", "multiDiv", "plus", "minus"];
 					} else {
 						return false;
 					}
 				},
-				
+								
 				isParen: function isParen(ch, lastCh) {
 					var inputRules = ["numbers", "pi", "root", "minus", "plus", "pi", "log", "leftParen"],
 						chFound = false;
@@ -103,7 +103,7 @@ define( [], function() {
 				// my so-called "Special Operators" are percent and factorial, that require different input filters than the regular operators.
 				isSpecOp: function isSpecOp(ch, lastCh) {
 					var specOps = ['%', '!' ],
-						inputRules = ["numbers","evaluate"],
+						inputRules = ["multiDiv","plus", "minus", "leftParen", "evaluate"],
 						percentVal = "";
 					
 					if (specOps.indexOf(ch) > -1) {

@@ -240,7 +240,7 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 										 
 						} else {
 							
-							if ( (keyInput === 'ac') || (keyInput === 'Clear') ) {
+							if ( (keyInput === 'ac') || (keyInput.toLowerCase() === 'clear') ) {
 								
 								allClear();
 								
