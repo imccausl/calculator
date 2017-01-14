@@ -53,7 +53,7 @@ define( [], function (expression) {
 				},
 				
 				changePi: function changePi() {
-					_modifyModel(/π/g, "pi");
+					_modifyModel(/π/g, "(pi)");
 				},
 				
 				changePercent: function changePercent() {
@@ -84,15 +84,18 @@ define( [], function (expression) {
 				
 				insertZero: function insertZero() {
 					var lastCh = getLastCh();
-										
-					if ( (lastCh === "") || (lastCh.search(/[\+\*\/-]/) > -1) || (lastCh === ",") ) {
+					console.log("ExcessOps()", "lastCh:", lastCh, "input:", ch);
+						
+					if ( (lastCh === "") || (lastCh.search(/[\+\*\/-]/) > -1) || (lastCh === ")") ) {
 						_modifyModel(lastCh+".", lastCh+"0.");
 					}
 				},
 				
 				checkForExcessOperators: function checkForExcessOperators(ch) {
 					var lastCh = getLastCh(),
-						operators = ["+", "-", "/", "*"];					
+						operators = ["+", "-", "/", "*"];	
+						
+									
 					
 					if ( (operators.indexOf(lastCh) > -1) && (operators.indexOf(ch) > -1) ) {
 						
@@ -103,22 +106,33 @@ define( [], function (expression) {
 					
 				},
 				
-				prettifyParenExpressions: function prettifyParenExpressions(input) {
+				prettifyExpressions: function prettifyExpressions(input) {
 					var lastCh = getLastCh();
 					
 					if (lastCh === ")") {
 						_modifyModel(/\)\d+/, ")*"+input);
+					} else if ( ( _wasDigit(lastCh) ) && (input === "(") ) {
+						_modifyModel(_splitExpression(/(\d+)/), _splitExpression(/(\d+)/).replace("(", "*")+"(");		
 					} else if (lastCh==="!") {
-						_modifyModel(/!\d+/, "!*"+input);
-					} 
-				}
+						_modifyModel(/\!\d+/, "!*"+input);
+					} else if ( (lastCh==="%") && (_wasDigit(input)) ) {
+						_modifyModel(/%\d+/, "%*"+input);
+					} else if ( (lastCh==="%") && (input==="/") ) {
+						_modifyModel(/(\d+%)/, "($1)")
+					}
+				},
+				
 			},
 			
 			_hasDecimal = function _hasDecimal() {
-				expr = _splitExpression("[\+\*\/\\-!%]");
+				expr = _splitExpression("[\+\*\/\\-\!\\%]");
 				
 				return /[.]/.test(expr);
 				
+			},
+			
+			_wasDigit = function _wasDigit(input) {
+				return /\d+/.test(input);	
 			},
 			
 			_modifyModel = function _modifyModel(replacer, newString) {

@@ -75,13 +75,13 @@ define( [], function() {
 				isOperator: function isOperator(ch, lastCh) {
 					var plusMinus = ['+', '-'],
 						operators = ['+', '-', '*', '/'],
-						inputRules = ["numbers", "pi", "leftParen", "rightParen", "plus", "minus"];
+						inputRules = ["numbers", "pi", "leftParen", "plus", "minus"];
 					
 					console.log("isOperator() ch", ch, "lastCh", lastCh);
 					
 					if ( (operators.indexOf(ch) > -1) ) {
 						
-						if ( ( (lastCh >= '0') && (lastCh <= '9') ) ) {
+						if ( ( (lastCh >= '0') && (lastCh <= '9') ) || (lastCh === '%') || (lastCh === ")") ) {
 							
 							inputRules.push("multiDiv");
 							
@@ -116,7 +116,7 @@ define( [], function() {
 				// that require different input filters than the regular operators.
 				isSpecOp: function isSpecOp(ch, lastCh) {
 					var specOps = ['%', '!' ],
-						inputRules = ["multiDiv","plus", "minus", "leftParen", "evaluate"],
+						inputRules = ["multiDiv","plus", "minus", "leftParen", "numbers", "evaluate"],
 						percentVal = "";
 					
 					if (specOps.indexOf(ch) > -1) {
@@ -189,6 +189,7 @@ define( [], function() {
 				
 				
 				_allowedInput = _getNextFilter(ch, lastCh);
+				console.log("SET NEW FILTER:", _allowedInput);
 			},
 			
 			addToFilter: _addToFilter
