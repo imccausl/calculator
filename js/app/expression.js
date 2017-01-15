@@ -82,7 +82,7 @@ define( [], function (expression) {
 			
 			_presentationSyntax = {
 				
-				insertZero: function insertZero() {
+				insertZero: function insertZero(ch) {
 					var lastCh = getLastCh();
 					console.log("ExcessOps()", "lastCh:", lastCh, "input:", ch);
 						
