@@ -228,7 +228,7 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 								 		.replace(/\//g, " ÷ ")
 								 		.replace(/sqrt/g, " √");
 								 		
-								 	elements.output.scrollLeft = elements.output.scrollWidth;
+								 	view.elements.output.scrollLeft = view.elements.output.scrollWidth;
 								 	
 								 	if (!(expression.hasDecimal())) {
 								 		inputFilter.addToFilter('.');
@@ -254,7 +254,7 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 								let aboutBody = document.querySelector('.calc-about--body');
 								
 								
-								elements.output.classList.toggle('hidden');
+								view.elements.output.classList.toggle('hidden');
 								view.elements.history.classList.toggle('hidden');
 								
 								aboutHeader.classList.toggle('visible');
