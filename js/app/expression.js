@@ -87,7 +87,14 @@ define( [], function (expression) {
 					console.log("ExcessOps()", "lastCh:", lastCh);
 					
 					if (ch===".") {
-						if ( (lastCh === "") || (lastCh.search(/[\+\*\/-]/) > -1) || (lastCh === "g") || (lastCh === "(") ) {
+						if ( 
+							 (lastCh === "") || 
+							 (lastCh.search(/[\+\*\/-]/) > -1) || 
+							 (lastCh === "g") || 
+							 (lastCh === "(") || 
+							 (lastCh === "^") 
+							 
+						   ) {
 							_modifyModel(lastCh+".", lastCh+"0.");
 						} else if ( (lastCh === ")") || (lastCh === "%") || (lastCh === "!") || (lastCh === "π") ) {
 							_modifyModel(lastCh+".", lastCh+"*0.");

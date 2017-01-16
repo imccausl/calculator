@@ -130,7 +130,7 @@ define( [], function() {
 				// implied by the name of the function because isSqExOrLog seemed cumbersome.
 				isSqOrLog: function isSqOrLog(ch, lastCh) {
 					var operation = ["^", "log", "sqrt"],
-						inputRules = ["numbers", "plus", "minus"];
+						inputRules = ["numbers", "plus", "minus", "leftParen"];
 												
 					if (operation.indexOf(ch) > -1) {
 						return inputRules;	
