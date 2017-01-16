@@ -168,7 +168,7 @@ define( [], function() {
 					}
 				} else {
 					// no input rules found, so initialize the input filter with the following allowed inputs:
-					return _makeFilter(['numbers', 'plus', 'minus', 'pi', 'log', 'root', 'decimal', 'leftParen']);
+					return _makeFilter(['numbers', 'pi', 'log', 'root', 'decimal', 'leftParen']);
 				}
 			},
 				
