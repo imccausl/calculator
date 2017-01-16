@@ -216,7 +216,7 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 								 	
 								 	if (keyInput === 'ans') keyInput = expression.getLastAns();
 								 	
-								 	calcOutput.scrollLeft = calcOutput.scrollWidth+1;
+								 									 	
 								 	
 								 	expression.pushToModel(keyInput);
 								 	inputFilter.setFilter(keyInput, expression.getLastCh());
@@ -227,6 +227,8 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 								 		.replace(/\-/g, " - ")
 								 		.replace(/\//g, " ÷ ")
 								 		.replace(/sqrt/g, " √");
+								 		
+								 	elements.output.scrollLeft = elements.output.scrollWidth;
 								 	
 								 	if (!(expression.hasDecimal())) {
 								 		inputFilter.addToFilter('.');

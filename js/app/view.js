@@ -27,6 +27,7 @@ define(['expression', 'MathJax'], function(expression) {
 				buttons: document.getElementById("calc--buttons"),
 				buffer: document.getElementById("calc--prerender"),
 				screen: document.getElementById("calc--output"),
+				output: document.getElementById("calc--total-output"),
 				closedParens: document.getElementById("calc--parens"),
 				history: document.getElementById("calc-history--data"),
 				historyBuffer: document.getElementById("calc--history-prerender"),
@@ -105,6 +106,9 @@ define(['expression', 'MathJax'], function(expression) {
 					elements.screen.innerHTML = elements.buffer.innerHTML;
 					elements.history.innerHTML = elements.historyBuffer.innerHTML;
 				}
+				
+				elements.output.scrollLeft = elements.output.scrollWidth;
+
 		
 			},
 			
