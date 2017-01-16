@@ -25,10 +25,20 @@ body {
   width: 100%;
 }
 
-div, footer, section, h4 {
+div, footer, section, h4, img {
 	
 	margin: 0;
 	padding: 0;
+}
+
+img {
+	display: inline-block;
+	padding-top: 10px;
+	
+}
+
+.calc--buttons-row {
+	clear:both;
 }
 
 sup, i {
@@ -38,18 +48,19 @@ sup, i {
 footer {
 	position: absolute;
 	
-	bottom: 0;
-	padding: 0 12px;
-	min-width: 320px;
+	bottom: 9px;
+	padding-left: 12px;
+	margin: 0;
+	width: 310px;
 	 
 	clear: both;
 }
 
 h4 {
-	margin: 5px 0;
+	margin: 0;
 	color: #a8a6a6;
 	font-family: "Rubik", sans-serif;
-	padding: 0 5px 5px 5px;
+	padding: 0;
 	
 	text-align: left;
 	
@@ -211,7 +222,7 @@ button:hover {
 	overflow-y: hidden;
 	
 	overflow-x: auto;
-	position: relative;
+	position: static;
 	white-space: nowrap;
 	
 	font-size: 1.8em;
@@ -260,9 +271,11 @@ button:hover {
 	
 	font-size: 0.78em;
 	
-	width: 288px;
+	width: 289px;
 	text-align: center;
-	height: 90px;
+	height: 70px;
+	margin: 5px 0 0 0;
+	
 	
 	transition: opacity 500ms ease-in;
 }
@@ -294,7 +307,7 @@ button:hover {
 
 .hidden {
 	
-	display: none;
+	visibility: hidden;
 }
 
 /* breakpoints */
