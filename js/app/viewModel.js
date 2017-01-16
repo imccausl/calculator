@@ -228,8 +228,9 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 								 	view.elements.output.scrollLeft = view.elements.output.scrollWidth;
 								 	
 								 	inputFilter.setFilter(keyInput, expression.getLastCh());
+								 	console.log("Root expression:", expression.splitExpression("[(sqrt\d*)\+\*\/\\-\!\\%]")); 
 								 	
-								 	if (!(expression.hasDecimal()) && (!((keyInput === 'log') || (keyInput ==='sqrt'))) ) {
+								 	if (!(expression.canHaveDecimal()) && (!((keyInput === 'log') || (keyInput ==='sqrt'))) ) {
 								 		inputFilter.addToFilter('.');
 									}
 									

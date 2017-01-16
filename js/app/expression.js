@@ -137,16 +137,16 @@ define( [], function (expression) {
 				
 			},
 			
-			_hasDecimal = function _hasDecimal() {
-				var expr = _splitExpression("[\+\*\/\\-\!\\%]"),
-					doesHave = false;
+			_canHaveDecimal = function _canHaveDecimal() {
+				var expr = _splitExpression("[(sqrt\d*)\+\*\/\\-\!\\%]"),
+					hasOne = false;
 				
 				
 				
-				doesHave = /[.]/.test(expr);
-				console.log("Has Decimal?", doesHave,  expr);
+				hasOne = /[\.t]/.test(expr);
+				console.log("Can Has Decimal?", hasOne,  expr);
 				
-				return doesHave
+				return hasOne;
 				
 			},
 			
@@ -168,9 +168,11 @@ define( [], function (expression) {
 				while (lastInstance = splitFrom.exec(input)) {
 					
 					index = lastInstance.index;
+										
 				}  
 				
-				return input.substring(index+1); 
+				
+					return input.substring(index); 
 			},
 					 	
 		 	getModel = function getModel() {
@@ -205,8 +207,6 @@ define( [], function (expression) {
 			 	
 		 	},
 		 	
-		 	
-		 	
 		 	pushToModel = function pushToModel(ch) {
 			 	 		
 				if (_model.content.firstInput === true) {
@@ -238,7 +238,7 @@ define( [], function (expression) {
 		// Interface
 		return {
 			
-		 	hasDecimal: _hasDecimal,
+		 	canHaveDecimal: _canHaveDecimal,
 		 	splitExpression: _splitExpression,
 		 	toggleFirstInput: toggleFirstInput,
 		 	pushToModel: pushToModel,
