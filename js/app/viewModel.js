@@ -252,9 +252,9 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 							} else if ( keyInput === 'info' ) {
 								let aboutHeader = document.querySelector('.calc-about--header');
 								let aboutBody = document.querySelector('.calc-about--body');
-								let screenOutput = document.querySelector('#calc--total-output');
 								
-								screenOutput.classList.toggle('hidden');
+								
+								elements.output.classList.toggle('hidden');
 								view.elements.history.classList.toggle('hidden');
 								
 								aboutHeader.classList.toggle('visible');
