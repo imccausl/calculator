@@ -75,7 +75,7 @@ define( [], function() {
 				isOperator: function isOperator(ch, lastCh) {
 					var plusMinus = ['+', '-'],
 						operators = ['+', '-', '*', '/'],
-						inputRules = ["numbers", "pi", "leftParen", "plus", "minus"];
+						inputRules = ["numbers", "pi", "leftParen", "plus", "minus", "root"];
 					
 					console.log("isOperator() ch", ch, "lastCh", lastCh);
 					

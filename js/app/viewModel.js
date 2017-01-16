@@ -214,12 +214,9 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 								 	// where getFilter used to be
 								 	checkInput(keyInput);
 								 	
-								 	if (keyInput === 'ans') keyInput = expression.getLastAns();
-								 	
-								 									 	
+								 	if (keyInput === 'ans') keyInput = expression.getLastAns();							 	
 								 	
 								 	expression.pushToModel(keyInput);
-								 	inputFilter.setFilter(keyInput, expression.getLastCh());
 								 	
 								 	view.elements.screen.textContent = expression.getModel().content.data
 								 		.replace(/\*/g, " ⋅ ")
@@ -230,7 +227,9 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 								 		
 								 	view.elements.output.scrollLeft = view.elements.output.scrollWidth;
 								 	
-								 	if (!(expression.hasDecimal())) {
+								 	inputFilter.setFilter(keyInput, expression.getLastCh());
+								 	
+								 	if (!(expression.hasDecimal()) && (!((keyInput === 'log') || (keyInput ==='sqrt'))) ) {
 								 		inputFilter.addToFilter('.');
 									}
 									
