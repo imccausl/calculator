@@ -39,14 +39,14 @@ define(['expression', 'MathJax'], function(expression) {
 					var parenClosed = elements.closedParens.textContent;
 	
 					parenClosed += ")";
-					elements.closedParens.innerHTML = parenClosed;
+					elements.closedParens.textContent = parenClosed;
 				},
 				
 				shiftToView: function shiftToView() {
 					var parenClosed = elements.closedParens.textContent;
 					
 					parenClosed = parenClosed.replace(")", "");
-					elements.closedParens.innerHTML = parenClosed;
+					elements.closedParens.textContent = parenClosed;
 					
 				},
 				

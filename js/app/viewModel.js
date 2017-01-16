@@ -13,7 +13,7 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 				
 				model = expression.getModel();
 				
-				model.content.data = model.content.data + view.elements.closedParens.textContent;
+				model.content.data = model.content.data.concat(view.elements.closedParens.textContent);
 				expression.toggleFirstInput();
 				view.elements.closedParens.textContent = "";
 				
@@ -22,6 +22,7 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 					expr = model.content.data;
 					model.lastExpression = preSyntaxModel.content.data + " =";
 					
+					console.log("Trying to evaluate", expr, expr.length);
 					model.content.data = math.eval(expr).toString(); // this is a mathJS function for evaluating math, not JS EVAL
 					model.lastAns = model.content.data;
 					view.disableLastAns(false);
