@@ -28,7 +28,7 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 				} 
 				
 				catch(err) {
-					model.content.data = "E R R  !";
+					model.content.data = "E R R O R !";
 					
 				}
 				
@@ -216,7 +216,7 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 								 	
 								 	if (keyInput === 'ans') keyInput = expression.getLastAns();
 								 	
-								 	calcOutput.scrollLeft = calcOutput.scrollWidth;
+								 	calcOutput.scrollLeft = calcOutput.scrollWidth+1;
 								 	
 								 	expression.pushToModel(keyInput);
 								 	inputFilter.setFilter(keyInput, expression.getLastCh());

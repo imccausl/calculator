@@ -112,9 +112,10 @@ define(['expression', 'MathJax'], function(expression) {
 				var model = expression.getModel();
 			
 				
-				if (model.content.data === "E R R  !") {
+				if (model.content.data === "E R R O R !") {
 					
 					View.elements.screen.textContent = model.content.data;
+					View.elements.history.textContent = "";
 					
 				} else {
 				
