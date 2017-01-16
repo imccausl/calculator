@@ -177,19 +177,16 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 					if (keyInput) { // if keyInput is not undefined
 												
 						if (keyInput !== 'info') {
-							let aboutHeader = document.querySelector('.calc-about--header');
 							let aboutBody = document.querySelector('.calc-about--body');
 														
 							// perform this check so that any key input will resume the app from its present state.
-							if (aboutHeader.classList.contains('visible')) {
+							if (aboutBody.classList.contains('visible')) {
 								// put the calc-history--data and calc--total-output classes back in.
 								// (I hide them in order to preserve the data, so clicking "info" doesn't delete everything.
 								
-								view.elements.history.classList.remove('hidden');
-								calcOutput.classList.remove('hidden');
+								view.elements.output.classList.remove('hidden');
 								
 								// hide the app info divs.
-								aboutHeader.classList.remove('visible');
 								aboutBody.classList.remove('visible');
 							}
 
@@ -263,14 +260,10 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 							} else if ( (keyInput === 'ce' ) || (keyInput === 'Backspace') || (keyInput === 'Delete') ) {
 								backspace();
 							} else if ( keyInput === 'info' ) {
-								let aboutHeader = document.querySelector('.calc-about--header');
-								let aboutBody = document.querySelector('.calc-about--body');
-								
+								let aboutBody = document.querySelector('.calc-about--body'); // ES6 block scope 
 								
 								view.elements.output.classList.toggle('hidden');
-								view.elements.history.classList.toggle('hidden');
-								
-								aboutHeader.classList.toggle('visible');
+																
 								aboutBody.classList.toggle('visible');
 							}		
 						}

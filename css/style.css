@@ -48,6 +48,8 @@ footer {
 h4 {
 	margin: 5px 0;
 	color: #a8a6a6;
+	font-family: "Rubik", sans-serif;
+	padding: 0 5px 5px 5px;
 	
 	text-align: left;
 	
@@ -133,7 +135,7 @@ button:hover {
   overflow:hidden;
   max-width: 320px;
   width: 100%;
-  height: 475px;
+  height: 485px;
   
   margin: 15px auto;
  }
@@ -151,8 +153,7 @@ button:hover {
   
   background-color: #fcfcfc;
   
-  
-  padding: 8px;
+  padding: 8px 8px 20px 8px;
   margin: 0;
 }
 
@@ -252,24 +253,18 @@ button:hover {
 	
 }
 
-.calc-about--body, .calc-about--header {
+.calc-about--body {
 	position: absolute;
 	display: none;
+	opacity: 0;
 	
-	font-family: "Rubik", sans-serif;
 	font-size: 0.78em;
-	padding: 0 5px 5px 5px;
 	
 	width: 288px;
 	text-align: center;
-}
-
-.calc-about--header {
-	height: 45px;
-}
-
-.calc-about--body {
 	height: 90px;
+	
+	transition: opacity 500ms ease-in;
 }
 
 .calc--screen, .calc--history {
@@ -293,9 +288,12 @@ button:hover {
 
 .visible {
 	display: block;
+	opacity: 1;
+	
 }
 
 .hidden {
+	
 	display: none;
 }
 
@@ -327,7 +325,7 @@ button:hover {
 	}
 	
 	.container {
-		margin: 40px auto;
+		margin: 8px auto;
 	}
 }
 
