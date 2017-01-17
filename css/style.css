@@ -110,7 +110,8 @@ button:last-of-type {
 }
 
 #row6 {
-	 border-top: 1px solid #aeaeae;	
+	 border-top: 1px solid #aeaeae;
+	 border-bottom: 1px solid #aeaeae;
 }
 
 
