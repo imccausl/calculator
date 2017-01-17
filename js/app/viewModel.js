@@ -154,9 +154,8 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 			
 			parseInput = function( event ) {
 				var history = null,
-					keyInput = event.target.value || event.key,
-					keyValue = event.charCode || keyInput,
-					calcOutput = document.getElementById('calc--total-output');
+					calcOutput = document.getElementById('calc--total-output'),
+					keyInput = getInput(event);
 					
 											
 									
@@ -166,7 +165,6 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 				// but also including two operators (+-) in a row, two decimals (..) in a row, etc.
 				
 				console.log("parseInput():", event);
-				console.log("KeyInput:", keyInput, "KeyValue:", keyValue);
 						
 				try {
 					
@@ -195,11 +193,11 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 							view.startRender();
 						}
 											
-						if ( !(isFunctionKey( keyValue )) ) { // check for key/button presses that
+						if ( !(isFunctionKey( keyInput )) ) { // check for key/button presses that
 							let dataFilter = inputFilter.getFilter(); //used let because I only need block scope here.
 							console.log("Current filter:", dataFilter);
 							
-							if (keyInput.toLowerCase() === 'Enter') keyInput = '=';
+							if (keyInput === 'Enter') keyInput = '=';
 											
 							if (dataFilter.indexOf(keyInput) > -1) {
 								
@@ -272,11 +270,31 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 				
 				catch(err) {
 					console.log(err);
-					allClear(); // if something totally unexpected happens with input, just reset the calculator.
+					allClear(); // if something totally unexpected happens with input, reset the calculator.
 					init();
 				}
 				
 				
+			},
+			
+			getInput = function getInput(e) {
+				var eventInput = "";
+				
+				// keyboard events for safari, firefox, chrome, opera
+				if (e.key) {
+					eventInput = e.key;
+				} else if (e.keyIdentifier) {
+					eventInput = String.fromCharCode(parseInt(e.keyIdentifier.replace("U+", "0x"), 16));
+				}
+				
+				// click/touch events
+				if (e.target.value) {
+					eventInput = e.target.value;
+				}
+				
+				console.log("eventInput():", eventInput);
+				
+				return eventInput;
 			},
 			
 			init = function init() {
