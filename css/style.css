@@ -257,6 +257,10 @@ button:hover {
   
   width: 40%;
  }
+ 
+ .button--about {
+	 width: 40%;
+ }
 
 #calc--parens {
 	
