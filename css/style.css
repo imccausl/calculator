@@ -13,7 +13,7 @@
   box-sizing: border-box;
 }
 
-body, div, footer, section, h4, img {
+body, div, section, h4, img, .calc--buttons-row, button {
 	
 	margin: 0;
 	padding: 0;
@@ -36,16 +36,12 @@ img {
 .calc--buttons-row {
 	display: flex;
 	flex-direction: row;
+	
 	width: 100%;
 }
 
 sup, i {
 	pointer-events: none;
-}
-
-footer {
-	height: 5%;
-	margin-top: 1px;
 }
 
 h4 {
@@ -55,7 +51,7 @@ h4 {
 	text-align: center;
 	
 	font-size: 0.8em;
-	font-weight: 100;
+	font-weight: 300;
 }
 
 a:link {
@@ -67,31 +63,54 @@ a:hover {
 }
 
 .text--emphasis, a:link, a:visited {
-	font-weight: 200;
+	font-weight: 300;
 	color: rgb(62,111,252);
 }
 
 button {
   width: 20%;
-  
-  margin: 1px;
- 
-  
+
   background-color: white;
-  border: 1px solid #aeaeae;
+ 
   
   font-family: "Rubik", sans-serif;
   
-  font-size: 1.2em;
+  font-size: 1.5em;
   text-align: center;
-  font-weight: 200;
-  
-  transition: all 200ms ease-in;
+  font-weight: 300;
+  border: 0;
+  transition: background-color 200ms ease-in;
 }
 
-.placeholder {
-	visibility: hidden;
+button {
+	 border-right: 1px solid #aeaeae;
 }
+
+button:last-of-type {
+	border-right: 0;
+}
+
+#row2 {
+	 border-top: 1px solid #aeaeae;	
+}
+
+#row3 {
+	 border-top: 1px solid #aeaeae;	
+}
+
+#row4 {
+	 border-top: 1px solid #aeaeae;	
+}
+
+#row5 {
+	 border-top: 1px solid #aeaeae;	
+}
+
+#row6 {
+	 border-top: 1px solid #aeaeae;	
+}
+
+
 
 button:focus {
   outline: 0;
@@ -103,17 +122,20 @@ button:active {
 }
 
 button:hover {
-  cursor: pointer;
+  cursor: default;
   background-color: lightgrey;
 }
 
-.button--keypad, #button--ce, #button--ac {
+.placeholder, .placeholder:active, button:hover {
+	background-color: transparent;
+}
+
+.button--keypad, #button--ce, #button--ac, #button--ans {
 	background-color:#e6e6e6;
 	
 }
 
 .container {
-
   overflow:hidden;
   width: 100vw;
   height: 100vh;
@@ -126,15 +148,12 @@ button:hover {
 	justify-content: center;
 	flex-direction: row;
 	
-	height: 487px;
+/* 	height: 487px; */
 	width: 100%;
-	
-  border: 1px solid #dfdfdf;
-  border-radius: 0 0 10px 0;
-  background-color: #fcfcfc;
+	background-color: #fcfcfc;
   
-  padding: 10px 12px 15px 12px;
-  margin: 0;
+	padding: 0;
+	margin: 0;
 }
 
 .calc--screen {
@@ -148,15 +167,15 @@ button:hover {
 /*   width: 300px; */
 /*   height: 140px; */
 
-	height: 30%;
+	height: 35%;
   width: 100%;
   
-  margin: 5px 0;
+  margin: 0;
   
   background-color: white;
   color: black;
   
-  border: 1px solid #dfdfdf;
+  border-bottom: 1px solid #aeaeae;
   
   font-family: MathJax; 
   font-size: 1.2em;
@@ -168,31 +187,28 @@ button:hover {
 }
 
 #calc--history {
-	
 	overflow-y: hidden;
 	overflow-x: auto;
-	
+	white-space: nowrap;
 /*
 	width: 288px;
 	height: 50px;
 */
-	height: 40%;
 	width: 100%;
-	
-	margin: 0;
 	padding: 4px 4px;
 	
 	text-align: right;
 	
 	font-family: MathJax, serif; 
-	font-size: 1em;
+	font-size: 1.8em;
 	font-weight: 100;
+	
 	text-align: right;
 	line-height: 1;	
 	
-	border: 1px solid #aeaeae;
+	
 	color: black;
-	background-color:#e6e6e6;
+	
 }
 
 #calc--total-output {
@@ -202,7 +218,7 @@ button:hover {
 	text-align: right;
 	white-space: nowrap;
 	width: 100%;
-	font-size: 1.8em;
+	font-size: 2.6em;
 	margin-top: 5px;
 	
 }
@@ -223,6 +239,7 @@ button:hover {
 
 #calc-history--data {
 	overflow: visible;
+	width: 100%;
 }
 
 #calc--output span:focus, #calc-history--data span:focus {
@@ -233,7 +250,7 @@ button:hover {
   color: white;
   
   
-  width: calc(20% * 2 + 2.5px);
+  width: 40%;
  }
 
 #calc--parens {
