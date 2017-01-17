@@ -35,8 +35,8 @@ img {
 
 .calc--buttons-row {
 	display: flex;
+	flex-direction: row;
 	width: 100%;
-	
 }
 
 sup, i {
@@ -44,20 +44,15 @@ sup, i {
 }
 
 footer {
-	
-	
+	height: 5%;
 	margin-top: 1px;
-	
-	 
-	clear: both;
 }
 
 h4 {
 	
 	color: #a8a6a6;
 	font-family: "Rubik", sans-serif;
-		
-	text-align: left;
+	text-align: center;
 	
 	font-size: 0.8em;
 	font-weight: 100;
@@ -77,19 +72,17 @@ a:hover {
 }
 
 button {
-   
-  height: 48px;
-  width: 58px;
+  width: 20%;
   
   margin: 1px;
-  padding: 0;
+ 
   
   background-color: white;
   border: 1px solid #aeaeae;
   
   font-family: "Rubik", sans-serif;
   
-  font-size: 1.1em;
+  font-size: 1.2em;
   text-align: center;
   font-weight: 200;
   
@@ -120,14 +113,10 @@ button:hover {
 }
 
 .container {
-	
- 
+
   overflow:hidden;
-  width: 320px;
- 
-  height: 487px;
- 
-  margin: 15px auto;
+  width: 100vw;
+  height: 100vh;
  }
 
 
@@ -135,13 +124,13 @@ button:hover {
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
+	flex-direction: row;
+	
+	height: 487px;
+	width: 100%;
 	
   border: 1px solid #dfdfdf;
   border-radius: 0 0 10px 0;
-  
-
-
-  
   background-color: #fcfcfc;
   
   padding: 10px 12px 15px 12px;
@@ -149,13 +138,18 @@ button:hover {
 }
 
 .calc--screen {
- 
-  word-wrap: break-word;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
   
-  clear:both;
+  word-wrap: break-word;
     
-  width: 300px;
-  height: 140px;
+/*   width: 300px; */
+/*   height: 140px; */
+
+	height: 30%;
+  width: 100%;
   
   margin: 5px 0;
   
@@ -178,8 +172,12 @@ button:hover {
 	overflow-y: hidden;
 	overflow-x: auto;
 	
+/*
 	width: 288px;
 	height: 50px;
+*/
+	height: 40%;
+	width: 100%;
 	
 	margin: 0;
 	padding: 4px 4px;
@@ -198,15 +196,15 @@ button:hover {
 }
 
 #calc--total-output {
-	
 	overflow-y: hidden;
 	
 	overflow-x: auto;
-	
+	text-align: right;
 	white-space: nowrap;
-	
+	width: 100%;
 	font-size: 1.8em;
 	margin-top: 5px;
+	
 }
 
 #calc--output {
@@ -218,7 +216,9 @@ button:hover {
 	margin: 0;
 	padding: 0;
 	
-	height: 70px;
+/* 	height: 70px; */
+	height: 60%
+	
 }
 
 #calc-history--data {
@@ -231,9 +231,9 @@ button:hover {
 #button--equals {
   background-color: rgb(62,111,252);
   color: white;
-  font-weight: 200;
-  font-size: 1.5em;
-  width: 118px;
+  
+  
+  width: calc(20% * 2 + 2.5px);
  }
 
 #calc--parens {
@@ -253,9 +253,9 @@ button:hover {
 	
 	font-size: 0.78em;
 	
-	width: 96.3%;
+	
 	text-align: center;
-	height: 50%;
+	
 	margin: 5px 0 0 0;
 	
 	
@@ -271,11 +271,14 @@ button:hover {
 #calc--buttons {
 	display: flex;
 	flex-wrap: wrap;
-	width: 300px
+/* 	width: 300px */
+	width: 100%;
+	height: 65%;
 }
 
 .calc--body {
-	height: 100%;
+	 width: 100%;
+	 height: 100%;
 }
 #button--ce:hover, #button--ac:hover {
 	background-color: rgba(255, 0, 0, 0.7);
