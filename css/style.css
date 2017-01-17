@@ -13,22 +13,18 @@
   box-sizing: border-box;
 }
 
-
-body {
-	
-  margin: 0;
-  padding: 0;
-  font-family: "MathJax", sans-serif;
-  font-weight: 100;
-  font-size: 16px;
-  
-  width: 100%;
-}
-
-div, footer, section, h4, img {
+body, div, footer, section, h4, img {
 	
 	margin: 0;
 	padding: 0;
+}
+
+body {
+  font-family: "MathJax", sans-serif;
+  font-weight: 100;
+  font-size: 16px;
+  margin: 0 auto;
+
 }
 
 img {
@@ -38,7 +34,9 @@ img {
 }
 
 .calc--buttons-row {
-	clear:both;
+	display: flex;
+	width: 100%;
+	
 }
 
 sup, i {
@@ -46,22 +44,19 @@ sup, i {
 }
 
 footer {
-	position: absolute;
 	
-	bottom: 4px;
-	padding-left: 16px;
-	margin: 0;
-	width: 310px;
+	
+	margin-top: 1px;
+	
 	 
 	clear: both;
 }
 
 h4 {
-	margin: 0;
+	
 	color: #a8a6a6;
 	font-family: "Rubik", sans-serif;
-	padding: 0;
-	
+		
 	text-align: left;
 	
 	font-size: 0.8em;
@@ -81,24 +76,8 @@ a:hover {
 	color: rgb(62,111,252);
 }
 
-
-
-.clearfix: after {
-	visibility: hidden;
-	display: block;
-	font-size: 0;
-	content: " ";
-	clear: both;
-	height: 0;
-}
-
-.clearfix {
-	display: inline-block;
-}
-
 button {
-  float: left;
-  
+   
   height: 48px;
   width: 58px;
   
@@ -141,36 +120,36 @@ button:hover {
 }
 
 .container {
-  position:relative;
+	
  
   overflow:hidden;
-  max-width: 375px;
-  width: 100%;
+  width: 320px;
+ 
   height: 487px;
-  
+ 
   margin: 15px auto;
  }
 
-.container--col-fluid {
-  display:block;
-  position: absolute;
-  font-size: 1em;
-  
-}
 
 .calc--body {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	
   border: 1px solid #dfdfdf;
   border-radius: 0 0 10px 0;
   
+
+
+  
   background-color: #fcfcfc;
   
-  padding: 10px 10px 15px 10px;
+  padding: 10px 12px 15px 12px;
   margin: 0;
 }
 
 .calc--screen {
-  position: relative;
-  display: inline-block;
+ 
   word-wrap: break-word;
   
   clear:both;
@@ -195,7 +174,7 @@ button:hover {
 }
 
 #calc--history {
-	position: relative;
+	
 	overflow-y: hidden;
 	overflow-x: auto;
 	
@@ -219,10 +198,11 @@ button:hover {
 }
 
 #calc--total-output {
+	
 	overflow-y: hidden;
 	
 	overflow-x: auto;
-	position: static;
+	
 	white-space: nowrap;
 	
 	font-size: 1.8em;
@@ -230,12 +210,14 @@ button:hover {
 }
 
 #calc--output {
+	
 	display: inline-block;
 	overflow-x: visible;
 	
 	
 	margin: 0;
 	padding: 0;
+	
 	height: 70px;
 }
 
@@ -265,30 +247,36 @@ button:hover {
 }
 
 .calc-about--body {
-	position: absolute;
+	
 	display: none;
 	opacity: 0;
 	
 	font-size: 0.78em;
 	
-	width: 289px;
+	width: 96.3%;
 	text-align: center;
-	height: 70px;
+	height: 50%;
 	margin: 5px 0 0 0;
 	
 	
 	transition: opacity 500ms ease-in;
 }
 
-.calc--screen, .calc--history {
-	position: relative;
-}
 
-.container .container--col-fluid .calc--body #calc--buttons {
+.container, .container--col-fluid, .calc--body, #calc--buttons {
 	
 	font-family: "Rubik", sans-serif;
 }
 
+#calc--buttons {
+	display: flex;
+	flex-wrap: wrap;
+	width: 300px
+}
+
+.calc--body {
+	height: 100%;
+}
 #button--ce:hover, #button--ac:hover {
 	background-color: rgba(255, 0, 0, 0.7);
 	transition: background-color 500ms ease-in;
@@ -311,16 +299,19 @@ button:hover {
 }
 
 /* breakpoints */
-	
+
+/* below iPhone 6 */	
+/*
 @media (max-width: 370px) {
 	body {
-		zoom: 99.7%;
+		zoom: 100%;
 	}
 	
 	.container {
 		margin: 0 auto;
 	}
 }
+
 
 @media (max-width: 414px) and (min-width: 370px) {
 	body {
@@ -361,6 +352,7 @@ button:hover {
 		margin: 15px auto;
 	}
 }
+*/
 
 
 

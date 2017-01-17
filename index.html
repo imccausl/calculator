@@ -4,10 +4,8 @@
 <head>
 	
 	<meta charset="UTF-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-	<!-- NB: yes, I know that 'user-scalable=no' is ordinarily very, very bad accessibility-wise, but the whole point of
-		setting it on this app is that the css takes care of the zooming to fill the space of the view-port, so on an ipad you get a GIANT 
-		calculator (http://tinyurl.com/h7xzrnb). Plus, its super annoying on mobile if you hit a button twice and then your device registers 		it as an attempt to zoom in -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	
 	<title>Calculator</title>
@@ -46,95 +44,92 @@
 	<div id="calc--prerender"></div>
 	<div id="calc--history-prerender"></div>
 	<div class="container">
-	  <div class="container--col-fluid clearfix">
+	 
 
-		<section class="calc--body clearfix">
+	<section class="calc--body">
+		
+		<div class="calc--screen">
 			
-			<div class="calc--screen">
+			<div id="calc--history">
 				
-				<div id="calc--history">
-					
-					<div id="calc-history--data"></div>
-					
-				</div>
-				<div class="calc-about--body">
-					
-						<h4>View the source code on 
-						<a href="https://github.com/imccausl/calculator" target="_blank">Github</a> | Powered by:</h4>
-						 
-						<a href="http://www.mathjax.org" target="_blank">
-						<img title="Powered by MathJax" 
-							 src="https://cdn.mathjax.org/mathjax/badge/mj_logo.png"
-							 width="45%" alt="Powered by MathJax"></a> 
-							 
-							 <a href="http://mathjs.org/" target="_blank">
-						    <img src="http://mathjs.org/css/img/mathjs_330x100.png" 
-						    	 width="50%" 
-						    	 alt="Uses mathJS extensive math library for JavaScript and Node.js"></a>
-					
-					</div>	
-									
-				<div id="calc--total-output">
-					
-					<span id="calc--output"></span>
-					<span id="calc--parens"></span>
-				</div>
+				<div id="calc-history--data"></div>
 				
-				
-
-			</div>  
-	  
-			<div id="calc--buttons" class="clearfix">
-				<div id="row1" class="calc--buttons-row">
-					
-				    <button class="button--about" value="info"><i class="fa fa-info-circle" aria-hidden="true"></i></button>
-				    <button class="placeholder" value=""></button>
-				    <button id="button--ans" value="ans">ans</button>
-				    <button id="button--ce" value="ce">ce</button>
-				    <button id="button--ac" value="ac">ac</button>
-				</div>
-				  				  
-				<div id="row2" class="calc--buttons-row">
-     			    <button value="!">n!</button>
-				    <button value="(">(</button>
-				    <button value=")">)</button>
-				    <button value="%">%</button>
-				    <button value="/">÷</button>
-				</div>
-				  
-				<div id="row3" class="calc--buttons-row">
-				    <button value="sqrt">&#8730;</button>
-				    <button class="button--keypad" value="7">7</button>
-				    <button class="button--keypad" value="8">8</button>
-				    <button class="button--keypad" value="9">9</button>
-				    <button value="*">&times;</button>
-				</div>
-				  
-				<div id="row4" class="calc--buttons-row">
-				    <button value="^">n<sup>x</sup></button>
-				    <button class="button--keypad" value="4">4</button>
-				    <button class="button--keypad" value="5">5</button>
-				    <button class="button--keypad" value="6">6</button>
-				    <button value="-">-</button>
-				</div>
-				  
-				<div id="row5" class="calc--buttons-row">
-				    <button value="log">log</button>
-				    <button class="button--keypad" value="1">1</button>
-				    <button class="button--keypad" value="2">2</button>
-				    <button class="button--keypad" value="3">3</button>
-				    <button value="+">+</button>
-				</div>
-				  
-				<div id="row6" class="calc--buttons-row">
-				    <button value = "π">π</button>
-				    <button class="button--keypad" value="0">0</button>
-				    <button class="button--keypad" value=".">.</button>
-				    <button id="button--equals" value="=">=</button>
-				</div>
 			</div>
-				  
-		</section>
+			
+			<div class="calc-about--body">
+				
+					<h4>View the source code on 
+					<a href="https://github.com/imccausl/calculator" target="_blank">Github</a> | Powered by:</h4>
+					 
+					<a href="http://www.mathjax.org" target="_blank">
+					<img title="Powered by MathJax" 
+						 src="https://cdn.mathjax.org/mathjax/badge/mj_logo.png"
+						 width="45%" alt="Powered by MathJax"></a> 
+						 
+						 <a href="http://mathjs.org/" target="_blank">
+					    <img src="http://mathjs.org/css/img/mathjs_330x100.png" 
+					    	 width="50%" 
+					    	 alt="Uses mathJS extensive math library for JavaScript and Node.js"></a>
+				
+				</div>	
+								
+			<div id="calc--total-output">
+				
+				<span id="calc--output"></span>
+				<span id="calc--parens"></span>
+			</div>
+
+		</div>  
+  
+		<div id="calc--buttons">
+			<div id="row1" class="calc--buttons-row">
+				
+			    <button class="button--about" value="info"><i class="fa fa-info-circle" aria-hidden="true"></i></button>
+			    <button class="placeholder" value=""></button>
+			    <button id="button--ans" value="ans">ans</button>
+			    <button id="button--ce" value="ce">ce</button>
+			    <button id="button--ac" value="ac">ac</button>
+			</div>
+			  				  
+			<div id="row2" class="calc--buttons-row">
+ 			    <button value="!">n!</button>
+			    <button value="(">(</button>
+			    <button value=")">)</button>
+			    <button value="%">%</button>
+			    <button value="/">÷</button>
+			</div>
+			  
+			<div id="row3" class="calc--buttons-row">
+			    <button value="sqrt">&#8730;</button>
+			    <button class="button--keypad" value="7">7</button>
+			    <button class="button--keypad" value="8">8</button>
+			    <button class="button--keypad" value="9">9</button>
+			    <button value="*">&times;</button>
+			</div>
+			  
+			<div id="row4" class="calc--buttons-row">
+			    <button value="^">n<sup>x</sup></button>
+			    <button class="button--keypad" value="4">4</button>
+			    <button class="button--keypad" value="5">5</button>
+			    <button class="button--keypad" value="6">6</button>
+			    <button value="-">-</button>
+			</div>
+			  
+			<div id="row5" class="calc--buttons-row">
+			    <button value="log">log</button>
+			    <button class="button--keypad" value="1">1</button>
+			    <button class="button--keypad" value="2">2</button>
+			    <button class="button--keypad" value="3">3</button>
+			    <button value="+">+</button>
+			</div>
+			  
+			<div id="row6" class="calc--buttons-row">
+			    <button value = "π">π</button>
+			    <button class="button--keypad" value="0">0</button>
+			    <button class="button--keypad" value=".">.</button>
+			    <button id="button--equals" value="=">=</button>
+			</div>
+		</div>
 		
 		<footer>
 		<h4>Designed & Coded by 
@@ -143,8 +138,8 @@
 		    </span> in <span class="text--emphasis">Toronto</span>
 		</h4>
 	</footer>
-
-	</div>
+	  
+	</section>
 	
 	</div> <!-- /container -->
 
