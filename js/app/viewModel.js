@@ -238,7 +238,7 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 								 	   
 								 	// ad-hoc filters for very specific situations.
 								 	
-								 	if ((expression.splitExpression("[(sqrt\d*)\^\+\*\/\\-\!]").search("[t\^]") === -1 )) {
+								 	if ((expression.splitExpression("[(log\d*)(sqrt\d*)\^\+\*\/\\-\!]").search("[gt\^\!]") === -1 )) {
 										inputFilter.addToFilter("%"); 	
 								    }
 								 	
