@@ -95,24 +95,11 @@ button:last-of-type {
 	border-right: 0;
 }
 
-#row2 {
-	 border-top: 1px solid #aeaeae;	
-}
-
-#row3 {
-	 border-top: 1px solid #aeaeae;	
-}
-
-#row4 {
-	 border-top: 1px solid #aeaeae;	
-}
-
-#row5 {
+#row2, #row3, #row4, #row5, #row6 {
 	 border-top: 1px solid #aeaeae;	
 }
 
 #row6 {
-	 border-top: 1px solid #aeaeae;
 	 border-bottom: 1px solid #aeaeae;
 }
 
@@ -144,7 +131,7 @@ button:hover {
 .container {
   	overflow:hidden;
   	
-  	width: 100vw;
+  	width: calc(100vw + 2px);
   	height: calc(100vh - 68px);
   	
   	min-height: 568px;
@@ -339,7 +326,7 @@ button:hover {
 
 /* breakpoints */
 
-@media (min-width: 415px) and (min-height: 583px) {	
+@media (min-width: 418px) and (min-height: 583px) {	
 	.container {
 		margin: 3% auto;
 	}
