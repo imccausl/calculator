@@ -312,6 +312,10 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 				function addListeners() {
 					var hasTouch = ("ontouchstart" in window);
 					
+					function preventTouchEvent(e) {
+						e.preventDefault();	
+					}
+					
 					if (hasTouch) {
 						document.documentElement.classList.add('can-touch'); // remove hover from buttons
 						
