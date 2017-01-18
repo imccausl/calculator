@@ -108,8 +108,7 @@ button:focus {
 }
 
 button:active {
-  background-color: black;
-  color:firebrick;
+   color:firebrick;
 }
 
 button:hover {
@@ -242,6 +241,7 @@ html.can-touch button:hover {
 #calc--output span:focus, #calc-history--data span:focus {
 	outline:0; /* for mathjax display */
 }
+
 #button--equals {
   background: rgb(62,111,252);
    color: white;
