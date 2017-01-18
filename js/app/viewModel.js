@@ -284,7 +284,11 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 				if (e.key) {
 					eventInput = e.key;
 				} else if (e.keyIdentifier) {
-					eventInput = String.fromCharCode(parseInt(e.keyIdentifier.replace("U+", "0x"), 16));
+					if ( (e.keyIdentifier === "Enter") || (e.keyIdentifier === "Clear") ) {
+						eventInput = e.keyIdentifier;
+					} else {
+						eventInput = String.fromCharCode(parseInt(e.keyIdentifier.replace("U+", "0x"), 16));
+					}
 				}
 				
 				// click/touch events
@@ -307,19 +311,42 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 				
 				function addListeners() {
 					var hasTouch = ("ontouchstart" in window),
-						preventTouchEvent = function preventTouchEvent(evt) {
+						isTouch = false,
+						isTouchTimer = null,
+						curRoutClass= "";
+						
+						
+					function preventTouchEvent(evt) {
 							evt.preventDefault();
-						};
+					}
 					
+					function addTouchClass(evt) {
+						clearTimeout(isTouchTimer);
+						isTouch = true;
+						
+						if (!isTouch) {
+							document.documentElement.classList.add('can-touch');
+						}
+						
+						isTouchTimer = setTimeout(function(){isTouch = false}, 500);
+					}
+					
+					function removeTouchClass(evt) {
+						if (isTouch) {
+							isTouch = false;
+							document.documentElement.classList.remove('can-touch');
+						}
+					}
 					
 					if (hasTouch) {
-						view.elements.buttons.addEventListener("touchstart", parseInput, false);
+						view.elements.buttons.addEventListener("touchstart", addTouchClass, false);
 						view.elements.buttons.addEventListener("touchmove", preventTouchEvent, false);
-						view.elements.buttons.addEventListener("touchend", preventTouchEvent, false);
+						view.elements.buttons.addEventListener("touchend", parseInput, false);
 					} else {
 						view.elements.buttons.addEventListener("mousedown", parseInput, false);
 					}
 					
+					view.elements.buttons.addEventListener("mouseover", removeTouchClass, false)
 					document.addEventListener("keydown", parseInput, false);
 					
 				}
