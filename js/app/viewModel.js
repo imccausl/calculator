@@ -310,43 +310,19 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 				});	
 				
 				function addListeners() {
-					var hasTouch = ("ontouchstart" in window),
-						isTouch = false,
-						isTouchTimer = null,
-						curRoutClass= "";
-						
-						
-					function preventTouchEvent(evt) {
-							evt.preventDefault();
-					}
-					
-					function addTouchClass(evt) {
-						clearTimeout(isTouchTimer);
-						isTouch = true;
-						
-						if (!isTouch) {
-							document.documentElement.classList.add('can-touch');
-						}
-						
-						isTouchTimer = setTimeout(function(){isTouch = false}, 500);
-					}
-					
-					function removeTouchClass(evt) {
-						if (isTouch) {
-							isTouch = false;
-							document.documentElement.classList.remove('can-touch');
-						}
-					}
+					var hasTouch = ("ontouchstart" in window);
 					
 					if (hasTouch) {
-						view.elements.buttons.addEventListener("touchstart", addTouchClass, false);
+						document.documentElement.classList.add('can-touch'); // remove hover from buttons
+						
+						view.elements.buttons.addEventListener("touchstart", parseInput, false);
 						view.elements.buttons.addEventListener("touchmove", preventTouchEvent, false);
-						view.elements.buttons.addEventListener("touchend", parseInput, false);
+						view.elements.buttons.addEventListener("touchend", preventTouchEvent, false);
 					} else {
 						view.elements.buttons.addEventListener("mousedown", parseInput, false);
 					}
 					
-					view.elements.buttons.addEventListener("mouseover", removeTouchClass, false)
+					
 					document.addEventListener("keydown", parseInput, false);
 					
 				}
