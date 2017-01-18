@@ -225,10 +225,15 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 										inputFilter.addToFilter("%"); 	
 								    }
 								    
-								    console.log(expression.splitExpression("[(log\d*)(sqrt\d*)\^\+\*\/\\-\!π%]"));
+								    console.log( expression.splitExpression("[(log\d*)(sqrt\d*)\^\+\*\/\\-\!π%]"),
+								    expression.splitExpression("[(log\d*)(sqrt\d*)\^\+\*\/\\-\!π%]").search(/(g\d+)|\^|\!|%/));
 								    
-								    if ((expression.splitExpression("[(log\d*)(sqrt\d*)\^\+\*\/\\-\!π%]").search(/\^/) === -1 )) {
+								    if ((expression.splitExpression("[(log\d*)(sqrt\d*)\^\+\*\/\\-\!π%]").search(/[gt\^\!%]/) === -1 )) {
 										inputFilter.addToFilter("^"); 	
+								    }
+								    
+								    if ((expression.splitExpression("[(log\d*)(sqrt\d*)\^\+\*\/\\-\!π%]").search(/(g\d+)|(t\d+)/) > -1 )) {
+									   inputFilter.addToFilter("^");  
 								    }
 								 	
 								 	if (!(expression.canHaveDecimal()) && (!((keyInput === 'log') || (keyInput ==='sqrt'))) ) {

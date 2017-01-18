@@ -120,7 +120,7 @@ define( [], function (expression) {
 				prettifyExpressions: function prettifyExpressions(input) {
 					var lastCh = getLastCh();
 					
-					
+					console.log("prettify:", lastCh, input)
 					
 					if (lastCh === ")") {
 						_modifyModel(/\)\d|π/, ")*"+input);
@@ -132,7 +132,7 @@ define( [], function (expression) {
 						_modifyModel(/%\d+/, "%*"+input);
 					} else if ( (lastCh==="%") && (input==="/") ) {
 						_modifyModel(/(\d+%)/, "($1)");
-					}
+					} 
 				}
 				
 			},
