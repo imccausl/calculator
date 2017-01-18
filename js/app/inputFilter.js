@@ -76,7 +76,6 @@ define( [], function() {
 						operators = ['+', '-', '*', '/'],
 						inputRules = ["numbers", "pi", "leftParen", "plus", "minus", "root"];
 					
-					console.log("isOperator() ch", ch, "lastCh", lastCh);
 					
 					if ( (operators.indexOf(ch) > -1) ) {
 						
@@ -188,7 +187,6 @@ define( [], function() {
 				
 				
 				_allowedInput = _getNextFilter(ch, lastCh);
-				console.log("SET NEW FILTER:", _allowedInput);
 			},
 			
 			addToFilter: _addToFilter

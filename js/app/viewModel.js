@@ -22,7 +22,6 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 					expr = model.content.data;
 					model.lastExpression = preSyntaxModel.content.data + " =";
 					
-					console.log("Trying to evaluate", expr, expr.length);
 					model.content.data = math.eval(expr).toString(); // this is a mathJS function for evaluating math, not JS EVAL
 					model.lastAns = model.content.data;
 					view.disableLastAns(false);
@@ -30,7 +29,7 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 				
 				catch(err) {
 					model.content.data = "E R R O R !";
-					console.log(err);
+					console.err(err);
 					
 				}
 				
@@ -156,16 +155,10 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 				var history = null,
 					calcOutput = document.getElementById('calc--total-output'),
 					keyInput = getInput(event);
-					
-											
-									
-				// IMPORTANT DATA: {keypress: data.which; click: data.target.value}
-				
+								
 				// this function routes valid inputs and ignores invalid inputs (such as letters),
 				// but also including two operators (+-) in a row, two decimals (..) in a row, etc.
-				
-				console.log("parseInput():", event);
-						
+										
 				try {
 					
 					if (document.activeElement) {
@@ -225,9 +218,7 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 								 	view.elements.output.scrollLeft = view.elements.output.scrollWidth;
 								 	
 								 	inputFilter.setFilter(keyInput, expression.getLastCh());
-								 	console.log("Root expression:", expression.splitExpression("[(sqrt\d*)\+\*\/\\-\!]")); 
-								 	
-								 									 	   
+								 								 	   
 								 	// ad-hoc filters for very specific situations.
 								 	
 								 	if ((expression.splitExpression("[(log\d*)(sqrt\d*)\^\+\*\/\\-\!π%]").search("[gt\^\!π%]") === -1 )) {
@@ -269,7 +260,7 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 				}
 				
 				catch(err) {
-					console.log(err);
+					console.err(err);
 					allClear(); // if something totally unexpected happens with input, reset the calculator.
 					init();
 				}

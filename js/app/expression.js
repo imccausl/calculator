@@ -84,7 +84,7 @@ define( [], function (expression) {
 				
 				insertZero: function insertZero(ch) {
 					var lastCh = getLastCh();
-					console.log("ExcessOps()", "lastCh:", lastCh);
+					
 					
 					if (ch===".") {
 						if ( 
@@ -120,7 +120,7 @@ define( [], function (expression) {
 				prettifyExpressions: function prettifyExpressions(input) {
 					var lastCh = getLastCh();
 					
-					console.log("prettify()", _model.content.data.indexOf(/(\d)/));
+					
 					
 					if (lastCh === ")") {
 						_modifyModel(/\)\d|π/, ")*"+input);
@@ -144,7 +144,7 @@ define( [], function (expression) {
 				
 				
 				hasOne = /[\.t]/.test(expr);
-				console.log("Can Has Decimal?", hasOne,  expr);
+				
 				
 				return hasOne;
 				
@@ -215,7 +215,7 @@ define( [], function (expression) {
 				}
 				
 				_model.content.data += ch;
-				console.log("State of the model:", _model.content);
+				// console.log("State of the model:", _model.content);
 				checkSyntax("presentation", ch);
 			},
 			
