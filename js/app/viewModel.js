@@ -271,8 +271,11 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 			getInput = function getInput(e) {
 				var eventInput = "";
 				
+				e.preventDefault();
 				// keyboard events for safari, firefox, chrome, opera
+				
 				if (e.key) {
+					
 					eventInput = e.key;
 				} else if (e.keyIdentifier) {
 					if ( (e.keyIdentifier === "Enter") || (e.keyIdentifier === "Clear") ) {
