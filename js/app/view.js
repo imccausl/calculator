@@ -107,6 +107,7 @@ define(['expression', 'MathJax'], function(expression) {
 					elements.history.innerHTML = elements.historyBuffer.innerHTML;
 				}
 				
+				elements.history.scrollLeft = elements.history.scrollWidth;
 				elements.output.scrollLeft = elements.output.scrollWidth;
 
 		
