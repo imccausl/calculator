@@ -221,8 +221,14 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 								 								 	   
 								 	// ad-hoc filters for very specific situations.
 								 	
-								 	if ((expression.splitExpression("[(log\d*)(sqrt\d*)\^\+\*\/\\-\!π%]").search("[gt\^\!π%]") === -1 )) {
+								 	if ((expression.splitExpression("[(log\d*)(sqrt\d*)\^\+\*\/\\-\!π%]").search(/[gt\^\!π%]/) === -1 )) {
 										inputFilter.addToFilter("%"); 	
+								    }
+								    
+								    console.log(expression.splitExpression("[(log\d*)(sqrt\d*)\^\+\*\/\\-\!π%]"));
+								    
+								    if ((expression.splitExpression("[(log\d*)(sqrt\d*)\^\+\*\/\\-\!π%]").search(/\^/) === -1 )) {
+										inputFilter.addToFilter("^"); 	
 								    }
 								 	
 								 	if (!(expression.canHaveDecimal()) && (!((keyInput === 'log') || (keyInput ==='sqrt'))) ) {

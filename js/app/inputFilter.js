@@ -45,7 +45,6 @@ define( [], function() {
 							"plus", 
 							"minus",  
 							"log",
-							"pow",
 							"evaluate", 
 							"factorial", 
 							"multiDiv"		];

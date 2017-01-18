@@ -107,9 +107,6 @@ button:focus {
   outline: 0;
 }
 
-button:active {
-   color:firebrick;
-}
 
 button:hover {
   cursor: default;
