@@ -277,6 +277,8 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 				} else if (e.keyIdentifier) {
 					if ( (e.keyIdentifier === "Enter") || (e.keyIdentifier === "Clear") ) {
 						eventInput = e.keyIdentifier;
+					} else if ( (e.keyIdentifier === "U+0008") || (e.keyIdentifier === "U+007F") ) {
+						eventInput = "Delete";
 					} else {
 						eventInput = String.fromCharCode(parseInt(e.keyIdentifier.replace("U+", "0x"), 16));
 					}
@@ -287,7 +289,7 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 					eventInput = e.target.value;
 				}
 				
-				console.log("eventInput():", eventInput);
+				console.log("eventInput():", eventInput, e);
 				
 				return eventInput;
 			},
