@@ -208,10 +208,16 @@ define( [], function (expression) {
 		 	},
 		 	
 		 	pushToModel = function pushToModel(ch) {
+			 	var operators = ['+', '-', '/', '*', '%', '^', '!'];
 			 	 		
 				if (_model.content.firstInput === true) {
 					toggleFirstInput();
-					_model.content.data = "";
+					
+					if ( (operators.indexOf(ch) > -1) && (_model.lastAns) ) {
+						_model.content.data = _model.lastAns; // if one of the acceptable operators is pressed, push lastAns to model.
+					} else {
+						_model.content.data = ""; // first input after equals, clear model for a clean pushToModel slate.
+					}
 				}
 				
 				_model.content.data += ch;

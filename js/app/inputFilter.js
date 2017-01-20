@@ -153,21 +153,27 @@ define( [], function() {
 	 	
 		 	_getNextFilter = function _getNextFilter(ch, lastCh) {
 				var inputRules = [],
+					defaultFilter = ['numbers', 'pi', 'log', 'root', 'decimal', 'leftParen'],
 					ch = ch || "";
 				
 				
-				if ( ( ch  ) !== "" ) {					
+				if (ch === "") {
+					// no input rules found, so initialize the input filter with the following allowed inputs:
+					inputRules = defaultFilter;
+				} else if (ch==="postCalc") {
+					defaultFilter.push("multiDiv", "plus", "minus", "pow", "percent");
+					inputRules = defaultFilter;
+				} else {					
 					for( var func in _lexer ) {
 												
 						inputRules = _lexer[func](ch, lastCh);
 						if (inputRules) {
-							return _makeFilter(inputRules);
+							break;
 						}	
 					}
-				} else {
-					// no input rules found, so initialize the input filter with the following allowed inputs:
-					return _makeFilter(['numbers', 'pi', 'log', 'root', 'decimal', 'leftParen']);
 				}
+				
+				return _makeFilter(inputRules); 
 			},
 				
 			_addToFilter = function _addToFilter(item) {

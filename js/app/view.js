@@ -97,6 +97,8 @@ define(['expression', 'MathJax'], function(expression) {
 			},
 			
 			swapBufferForScreen = function swapBufferForScreen() {	
+				var historyData = document.getElementById('calc--history');
+				
 				mjRunning = mjPending = false;
 				
 				// Only swap the buffer if it contains rendered data
@@ -107,7 +109,7 @@ define(['expression', 'MathJax'], function(expression) {
 					elements.history.innerHTML = elements.historyBuffer.innerHTML;
 				}
 				
-				elements.history.scrollLeft = elements.history.scrollWidth;
+				historyData.scrollLeft = historyData.scrollWidth;
 				elements.output.scrollLeft = elements.output.scrollWidth;
 
 		

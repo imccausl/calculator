@@ -34,7 +34,7 @@ define(['view', 'expression', 'inputFilter', 'math'], function(view, expression,
 				}
 				
 				finally {
-					inputFilter.setFilter();
+					inputFilter.setFilter("postCalc");
 					view.elements.screen.textContent = model.content.data;
 					view.elements.history.textContent = expr
 						.replace(/\*/g, " ⋅ ")
